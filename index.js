@@ -12,7 +12,7 @@ app.get('/', function(request, response)
 
 app.get('/test', function(request, response)
 {
-  response.send('whatever')
+  response.json({test: 'whatever2'})
 })
 
 app.listen(app.get('port'), function()
