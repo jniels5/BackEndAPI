@@ -19,10 +19,40 @@ app.options('*', cors(corsOptions)); //enables preflight options
 
 app.set('port', (process.env.PORT || 5000))
 
-app.get('/', function(request, response)
-{
-  response.send('Hello World!')
-})
+//creating connection object
+var connection = mysql.createConnection({
+  host     : process.env.RDS_HOSTNAME,
+  user     : process.env.RDS_USERNAME,
+  password : process.env.RDS_PASSWORD,
+  port     : process.env.RDS_PORT,
+  database : process.env.RDS_DB_NAME,
+  multipleStatements: true //used for running an sql file
+});
+
+var conn_succ = false; //checks connection status, will probably get rid of this soon
+
+//connect to db
+connection.connect(function(err) {
+  if (err) {
+    conn_succ = false;
+    //Worthless right not, haven't been able to access aws logs
+    console.log('Not Connected to database.'); //but maybe some day
+    return;
+  }
+  //yussssssssss
+  conn_succ = true;
+  console.log('Connected to database.');
+});
+
+//pretty much useless, used it to test db connection
+app.get('/', function(request,response) {
+  if(!conn_succ) {
+    response.json({connect_status: 'Failed'});
+  }
+  else {
+    response.json({connect_status: 'Success'});
+  }
+});
 
 app.get('/test', function(request, response)
 {
