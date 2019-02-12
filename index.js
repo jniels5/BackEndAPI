@@ -1,3 +1,4 @@
+var runfile = require('./runfile.js');
 var express = require('express')
 var mysql = require('mysql')
 var cors = require('cors')
@@ -54,10 +55,32 @@ app.get('/', function(request,response) {
   }
 });
 
-app.get('/test', function(request, response)
-{
-  response.json({test: 'whatever2'})
-})
+// Used to get database information on team members
+app.get('/select/table/Assets', function(request,response) {
+  connection.query('SELECT * FROM Assets' , function (error, results, fields) {
+        if(error) {
+            response.json({select_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+//runs a specified sql file (**Needs error handling**)
+app.get('/runfile/:file', function(request,response) {
+  try{
+      runfile.execFile(connection, './' + request.params.file, response);
+  }
+  catch(error) {
+    response.json( {
+      runfile_status: "Failed",
+      runfile_error: error
+    });
+    return;
+  }
+  response.json({runfile_status: "Success"});
+});
 
 app.listen(app.get('port'), function()
   {
