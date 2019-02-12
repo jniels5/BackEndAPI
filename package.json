@@ -18,7 +18,8 @@
     "mysql": "^2.16.0",
     "underscore": "^1.9.1",
     "fs": "0.0.1-security",
-    "execsql": "latest"
+    "execsql": "latest",
+    "body-parser": "latest"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
