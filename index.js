@@ -17,6 +17,7 @@ var corsOptions = {
 //app.use(cors()); uncomment to enable cors for everything
 app.use(cors(corsOptions)); //use cors with options enables
 app.options('*', cors(corsOptions)); //enables preflight options
+app.use(bodyParser.json()); //Parses POST Data
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -56,8 +57,8 @@ app.get('/', function(request,response) {
 });
 
 // Used to get database information on team members
-app.get('/select/table/Assets', function(request,response) {
-  connection.query('SELECT * FROM Assets' , function (error, results, fields) {
+app.get('/select/table/:table', function(request,response) {
+  connection.query('SELECT * FROM'  + request.params.table, function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
