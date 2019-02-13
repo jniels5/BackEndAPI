@@ -33,6 +33,20 @@ FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID),
 FOREIGN KEY (LabID) REFERENCES Labs(LabID),
 UNIQUE (AcctID, LabID));
 
+CREATE TABLE Preferences
+(PrefID int auto_increment PRIMARY KEY,
+NavColor CHAR(6),
+AcctID int,
+FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID));
+
+CREATE TABLE Metrics
+(MetID int auto_increment PRIMARY KEY,
+Type VARCHAR(25),
+Description VARCHAR(50),
+IsActive BOOLEAN,
+PrefID int,
+FOREIGN KEY (PrefID) REFERENCES Preferences(PrefID));
+
 INSERT INTO Accounts( Username, Password, FirstName, LastName, Role) VALUES
 ('mbrenner2', 'password', 'Mike', 'Brenner', 'Write');
 
@@ -41,3 +55,9 @@ INSERT INTO Labs(Abbrev, School, City, State) VALUES
 
 INSERT INTO AccountLabs(AcctID, LabID) VALUES
 (1, 1);
+
+INSERT INTO Preferences(NavColor, AcctID) VALUES
+('202020', 1);
+
+INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
+('Total', 'Number of students', 1, 1);
