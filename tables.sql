@@ -64,9 +64,9 @@ Gender VARCHAR(15),
 GradSemester VARCHAR(6),
 GradYear VARCHAR(4),
 Email VARCHAR(320),
-AssetTag int,
+AssetID int,
 LabID int,
-FOREIGN KEY (AssetTag) REFERENCES Assets(AssetID),
+FOREIGN KEY (AssetID) REFERENCES Assets(AssetID),
 FOREIGN KEY (LabID) REFERENCES Labs(LabID));
 
 CREATE TABLE Role
@@ -126,8 +126,8 @@ INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
 INSERT INTO Assets(AssetTag, Type, Description, IsImaged, LabID) VALUES
 ( 20100206 ,'Laptop', 'Apple MacBook Pro', 1, 1);
 
-INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetTag, LabID) VALUES
-('Jeremy', 'Nielson', 'Male','Spring', '2019', 'saktirshinu@gmail.com', 20100206, 1);
+INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID, LabID) VALUES
+('Jeremy', 'Nielson', 'Male','Spring', '2019', 'saktirshinu@gmail.com', 1, 1);
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1);
