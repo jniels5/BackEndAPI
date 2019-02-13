@@ -47,6 +47,26 @@ IsActive BOOLEAN,
 PrefID int,
 FOREIGN KEY (PrefID) REFERENCES Preferences(PrefID));
 
+CREATE TABLE Assets
+(AssetTag int NOT NULL PRIMARY KEY,
+Type VARCHAR(25),
+Description VARCHAR(50),
+IsImaged boolean,
+LabID int,
+FOREIGN KEY (LabID) REFERENCES Labs(LabID));
+
+CREATE TABLE Members
+(MemberID int auto_increment PRIMARY KEY,
+FirstName VARCHAR(20),
+LastName VARCHAR(20),
+GradSemester VARCHAR(6),
+GradYear VARCHAR(4),
+Email VARCHAR(320),
+AssetTag int,
+LabID int,
+FOREIGN KEY (AssetTag) REFERENCES Assets(AssetID),
+FOREIGN KEY (LabID) REFERENCES Labs(LabID));
+
 INSERT INTO Accounts( Username, Password, FirstName, LastName, Role) VALUES
 ('mbrenner2', 'password', 'Mike', 'Brenner', 'Write');
 
@@ -61,3 +81,9 @@ INSERT INTO Preferences(NavColor, AcctID) VALUES
 
 INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
 ('Total', 'Number of students', 1, 1);
+
+INSERT INTO Assets(AssetTag, Type, Description, IsImaged, LabID) VALUES
+( 20100206 ,'Laptop', 'Apple MacBook Pro', 1, 1);
+
+INSERT INTO Members(FirstName, LastName, GradSemester, GradYear, Email, AssetTag) VALUES
+('Jeremy', 'Nielson', 'Spring', '2019', 'saktirshinu@gmail.com', 20100206, 1);
