@@ -55,6 +55,24 @@ IsImaged boolean,
 LabID int,
 FOREIGN KEY (LabID) REFERENCES Labs(LabID));
 
+INSERT INTO Accounts( Username, Password, FirstName, LastName, Role) VALUES
+('mbrenner2', 'password', 'Mike', 'Brenner', 'Write');
+
+INSERT INTO Labs(Abbrev, School, City, State) VALUES
+('NIU', 'Northern Illinois University', 'Dekalb', 'IL');
+
+INSERT INTO AccountLabs(AcctID, LabID) VALUES
+(1, 1);
+
+INSERT INTO Preferences(NavColor, AcctID) VALUES
+('202020', 1);
+
+INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
+('Total', 'Number of students', 1, 1);
+
+INSERT INTO Assets(AssetTag, Type, Description, IsImaged, LabID) VALUES
+( 20100206 ,'Laptop', 'Apple MacBook Pro', 1, 1);
+
 CREATE TABLE Members
 (MemberID int auto_increment PRIMARY KEY,
 FirstName VARCHAR(20),
@@ -106,26 +124,8 @@ Description VARCHAR(255),
 TeamID int,
 FOREIGN KEY (TeamID) REFERENCES Teams(TeamID));
 
-INSERT INTO Accounts( Username, Password, FirstName, LastName, Role) VALUES
-('mbrenner2', 'password', 'Mike', 'Brenner', 'Write');
-
-INSERT INTO Labs(Abbrev, School, City, State) VALUES
-('NIU', 'Northern Illinois University', 'Dekalb', 'IL');
-
-INSERT INTO AccountLabs(AcctID, LabID) VALUES
-(1, 1);
-
-INSERT INTO Preferences(NavColor, AcctID) VALUES
-('202020', 1);
-
-INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
-('Total', 'Number of students', 1, 1);
-
-INSERT INTO Assets(AssetTag, Type, Description, IsImaged, LabID) VALUES
-( 20100206 ,'Laptop', 'Apple MacBook Pro', 1, 1);
-
 INSERT INTO Members(FirstName, LastName, GradSemester, GradYear, Email, AssetTag) VALUES
-('Jeremy', 'Nielson', 'Spring', '2019', 'saktirshinu@gmail.com', 20100206);
+('Jeremy', 'Nielson', 'Spring', '2019', 'saktirshinu@gmail.com', 20100206, 1);
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1);
