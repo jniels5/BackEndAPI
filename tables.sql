@@ -114,6 +114,7 @@ UNIQUE (TeamID, MemberID));
 CREATE TABLE Projects
 (ProjectID int auto_increment PRIMARY KEY,
 Name VARCHAR(50),
+Type VARCHAR(20),
 Description VARCHAR(255),
 TeamID int,
 FOREIGN KEY (TeamID) REFERENCES Teams(TeamID));
@@ -155,5 +156,5 @@ INSERT INTO Teams(TeamName, PO, Mentor, Semester, LabID) VALUES
 INSERT INTO TeamMembers(TeamID, MemberID) VALUES
 (1, 1);
 
-INSERT INTO Projects(Name, Description, TeamID) VALUES
-('Applicant Tracking & Dashboard', 'Keep track of all applicants, interns, and hires from the code_orange project', 1);
+INSERT INTO Projects(Name, Type, Description, TeamID) VALUES
+('Applicant Tracking & Dashboard', 'Website', 'Keep track of all applicants, interns, and hires from the code_orange project', 1);
