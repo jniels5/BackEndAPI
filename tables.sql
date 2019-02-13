@@ -20,6 +20,15 @@ FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID),
 FOREIGN KEY (LabID) REFERENCES Labs(LabID),
 UNIQUE (AcctID, LabID));
 
+CREATE TABLE Notifications
+(NotifyID int auto_increment PRIMARY KEY,
+Type VARCHAR(25),
+Description VARCHAR(255),
+Name VARCHAR(40),
+Date DATE,
+AcctID int,
+FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID));
+
 CREATE TABLE Preferences
 (PrefID int auto_increment PRIMARY KEY,
 NavColor CHAR(6),
@@ -104,6 +113,9 @@ INSERT INTO Labs(Abbrev, School, City, State) VALUES
 INSERT INTO AccountLabs(AcctID, LabID) VALUES
 (1, 1);
 
+INSERT INTO Notifications(Type, Description, Name, Date, AcctID) VALUES
+('Alert', 'This user sucks', 'Not Me', '2019-2-12', 1);
+
 INSERT INTO Preferences(NavColor, AcctID) VALUES
 ('202020', 1);
 
@@ -114,7 +126,7 @@ INSERT INTO Assets(AssetTag, Type, Description, IsImaged, LabID) VALUES
 ( 20100206 ,'Laptop', 'Apple MacBook Pro', 1, 1);
 
 INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID, LabID) VALUES
-('Jeremy', 'Nielson', 'Male','Spring', '2019', 'saktirshinu@gmail.com', 1, 1);
+('Jeremy', 'Nielson', 'Male', 'Spring', '2019', 'saktirshinu@gmail.com', 1, 1);
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1);
