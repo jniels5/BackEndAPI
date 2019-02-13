@@ -68,6 +68,16 @@ app.get('/select/table/:table', function(request,response) {
   });
 });
 
+app.get('/login/check/', function(request,response) {
+  connection.query('SELECT AcctID FROM Accounts')
+    if(error) {
+      response.json({login_check: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+}
+
 //runs a specified sql file (**Needs error handling**)
 app.get('/runfile/:file', function(request,response) {
   try{
