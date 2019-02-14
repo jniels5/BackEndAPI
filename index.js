@@ -95,7 +95,7 @@ app.get('/stats/search/', function(request,response) {
     {
       connection.query('SELECT * FROM Members WHERE FirstName = ' + entryRes.Search)
         if(error) {
-          response.json({table_names: "failed"})
+          response.json({table_names: "failed"});
         }
         else {
           response.json(results);
@@ -105,7 +105,7 @@ app.get('/stats/search/', function(request,response) {
     {
       connection.query('SELECT * FROM Members WHERE LastName = ' + entryRes.Search)
         if(error) {
-          response.json({table_names: "failed"})
+          response.json({table_names: "failed"});
         }
         else {
           response.json(results);
@@ -115,7 +115,7 @@ app.get('/stats/search/', function(request,response) {
     {
       connection.query('SELECT * FROM Members WHERE GradYear = ' + entryRes.Search)
         if(error) {
-          response.json({table_names: "failed"})
+          response.json({table_names: "failed"});
         }
         else {
           response.json(results);
@@ -127,9 +127,8 @@ app.get('/stats/search/', function(request,response) {
     if(entryRes.Filter == "FirstName")
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.FirstName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
-                        
         if(error) {
-          response.json({table_names: "failed"})
+          response.json({table_names: "failed"});
         }
         else {
           response.json(results);
@@ -139,7 +138,7 @@ app.get('/stats/search/', function(request,response) {
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.LastName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
         if(error) {
-          response.json({table_names: "failed"})
+          response.json({table_names: "failed"});
         }
         else {
           response.json(results);
@@ -149,14 +148,13 @@ app.get('/stats/search/', function(request,response) {
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.GradYear = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
         if(error) {
-          response.json({table_names: "failed"})
+          response.json({table_names: "failed"});
         }
         else {
           response.json(results);
         }
     }
   }
-
 });
 
 //runs a specified sql file (**Needs error handling**)
