@@ -71,7 +71,6 @@ CREATE TABLE Members
 FirstName VARCHAR(20),
 LastName VARCHAR(20),
 Gender VARCHAR(15),
-GradSemester VARCHAR(6),
 GradYear VARCHAR(4),
 Email VARCHAR(320),
 AssetID int,
@@ -138,23 +137,39 @@ INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
 ('Total', 'Number of students', 1, 1);
 
 INSERT INTO Assets(AssetTag, Type, Description, IsImaged, LabID) VALUES
-( 20100206 ,'Laptop', 'Apple MacBook Pro', 1, 1);
+( 20100206, 'Laptop', 'Apple MacBook Pro', 1, 1),
+( 20100464, 'Laptop', 'Apple MacBook Pro', 1, 1),
+( 20100217, 'Laptop', 'Apple MacBook Pro', 1, 1),
+( 20108969, 'Laptop', 'Apple MacBook Pro', 1, 1);
 
-INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID, LabID) VALUES
-('Jeremy', 'Nielson', 'Male', 'Spring', '2019', 'saktirshinu@gmail.com', 1, 1);
+INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES
+('Jeremy', 'Nielson', 'Male', 'SP19', 'saktirshinu@gmail.com', 1, 1),
+('Sean', 'Wallace', 'Male', 'SP20', 'walis846@gmail.com', 2, 1),
+('Cole', 'Braswell', 'Male', 'SP20', 'braswellcole@outlook.com', 3, 1),
+('Cody', 'Knight', 'Male', 'SP19', 'pulse14@live.com', 4, 1);
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
-('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1);
+('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
+('Intern', 'Campus Innovator', 'Working second semester at code_orange', '2019-2-14', 2),
+('Intern', 'Campus Innovator', 'First semester at code_orange', '2019-2-14', 3),
+('Intern', 'Campus Innovator', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4);
 
 INSERT INTO Semesters(Semester, Year, MemberID) VALUES
 ('Fall', 2018, 1),
-('Spring', 2019, 1);
+('Spring', 2019, 1),
+('Fall', 2018, 2),
+('Spring', 2019, 2),
+('Spring', 2019, 3),
+('Spring', 2019, 4);
 
 INSERT INTO Teams(TeamName, PO, Mentor, Semester, LabID) VALUES
 ('Team11', 'Mike Brenner', 'Jeremy Nielson', 'SP19', 1);
 
 INSERT INTO TeamMembers(TeamID, MemberID) VALUES
-(1, 1);
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4);
 
 INSERT INTO Projects(Name, Type, Description, TeamID) VALUES
 ('Applicant Tracking & Dashboard', 'Website', 'Keep track of all applicants, interns, and hires from the code_orange project', 1);

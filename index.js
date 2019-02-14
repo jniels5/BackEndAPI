@@ -56,7 +56,7 @@ app.get('/', function(request,response) {
   }
 });
 
-// Used to get database information on team members
+// Used to get All info from each table
 app.get('/select/table/:table', function(request,response) {
   connection.query('SELECT * FROM '  + request.params.table, function (error, results, fields) {
         if(error) {
@@ -68,6 +68,7 @@ app.get('/select/table/:table', function(request,response) {
   });
 });
 
+// Login Page Stuff
 app.get('/login/check/', function(request,response) {
   connection.query('SELECT AcctID FROM Accounts')
     if(error) {
@@ -76,7 +77,87 @@ app.get('/login/check/', function(request,response) {
     else {
       response.json(results);
     }
-}
+});
+
+
+// STATS TABLE QUERIES
+app.get('/stats/search/', function(request,response) {
+  //used in connection.query
+  var entryRes = {
+    Filter: request.body.Filter,
+    Search: request.body.Search,
+    Location: request.body.Location
+  };
+
+  if(entryRes.Location == "All")
+  {
+    if(entryRes.Filter == "FirstName")
+    {
+      connection.query('SELECT * FROM Members WHERE FirstName = ' + entryRes.Search)
+        if(error) {
+          response.json({table_names: "failed"})
+        }
+        else {
+          response.json(results);
+        }
+    }
+    else if(entryRes.Filter == "LastName")
+    {
+      connection.query('SELECT * FROM Members WHERE LastName = ' + entryRes.Search)
+        if(error) {
+          response.json({table_names: "failed"})
+        }
+        else {
+          response.json(results);
+        }
+    }
+    else if(entryRes.Filter == "GradYear")
+    {
+      connection.query('SELECT * FROM Members WHERE GradYear = ' + entryRes.Search)
+        if(error) {
+          response.json({table_names: "failed"})
+        }
+        else {
+          response.json(results);
+        }
+    }
+  }
+  else // IF location is specified
+  {
+    if(entryRes.Filter == "FirstName")
+    {
+      connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.FirstName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
+                        
+        if(error) {
+          response.json({table_names: "failed"})
+        }
+        else {
+          response.json(results);
+        }
+    }
+    else if(entryRes.Filter == "LastName")
+    {
+      connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.LastName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
+        if(error) {
+          response.json({table_names: "failed"})
+        }
+        else {
+          response.json(results);
+        }
+    }
+    else if(entryRes.Filter == "GradYear")
+    {
+      connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.GradYear = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
+        if(error) {
+          response.json({table_names: "failed"})
+        }
+        else {
+          response.json(results);
+        }
+    }
+  }
+
+});
 
 //runs a specified sql file (**Needs error handling**)
 app.get('/runfile/:file', function(request,response) {
