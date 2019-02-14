@@ -150,9 +150,9 @@ INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
-('Intern', 'Campus Innovator', 'Working second semester at code_orange', '2019-2-14', 2),
-('Intern', 'Campus Innovator', 'First semester at code_orange', '2019-2-14', 3),
-('Intern', 'Campus Innovator', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4);
+('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 2),
+('Intern', 'Active', 'First semester at code_orange', '2019-2-14', 3),
+('Intern', 'Active', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4);
 
 INSERT INTO Semesters(Semester, Year, MemberID) VALUES
 ('Fall', 2018, 1),
