@@ -70,13 +70,13 @@ app.get('/select/table/:table', function(request,response) {
 
 // Login Page Stuff
 app.get('/login/check/', function(request,response) {
-  connection.query('SELECT AcctID FROM Accounts', function (error, results, fields))
+  connection.query('SELECT AcctID FROM Accounts', function (error, results, fields)
     if(error) {
       response.json({login_check: "failed"});
     }
     else {
       response.json(results);
-    }
+    });
 });
 
 // Preferences Stuff
@@ -87,19 +87,19 @@ app.get('/navbar/color/get', function(request,response) {
     }
     else {
       response.json(results);
-    }
+    });
 });
 
 // updating Navigation Bar Color
 app.post('/navbar/color/post', function(request,response) {
-  connection.query('UPDATE Preferences SET NavColor = ' + request.params.NavColor + 'WHERE AcctID = 1', function (error, results, fields) )
+  connection.query('UPDATE Preferences SET NavColor = ' + request.params.NavColor + 'WHERE AcctID = 1', function (error, results, fields)
 
   if(error) {
     response.json({navColor_post: "failed"});
   }
   else {
     response.json(results);
-  }
+  });
 });
 
 
