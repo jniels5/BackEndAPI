@@ -45,7 +45,7 @@ FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID));
 
 CREATE TABLE Preferences
 (PrefID int auto_increment PRIMARY KEY,
-NavColor CHAR(6),
+NavColor VARCHAR(6),
 AcctID int,
 FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID));
 
