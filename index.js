@@ -79,6 +79,29 @@ app.get('/login/check/', function(request,response) {
     }
 });
 
+// Preferences Stuff
+app.get('/navbar/color/get', function(request,response) {
+  connection.query('SELECT NavColor FROM Preferences')
+    if(error) {
+      response.json({navColor_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+});
+
+// updating Navigation Bar Color
+app.post('/navbar/color/post', function(request,response) {
+  connection.query('UPDATE Preferences SET NavColor = ' + request.params.NavColor + 'WHERE AcctID = 1' )
+
+  if(error) {
+    response.json({navColor_post: "failed"});
+  }
+  else {
+    response.json(results);
+  }
+});
+
 
 // STATS TABLE QUERIES
 app.get('/stats/search/', function(request,response) {
