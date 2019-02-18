@@ -94,7 +94,7 @@ app.get('/navbar/color/get', function(request,response) {
 
 // updating Navigation Bar Color
 app.post('/navbar/color/post', function(request,response) {
-  connection.query('UPDATE Preferences SET NavColor = "' + request.params.NavColor + '" WHERE AcctID = 1', function (error, results, fields) {
+  connection.query('UPDATE Preferences SET NavColor = "' + request.body.NavColor + '" WHERE AcctID = 1', function (error, results, fields) {
     if(error) {
       response.json({navColor_post: "failed"});
     }
