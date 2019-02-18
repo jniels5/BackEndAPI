@@ -82,7 +82,7 @@ app.get('/login/check/', function(request,response) {
 
 // Preferences Stuff
 app.get('/navbar/color/get', function(request,response) {
-  connection.query('SELECT NavColor FROM Preferences', function (error, results, fields)) {
+  connection.query('SELECT NavColor FROM Preferences', function (error, results, fields) {
     if(error) {
       response.json({navColor_get: "failed"});
     }
