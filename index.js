@@ -81,6 +81,7 @@ app.get('/login/check/', function(request,response) {
 });
 
 // Preferences Stuff
+// Navbar Color
 app.get('/navbar/color/get', function(request,response) {
   connection.query('SELECT NavColor FROM Preferences', function (error, results, fields) {
     if(error) {
@@ -104,6 +105,34 @@ app.post('/navbar/color/post', function(request,response) {
   });
 });
 
+<<<<<<< HEAD
+=======
+// Metrics
+app.get('/metrics/options/get', function(request,response) {
+  connection.query('SELECT * FROM Metrics', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+// updating Metrics
+app.post('/metrics/options/post', function(request,response) {
+  connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_post: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+
+>>>>>>> Cole
 // STATS TABLE QUERIES
 app.get('/stats/search/', function(request,response) {
   //used in connection.query
