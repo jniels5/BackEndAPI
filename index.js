@@ -131,6 +131,7 @@ app.get('/metrics/total/interns', function(request,response) {
 
 
 // updating Metrics
+// needs to be looked at, how to change multiple metrics with just one statement if possible
 app.post('/metrics/options/post', function(request,response) {
   connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
     if(error) {
@@ -142,6 +143,35 @@ app.post('/metrics/options/post', function(request,response) {
   });
 });
 
+<<<<<<< HEAD
+// Notifications
+app.get('/notifications/options/get', function(request,response) {
+  connection.query('SELECT * FROM Notifications', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+// updating Notification Preferences
+// same thing as "Updating Metrics"; needs to be looked at some more
+app.post('/notifications/options/post', function(request,response) {
+  connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_post: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+>>>>>>> Cole
+=======
+>>>>>>> ed3fc42b3c3730ed073769ae01ed4bd9943eb1d0
 // STATS TABLE QUERIES
 app.get('/stats/search/', function(request,response) {
   //used in connection.query
