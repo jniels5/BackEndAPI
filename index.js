@@ -105,7 +105,10 @@ app.post('/navbar/color/post', function(request,response) {
   });
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 // Metrics
 app.get('/metrics/options/get', function(request,response) {
   connection.query('SELECT * FROM Metrics', function (error, results, fields) {
@@ -117,6 +120,19 @@ app.get('/metrics/options/get', function(request,response) {
     }
   });
 });
+
+// Count em up
+app.get('/metrics/total/interns', function(request,response) {
+  connection.query('SELECT COUNT(*) "Count" FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Role.Status != "Not Active"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
 
 // updating Metrics
 app.post('/metrics/options/post', function(request,response) {
