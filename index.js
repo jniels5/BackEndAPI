@@ -58,7 +58,7 @@ app.get('/', function(request,response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function(request,response) {
-  connection.query('SELECT * FROM '  + request.params.table, function (error, results, fields) {
+  connection.query('SELECT * FROM ' + request.params.table, function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
