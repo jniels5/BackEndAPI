@@ -105,8 +105,6 @@ app.post('/navbar/color/post', function(request,response) {
   });
 });
 
-<<<<<<< HEAD
-=======
 // Metrics
 app.get('/metrics/options/get', function(request,response) {
   connection.query('SELECT * FROM Metrics', function (error, results, fields) {
@@ -118,6 +116,19 @@ app.get('/metrics/options/get', function(request,response) {
     }
   });
 });
+
+// Count em up
+app.get('/metrics/total/interns', function(request,response) {
+  connection.query('SELECT COUNT(*) "Count" FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Role.Status != "Not Active"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
 
 // updating Metrics
 // needs to be looked at, how to change multiple metrics with just one statement if possible
@@ -132,6 +143,7 @@ app.post('/metrics/options/post', function(request,response) {
   });
 });
 
+<<<<<<< HEAD
 // Notifications
 app.get('/notifications/options/get', function(request,response) {
   connection.query('SELECT * FROM Notifications', function (error, results, fields) {
@@ -158,6 +170,8 @@ app.post('/notifications/options/post', function(request,response) {
 });
 
 >>>>>>> Cole
+=======
+>>>>>>> ed3fc42b3c3730ed073769ae01ed4bd9943eb1d0
 // STATS TABLE QUERIES
 app.get('/stats/search/', function(request,response) {
   //used in connection.query
