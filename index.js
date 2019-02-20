@@ -119,7 +119,7 @@ app.get('/metrics/options/get', function(request,response) {
 
 // Count em up
 app.get('/metrics/total/interns', function(request,response) {
-  connection.query('SELECT COUNT(*) FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Role.Status != "Not Active"', function (error, results, fields) {
+  connection.query('SELECT COUNT(*) "Count" FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Role.Status != "Not Active"', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
