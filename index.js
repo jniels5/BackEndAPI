@@ -119,7 +119,7 @@ app.get('/metrics/options/get', function(request,response) {
 
 // updating Metrics
 app.post('/metrics/options/post', function(request,response) {
-  connection.query('UPDATE Preferences SET NavColor = "' + request.params.NavColor + '" WHERE AcctID = 1', function (error, results, fields) {
+  connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
     if(error) {
       response.json({Metrics_post: "failed"});
     }
