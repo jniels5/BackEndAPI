@@ -58,7 +58,7 @@ app.get('/', function(request,response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function(request,response) {
-  connection.query('SELECT * FROM ' + request.params.table, function (error, results, fields) {
+  connection.query('SELECT * FROM '  + request.params.table, function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
@@ -118,6 +118,7 @@ app.get('/metrics/options/get', function(request,response) {
 });
 
 // updating Metrics
+// needs to be looked at, how to change multiple metrics with just one statement if possible
 app.post('/metrics/options/post', function(request,response) {
   connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
     if(error) {
@@ -128,7 +129,6 @@ app.post('/metrics/options/post', function(request,response) {
     }
   });
 });
-
 
 // STATS TABLE QUERIES
 app.get('/stats/search/', function(request,response) {
