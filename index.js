@@ -105,8 +105,7 @@ app.post('/navbar/color/post', function(request,response) {
   });
 });
 
-<<<<<<< HEAD
-=======
+
 // Metrics
 app.get('/metrics/options/get', function(request,response) {
   connection.query('SELECT * FROM Metrics', function (error, results, fields) {
@@ -131,8 +130,6 @@ app.post('/metrics/options/post', function(request,response) {
   });
 });
 
-
->>>>>>> Cole
 // STATS TABLE QUERIES
 app.get('/stats/search/', function(request,response) {
   //used in connection.query
