@@ -143,7 +143,6 @@ app.post('/metrics/options/post', function(request,response) {
   });
 });
 
-<<<<<<< HEAD
 // Notifications
 app.get('/notifications/options/get', function(request,response) {
   connection.query('SELECT * FROM Notifications', function (error, results, fields) {
@@ -169,9 +168,6 @@ app.post('/notifications/options/post', function(request,response) {
   });
 });
 
->>>>>>> Cole
-=======
->>>>>>> ed3fc42b3c3730ed073769ae01ed4bd9943eb1d0
 // STATS TABLE QUERIES
 app.get('/stats/search/', function(request,response) {
   //used in connection.query
