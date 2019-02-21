@@ -173,9 +173,9 @@ app.post('/notifications/options/post', function(request,response) {
 app.get('/stats/search/', function(request,response) {
   //used in connection.query
   var entryRes = {
-    Filter: request.body.Filter,
-    Search: request.body.Search,
-    Location: request.body.Location
+    Filter: request.params.Filter,
+    Search: request.params.Search,
+    Location: request.params.Location
   };
 
   if(entryRes.Location == "All")
