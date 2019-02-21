@@ -1,4 +1,5 @@
 var runfile = require('./runfile.js');
+var bodyParser = require('body-parser')
 var express = require('express')
 var mysql = require('mysql')
 var cors = require('cors')
@@ -17,7 +18,7 @@ var corsOptions = {
 //app.use(cors()); uncomment to enable cors for everything
 app.use(cors(corsOptions)); //use cors with options enables
 app.options('*', cors(corsOptions)); //enables preflight options
-//app.use(bodyParser.json()); //Parses POST Data
+app.use(bodyParser.json()); //Parses POST Data
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -95,7 +96,7 @@ app.get('/navbar/color/get', function(request,response) {
 
 // updating Navigation Bar Color
 app.post('/navbar/color/post', function(request,response) {
-  connection.query('UPDATE Preferences SET NavColor = "' + request.params.NavColor + '" WHERE AcctID = 1', function (error, results, fields) {
+  connection.query('UPDATE Preferences SET NavColor = "' + request.body.Color + '" WHERE AcctID = 1', function (error, results, fields) {
     if(error) {
       response.json({navColor_post: "failed"});
     }
@@ -142,7 +143,33 @@ app.get('/metrics/total/gender', function(request,response) {
 });
 
 // updating Metrics
+// needs to be looked at, how to change multiple metrics with just one statement if possible
 app.post('/metrics/options/post', function(request,response) {
+  connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_post: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+// Notifications
+app.get('/notifications/options/get', function(request,response) {
+  connection.query('SELECT * FROM Notifications', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+// updating Notification Preferences
+// same thing as "Updating Metrics"; needs to be looked at some more
+app.post('/notifications/options/post', function(request,response) {
   connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
     if(error) {
       response.json({Metrics_post: "failed"});
@@ -157,14 +184,14 @@ app.post('/metrics/options/post', function(request,response) {
 app.get('/stats/search/', function(request,response) {
   //used in connection.query
   var entryRes = {
-    Filter: request.body.Filter,
-    Search: request.body.Search,
-    Location: request.body.Location
+    Filter: request.params.Filter,
+    Search: request.params.Search,
+    Location: request.params.Location
   };
 
   if(entryRes.Location == "All")
   {
-    if(entryRes.Filter == "FirstName")
+    if(entryRes.Filter == "First name is")
     {
       connection.query('SELECT * FROM Members WHERE FirstName = ' + entryRes.Search)
         if(error) {
@@ -174,7 +201,7 @@ app.get('/stats/search/', function(request,response) {
           response.json(results);
         }
     }
-    else if(entryRes.Filter == "LastName")
+    else if(entryRes.Filter == "Last name is")
     {
       connection.query('SELECT * FROM Members WHERE LastName = ' + entryRes.Search)
         if(error) {
@@ -184,7 +211,7 @@ app.get('/stats/search/', function(request,response) {
           response.json(results);
         }
     }
-    else if(entryRes.Filter == "GradYear")
+    else if(entryRes.Filter == "Gradudation year is")
     {
       connection.query('SELECT * FROM Members WHERE GradYear = ' + entryRes.Search)
         if(error) {
@@ -197,7 +224,7 @@ app.get('/stats/search/', function(request,response) {
   }
   else // IF location is specified
   {
-    if(entryRes.Filter == "FirstName")
+    if(entryRes.Filter == "First name is")
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.FirstName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
         if(error) {
@@ -207,7 +234,7 @@ app.get('/stats/search/', function(request,response) {
           response.json(results);
         }
     }
-    else if(entryRes.Filter == "LastName")
+    else if(entryRes.Filter == "Last name is")
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.LastName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
         if(error) {
@@ -217,7 +244,7 @@ app.get('/stats/search/', function(request,response) {
           response.json(results);
         }
     }
-    else if(entryRes.Filter == "GradYear")
+    else if(entryRes.Filter == "Graduation year is")
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.GradYear = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
         if(error) {
