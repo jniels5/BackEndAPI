@@ -132,7 +132,7 @@ app.get('/metrics/total/interns', function(request,response) {
 
 //"per gender" counters
 app.get('/metrics/total/male', function(request,response) {
-  connection.query('SELECT COUNT(*) "Gender" FROM Members WHERE Members.Gender = "Male"', function (error, results, fields) {
+  connection.query('SELECT COUNT(*) "Males" FROM Members WHERE Members.Gender = "Male"', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
@@ -143,7 +143,7 @@ app.get('/metrics/total/male', function(request,response) {
 });
 
 app.get('/metrics/total/female', function(request,response) {
-  connection.query('SELECT COUNT(*) "Gender" FROM Members WHERE Members.Gender = "Female"', function (error, results, fields) {
+  connection.query('SELECT COUNT(*) "Females" FROM Members WHERE Members.Gender = "Female"', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
@@ -154,7 +154,7 @@ app.get('/metrics/total/female', function(request,response) {
 });
 
 app.get('/metrics/total/other', function(request,response) {
-  connection.query('SELECT COUNT(*) "Gender" FROM Members WHERE Members.Gender = "Nonbinary"', function (error, results, fields) {
+  connection.query('SELECT COUNT(*) "Nonbinary" FROM Members WHERE Members.Gender = "Nonbinary"', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
