@@ -129,6 +129,17 @@ app.get('/metrics/total/interns', function(request,response) {
   });
 });
 
+//"per gender" counter
+app.get('/metrics/total/gender', function(request,response) {
+  connection.query('SELECT COUNT(*) "Gender" FROM Members WHERE Members.Gender = "Male"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
 
 // updating Metrics
 app.post('/metrics/options/post', function(request,response) {
