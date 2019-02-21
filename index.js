@@ -130,9 +130,31 @@ app.get('/metrics/total/interns', function(request,response) {
   });
 });
 
-//"per gender" counter
-app.get('/metrics/total/gender', function(request,response) {
+//"per gender" counters
+app.get('/metrics/total/male', function(request,response) {
   connection.query('SELECT COUNT(*) "Gender" FROM Members WHERE Members.Gender = "Male"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+app.get('/metrics/total/female', function(request,response) {
+  connection.query('SELECT COUNT(*) "Gender" FROM Members WHERE Members.Gender = "Female"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+app.get('/metrics/total/other', function(request,response) {
+  connection.query('SELECT COUNT(*) "Gender" FROM Members WHERE Members.Gender = "Nonbinary"', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
