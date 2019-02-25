@@ -45,7 +45,7 @@ FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID));
 
 CREATE TABLE Preferences
 (PrefID int auto_increment PRIMARY KEY,
-NavColor VARCHAR(6),
+NavColor VARCHAR(7),
 AcctID int,
 FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID));
 
@@ -131,7 +131,7 @@ INSERT INTO Notifications(Type, Description, Name, Date, AcctID) VALUES
 ('Alert', 'This user sucks', 'Not Me', '2019-2-12', 1);
 
 INSERT INTO Preferences(NavColor, AcctID) VALUES
-('202020', 1);
+('#202020', 1);
 
 INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
 ('Total', 'Number of students', 1, 1);

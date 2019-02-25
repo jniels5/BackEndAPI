@@ -211,7 +211,7 @@ app.get('/stats/search/:Filter/:Search/:Location', function(request,response) {
     Location: request.params.Location
   };
 
-  if(entryRes.Location == "All")
+  if(entryRes.Location == "All Locations")
   {
     if(entryRes.Filter == "First name is")
     {
