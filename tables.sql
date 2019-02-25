@@ -39,7 +39,7 @@ CREATE TABLE Notifications
 Type VARCHAR(25),
 Description VARCHAR(255),
 Name VARCHAR(40),
-Date DATE,
+Date1 DATE,
 AcctID int,
 FOREIGN KEY (AcctID) REFERENCES Accounts(AcctID));
 
@@ -83,7 +83,7 @@ CREATE TABLE Role
 Type VARCHAR(25),
 Status VARCHAR(25),
 Description VARCHAR(255),
-Date DATE,
+Date1 DATE,
 MemberID int NOT NULL,
 FOREIGN KEY (MemberID) REFERENCES Members(MemberID));
 
