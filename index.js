@@ -130,6 +130,39 @@ app.get('/metrics/total/interns', function(request,response) {
   });
 });
 
+//"per gender" counters
+app.get('/metrics/total/male', function(request,response) {
+  connection.query('SELECT COUNT(*) "Males" FROM Members WHERE Members.Gender = "Male"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+app.get('/metrics/total/female', function(request,response) {
+  connection.query('SELECT COUNT(*) "Females" FROM Members WHERE Members.Gender = "Female"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+app.get('/metrics/total/other', function(request,response) {
+  connection.query('SELECT COUNT(*) "Nonbinary" FROM Members WHERE Members.Gender = "Nonbinary"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
 
 // updating Metrics
 // needs to be looked at, how to change multiple metrics with just one statement if possible
