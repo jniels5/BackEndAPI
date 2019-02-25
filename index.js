@@ -203,7 +203,7 @@ app.post('/notifications/options/post', function(request,response) {
 });
 
 // STATS TABLE QUERIES
-app.get('/stats/search/:Filter/:Search/:Location', function(request,response) {
+app.get('/stats/search/:Filter:Search:Location', function(request,response) {
   //used in connection.query
   var entryRes = {
     Filter: request.params.Filter,
