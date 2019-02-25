@@ -216,7 +216,7 @@ app.get('/notifications/options/gets', function(request,response) {
 // STATS TABLE QUERIES
 app.get('/stats/search/first', function(request,response) {
 
-  connection.query('SELECT * FROM Members WHERE FirstName = ' + entryRes.Search), function(request,response) {
+  connection.query('SELECT * FROM Members WHERE FirstName = ' + request.params.Search), function(request,response) {
     if(error) {
       response.json({table_names: "failed"});
     }
@@ -228,7 +228,7 @@ app.get('/stats/search/first', function(request,response) {
 
 app.get('/stats/search/last', function(request,response) {
 
-  connection.query('SELECT * FROM Members WHERE LastName = ' + entryRes.Search), function(request,response) {
+  connection.query('SELECT * FROM Members WHERE LastName = ' + request.params.Search), function(request,response) {
     if(error) {
       response.json({table_names: "failed"});
     }
@@ -240,7 +240,7 @@ app.get('/stats/search/last', function(request,response) {
 
 app.get('/stats/search/grad', function(request,response) {
 
-  connection.query('SELECT * FROM Members WHERE Graduation = ' + entryRes.Search), function(request,response) {
+  connection.query('SELECT * FROM Members WHERE Graduation = ' + request.params.Search), function(request,response) {
     if(error) {
       response.json({table_names: "failed"});
     }
