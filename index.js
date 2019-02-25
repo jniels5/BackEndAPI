@@ -214,86 +214,40 @@ app.get('/notifications/options/gets', function(request,response) {
 });
 
 // STATS TABLE QUERIES
-app.get('/stats/search/:Filter:Search:Location', function(request,response) {
-  //used in connection.query
-  var entryRes = {
-    Filter: request.params.Filter,
-    Search: request.params.Search,
-    Location: request.params.Location
-  };
+app.get('/stats/search/first', function(request,response) {
 
-  if(entryRes.Location == "All")
-  {
-    if(entryRes.Filter == "FirstName")
-    {
-      connection.query('SELECT * FROM Members WHERE FirstName = ' + entryRes.Search)
-        if(error) {
-          response.json({table_names: "failed"});
-        }
-        else {
-          response.json(results);
-        }
-    }
-    else if(entryRes.Filter == "LastName")
-    {
-      connection.query('SELECT * FROM Members WHERE LastName = ' + entryRes.Search)
-        if(error) {
-          response.json({table_names: "failed"});
-        }
-        else {
-          response.json(results);
-        }
-    }
-    else if(entryRes.Filter == "Gradudation")
-    {
-      connection.query('SELECT * FROM Members WHERE GradYear = ' + entryRes.Search)
-        if(error) {
-          response.json({table_names: "failed"});
-        }
-        else {
-          response.json(results);
-        }
+  connection.query('SELECT * FROM Members WHERE FirstName = ' + entryRes.Search), function(request,response) {
+    if(error) {
+      response.json({table_names: "failed"});
     }
     else {
-      response.json({Justsoyouknow: "IT FAILED"})
+      response.json(results);
     }
-  }
-  else // IF location is specified
-  {
-    if(entryRes.Filter == "FirstName")
-    {
-      connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.FirstName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
-        if(error) {
-          response.json({table_names: "failed"});
-        }
-        else {
-          response.json(results);
-        }
-    }
-    else if(entryRes.Filter == "LastName")
-    {
-      connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.LastName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
-        if(error) {
-          response.json({table_names: "failed"});
-        }
-        else {
-          response.json(results);
-        }
-    }
-    else if(entryRes.Filter == "Graduation")
-    {
-      connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.GradYear = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
-        if(error) {
-          response.json({table_names: "failed"});
-        }
-        else {
-          response.json(results);
-        }
+  });
+});
+
+app.get('/stats/search/last', function(request,response) {
+
+  connection.query('SELECT * FROM Members WHERE LastName = ' + entryRes.Search), function(request,response) {
+    if(error) {
+      response.json({table_names: "failed"});
     }
     else {
-      response.json({Justsoyouknow: "IT FAILED"})
+      response.json(results);
     }
-  }
+  });
+});
+
+app.get('/stats/search/grad', function(request,response) {
+
+  connection.query('SELECT * FROM Members WHERE Graduation = ' + entryRes.Search), function(request,response) {
+    if(error) {
+      response.json({table_names: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
 });
 
 //runs a specified sql file (**Needs error handling**)
