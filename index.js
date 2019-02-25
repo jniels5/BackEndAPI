@@ -283,7 +283,6 @@ app.get('/stats/search/', function(request,response) {
       response.json({Justsoyouknow: "IT FAILED"})
     }
   }
-  }
 });
 
 //runs a specified sql file (**Needs error handling**)
