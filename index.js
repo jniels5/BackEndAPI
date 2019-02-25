@@ -223,7 +223,7 @@ app.get('/stats/search/first', function(request,response) {
     else {
       response.json(results);
     }
-  });
+  };
 });
 
 app.get('/stats/search/last', function(request,response) {
@@ -235,7 +235,7 @@ app.get('/stats/search/last', function(request,response) {
     else {
       response.json(results);
     }
-  });
+  };
 });
 
 app.get('/stats/search/grad', function(request,response) {
@@ -247,7 +247,7 @@ app.get('/stats/search/grad', function(request,response) {
     else {
       response.json(results);
     }
-  });
+  };
 });
 
 //runs a specified sql file (**Needs error handling**)
