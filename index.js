@@ -210,6 +210,9 @@ app.get('/stats/search/', function(request,response) {
           response.json(results);
         }
     }
+    else {
+      response.json({Justsoyouknow: "IT FAILED"})
+    }
   }
   else // IF location is specified
   {
@@ -243,6 +246,10 @@ app.get('/stats/search/', function(request,response) {
           response.json(results);
         }
     }
+    else {
+      response.json({Justsoyouknow: "IT FAILED"})
+    }
+  }
   }
 });
 
