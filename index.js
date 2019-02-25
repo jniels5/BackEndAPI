@@ -211,9 +211,9 @@ app.get('/stats/search/:Filter/:Search/:Location', function(request,response) {
     Location: request.params.Location
   };
 
-  if(entryRes.Location == "All Locations")
+  if(entryRes.Location == "All")
   {
-    if(entryRes.Filter == "First name is")
+    if(entryRes.Filter == "FirstName")
     {
       connection.query('SELECT * FROM Members WHERE FirstName = ' + entryRes.Search)
         if(error) {
@@ -223,7 +223,7 @@ app.get('/stats/search/:Filter/:Search/:Location', function(request,response) {
           response.json(results);
         }
     }
-    else if(entryRes.Filter == "Last name is")
+    else if(entryRes.Filter == "LastName")
     {
       connection.query('SELECT * FROM Members WHERE LastName = ' + entryRes.Search)
         if(error) {
@@ -233,7 +233,7 @@ app.get('/stats/search/:Filter/:Search/:Location', function(request,response) {
           response.json(results);
         }
     }
-    else if(entryRes.Filter == "Gradudation year is")
+    else if(entryRes.Filter == "Gradudation")
     {
       connection.query('SELECT * FROM Members WHERE GradYear = ' + entryRes.Search)
         if(error) {
@@ -249,7 +249,7 @@ app.get('/stats/search/:Filter/:Search/:Location', function(request,response) {
   }
   else // IF location is specified
   {
-    if(entryRes.Filter == "First name is")
+    if(entryRes.Filter == "FirstName")
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.FirstName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
         if(error) {
@@ -259,7 +259,7 @@ app.get('/stats/search/:Filter/:Search/:Location', function(request,response) {
           response.json(results);
         }
     }
-    else if(entryRes.Filter == "Last name is")
+    else if(entryRes.Filter == "LastName")
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.LastName = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
         if(error) {
@@ -269,7 +269,7 @@ app.get('/stats/search/:Filter/:Search/:Location', function(request,response) {
           response.json(results);
         }
     }
-    else if(entryRes.Filter == "Graduation year is")
+    else if(entryRes.Filter == "Graduation")
     {
       connection.query('SELECT m.FirstName, m.LastName, m.Gender, m.GradYear, m.Email FROM Members m, Labs l WHERE m.GradYear = ' + entryRes.Search + ' AND m.LabID = l.LabID and l.School = ' + entryRes.Location)
         if(error) {
