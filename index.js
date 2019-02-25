@@ -105,10 +105,6 @@ app.post('/navbar/color/post', function(request,response) {
   });
 });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 // Metrics
 app.get('/metrics/options/get', function(request,response) {
   connection.query('SELECT * FROM Metrics', function (error, results, fields) {
@@ -165,6 +161,17 @@ app.post('/notifications/options/post', function(request,response) {
   connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
     if(error) {
       response.json({Metrics_post: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+app.get('/notifications/options/gets', function(request,response) {
+  connection.query('SELECT Name, Description, CONVERT(VARCHAR(12), date, 107) AS [Mon, DD, YYYY] FROM Notifications', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
     }
     else {
       response.json(results);
