@@ -202,6 +202,17 @@ app.post('/notifications/options/post', function(request,response) {
   });
 });
 
+app.get('/notifications/options/gets', function(request,response) {
+  connection.query('SELECT Name, Description, CONVERT(VARCHAR(12), date, 107) AS [Mon, DD, YYYY] FROM Notifications', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
 // STATS TABLE QUERIES
 app.get('/stats/search/:Filter:Search:Location', function(request,response) {
   //used in connection.query
