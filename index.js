@@ -203,7 +203,7 @@ app.post('/notifications/options/post', function(request,response) {
 });
 
 app.get('/notifications/options/gets', function(request,response) {
-  connection.query('SELECT Name, Description, FORMAT(Date, MM/dd/yyyy) FROM Notifications', function (error, results, fields) {
+  connection.query('SELECT Name, Description, FORMAT(Date, 'MM/dd/yyyy', 'en-US') FROM Notifications', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
