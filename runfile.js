@@ -21,6 +21,16 @@ function exec(connection, sql, response, callback) {
 	return this;
 }
 
+function execNodeMailer(connection, filename, response, callback) {
+	fs.readFile(filename, 'utf8', function(error, data) {
+		if (error) {
+			throw error;
+		};
+		// execute nodemailer
+
+	})
+}
+
 //takes a mysql connection and sql file
 function execFile(connection, filename, response, callback) {
 	fs.readFile(filename, 'utf8', function (error, data) {
@@ -36,3 +46,4 @@ function execFile(connection, filename, response, callback) {
 //export functions
 exports.exec = exec;
 exports.execFile = execFile;
+exports.execNodeMailer = execNodeMailer;
