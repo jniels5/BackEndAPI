@@ -214,38 +214,38 @@ app.get('/notifications/options/gets', function(request,response) {
 });
 
 // STATS TABLE QUERIES
-app.get('/stats/search/first', function(request,response) {
+app.get('/stats/search/first', function(req,res) {
 
   connection.query('SELECT * FROM Members WHERE FirstName = ' + req.query.Search), function(request,response) {
     if(error) {
-      response.json({table_names: "failed"});
+      res.json({table_names: "failed"});
     }
     else {
-      response.json(results);
+      res.json(results);
     }
   };
 });
 
-app.get('/stats/search/last', function(request,response) {
+app.get('/stats/search/last', function(req,res) {
 
   connection.query('SELECT * FROM Members WHERE LastName = ' + req.query.Search), function(request,response) {
     if(error) {
-      response.json({table_names: "failed"});
+      res.json({table_names: "failed"});
     }
     else {
-      response.json(results);
+      res.json(results);
     }
   };
 });
 
-app.get('/stats/search/grad', function(request,response) {
+app.get('/stats/search/grad', function(req,res) {
 
   connection.query('SELECT * FROM Members WHERE Graduation = ' + req.query.Search), function(request,response) {
     if(error) {
-      response.json({table_names: "failed"});
+      res.json({table_names: "failed"});
     }
     else {
-      response.json(results);
+      res.json(results);
     }
   };
 });
