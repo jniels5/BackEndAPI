@@ -4,6 +4,7 @@ var express = require('express')
 var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
+var nodemailer = require('nodemailer')
 
 var whitelist = [
   'localhost:3000/',
@@ -47,6 +48,30 @@ connection.connect(function(err) {
   console.log('Connected to database.');
 });
 
+//nodemailer stuff
+// create reusable transporter object using the default SMTP transport
+var transporter = nodemailer.createTransport({
+  host: "smtp.ethereal.email",
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: 'trycia96@ethereal.email', // generated ethereal user
+    pass: 'H2qNsXxpkeUew42BFS' // generated ethereal password
+  }
+});
+
+// setup email data with unicode symbols
+var mailOptions = {
+  from: '"Trycia Nikolaus" <trycia96@ethereal.email>', // sender address
+  to: "colebraswell@discover.com, @example.com", // list of receivers
+  subject: "Hello this is a test", // Subject line
+  text: "Hello world this is the text test", // plain text body
+  html: "<b>Hello world this is the text test</b>" // html body
+};
+
+app.get('/email', function(request,response) {
+
+});
 //pretty much useless, used it to test db connection
 app.get('/', function(request,response) {
   if(!conn_succ) {

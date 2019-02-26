@@ -6,10 +6,10 @@ async function main(){
 
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
-  let account = await nodemailer.createTestAccount();
+  var account = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
+  var transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
     secure: false, // true for 465, false for other ports
@@ -20,7 +20,7 @@ async function main(){
   });
 
   // setup email data with unicode symbols
-  let mailOptions = {
+  var mailOptions = {
     from: '"Trycia Nikolaus" <trycia96@ethereal.email>', // sender address
     to: "colebraswell@discover.com, @example.com", // list of receivers
     subject: "Hello this is a test", // Subject line
@@ -29,7 +29,7 @@ async function main(){
   };
 
   // send mail with defined transport object
-  let info = await transporter.sendMail(mailOptions)
+  var info = await transporter.sendMail(mailOptions)
 
   console.log("Message sent: %s", info.messageId);
   // Preview only available when sending through an Ethereal account
