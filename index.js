@@ -240,39 +240,36 @@ app.get('/notifications/options/gets', function(request,response) {
 
 // STATS TABLE QUERIES
 app.get('/stats/search/first', function(request,response) {
-
-  connection.query('SELECT * FROM Members WHERE FirstName = ' + request.params.Search), function(request,response) {
-    if(error) {
-      response.json({table_names: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  };
+  connection.query('SELECT * FROM Members WHERE FirstName = '  + request.query.Search, function (error, results, fields) {
+        if(error) {
+            response.json({select_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
 });
 
 app.get('/stats/search/last', function(request,response) {
-
-  connection.query('SELECT * FROM Members WHERE LastName = ' + request.params.Search), function(request,response) {
-    if(error) {
-      response.json({table_names: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  };
+  connection.query('SELECT * FROM Members WHERE FirstName = '  + request.query.Search, function (error, results, fields) {
+        if(error) {
+            response.json({select_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
 });
 
 app.get('/stats/search/grad', function(request,response) {
-
-  connection.query('SELECT * FROM Members WHERE Graduation = ' + request.params.Search), function(request,response) {
-    if(error) {
-      response.json({table_names: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  };
+  connection.query('SELECT * FROM Members WHERE FirstName = '  + request.query.Search, function (error, results, fields) {
+        if(error) {
+            response.json({select_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
 });
 
 //runs a specified sql file (**Needs error handling**)
