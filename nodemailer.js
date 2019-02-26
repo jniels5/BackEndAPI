@@ -14,18 +14,18 @@ async function main(){
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: account.user, // generated ethereal user
-      pass: account.pass // generated ethereal password
+      user: 'trycia96@ethereal.email', // generated ethereal user
+      pass: 'H2qNsXxpkeUew42BFS' // generated ethereal password
     }
   });
 
   // setup email data with unicode symbols
   let mailOptions = {
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to: "bar@example.com, baz@example.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>" // html body
+    from: '"Trycia Nikolaus" <trycia96@ethereal.email>', // sender address
+    to: "colebraswell@discover.com, @example.com", // list of receivers
+    subject: "Hello this is a test", // Subject line
+    text: "Hello world this is the text test", // plain text body
+    html: "<b>Hello world this is the text test</b>" // html body
   };
 
   // send mail with defined transport object
