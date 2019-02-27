@@ -63,12 +63,13 @@ var transporter = nodemailer.createTransport({
 // setup email data with unicode symbols
 var mailOptions = {
   from: '"Trycia Nikolaus" <trycia96@ethereal.email>', // sender address
-  to: "colebraswell@discover.com, @example.com", // list of receivers
+  to: "colebraswell@discover.com, trycia96@ethereal.email", // list of receivers
   subject: "Hello this is a test", // Subject line
   text: "Hello world this is the text test", // plain text body
-  html: "<b>Hello world this is the text test</b>" // html body
+  html: "<b>Hello world this is the text test</b>" // html body, I beleive this is optional. Can choose between either text and html, or have both!
 };
 
+// hopefully sends the eMail?
 app.get('/email', function(request,response) {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
@@ -76,6 +77,7 @@ app.get('/email', function(request,response) {
     }
     console.log('Message %s sent: %s', info.messageId, info.response);
 });
+
 //pretty much useless, used it to test db connection
 app.get('/', function(request,response) {
   if(!conn_succ) {
