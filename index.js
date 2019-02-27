@@ -76,6 +76,7 @@ app.get('/email', function(request,response) {
         return console.log(error);
     }
     console.log('Message %s sent: %s', info.messageId, info.response);
+  })
 });
 
 //pretty much useless, used it to test db connection
@@ -293,7 +294,6 @@ app.get('/runfile/:file', function(request,response) {
   response.json({runfile_status: "Success"});
 });
 
-app.listen(app.get('port'), function()
-  {
+app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'))
-  })
+  });
