@@ -198,6 +198,17 @@ app.get('/metrics/total/other', function(request,response) {
   });
 });
 
+app.get('/metrics/total/OH', function(request,response) {
+  connection.query('SELECT COUNT(*) "OpenHouse" FROM Role WHERE Role.Type = "Open House"', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
 // updating Metrics
 // needs to be looked at, how to change multiple metrics with just one statement if possible
 app.post('/metrics/options/post', function(request,response) {
