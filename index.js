@@ -76,7 +76,7 @@ app.get('/email', function(request,response) {
         response.json({email: "failed"});
     }
     else {
-      respose.json({email: "sent"})
+      respose.json({email: "sent"});
     }
   })
 });
