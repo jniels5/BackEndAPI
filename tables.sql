@@ -128,7 +128,8 @@ INSERT INTO AccountLabs(AcctID, LabID) VALUES
 (1, 1);
 
 INSERT INTO Notifications(Type, Description, Name, Date, AcctID) VALUES
-('Alert', 'This user sucks', 'Not Me', '2019-2-12', 1);
+('Alert', 'This user sucks', 'Not Me', '2019-2-12', 1),
+('Alert', 'This user rules', 'Me', '2019-2-27', 1);
 
 INSERT INTO Preferences(NavColor, AcctID) VALUES
 ('#202020', 1);
