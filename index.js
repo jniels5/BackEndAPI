@@ -73,9 +73,11 @@ var mailOptions = {
 app.get('/email', function(request,response) {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-        return console.log(error);
+        response.json({email: "failed"});
     }
-    console.log('Message %s sent: %s', info.messageId, info.response);
+    else {
+      respose.json({email: "sent"})
+    }
   })
 });
 
