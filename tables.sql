@@ -147,12 +147,8 @@ INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID
 ('Sean', 'Wallace', 'Male', 'SP20', 'walis846@gmail.com', 2, 1),
 ('Cole', 'Braswell', 'Male', 'SP20', 'braswellcole@outlook.com', 3, 1),
 ('Cody', 'Knight', 'Male', 'SP19', 'pulse14@live.com', 4, 1),
-<<<<<<< Updated upstream
 ('Michael', 'Pacyga', 'Male', 'SP20', 'michagy@gmail.com', 5, 1);
-
-=======
 ('Rick', 'Danger', 'Male', 'SP20', 'example@fake.com', NULL, 1);
->>>>>>> Stashed changes
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
