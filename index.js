@@ -70,7 +70,11 @@ var mailOptions = {
 };
 
 app.get('/email', function(request,response) {
-
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
 });
 //pretty much useless, used it to test db connection
 app.get('/', function(request,response) {
