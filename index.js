@@ -293,6 +293,15 @@ app.get('/stats/search/grad', function(request,response) {
   });
 });
 
+// runfile is failing with SQL files, no error output. Table modifications done here
+app.get('/jeremy/thisismyswamp', function(request, response) {
+  connection.query("INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES ('Rick', 'Danger', 'Male', 'SP20', 'example@fake.com', NULL, 1);", function (error, results, fields) {
+    if(error) {
+      console.log(error.sql)
+    }
+  });
+});
+
 //runs a specified sql file (**Needs error handling**)
 app.get('/runfile/:file', function(request,response) {
   try{
