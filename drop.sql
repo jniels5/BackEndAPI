@@ -1,8 +1,16 @@
 INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES
-('Jeremy', 'Nielson', 'Male', 'SP19', 'saktirshinu@gmail.com', 1, 1),
-('Sean', 'Wallace', 'Male', 'SP20', 'walis846@gmail.com', 2, 1),
-('Cole', 'Braswell', 'Male', 'SP20', 'braswellcole@outlook.com', 3, 1),
-('Cody', 'Knight', 'Male', 'SP19', 'pulse14@live.com', 4, 1),
+('Jeremy', 'Nielson', 'Male', 'SP19', 'saktirshinu@gmail.com', 1, 1);
+
+INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES
+('Sean', 'Wallace', 'Male', 'SP20', 'walis846@gmail.com', 2, 1);
+
+INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES
+('Cole', 'Braswell', 'Male', 'SP20', 'braswellcole@outlook.com', 3, 1);
+
+INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES
+('Cody', 'Knight', 'Male', 'SP19', 'pulse14@live.com', 4, 1);
+
+INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES
 ('Michael', 'Pacyga', 'Male', 'SP20', 'michagy@gmail.com', 5, 1);
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
