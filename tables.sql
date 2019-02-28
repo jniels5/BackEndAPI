@@ -129,7 +129,7 @@ INSERT INTO AccountLabs(AcctID, LabID) VALUES
 
 INSERT INTO Notifications(Type, Description, Name, Date, AcctID) VALUES
 ('Alert', 'This user sucks', 'Not Me', '2019-2-12', 1),
-('Alert', 'This user rules', 'Me', '2019-2-27', 1);
+('Warning', 'Summer Internship Deadlines', 'Multiple Users', '2019-2-27', 1);
 
 INSERT INTO Preferences(NavColor, AcctID) VALUES
 ('#202020', 1);
@@ -155,7 +155,7 @@ INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 2),
 ('Intern', 'Active', 'First semester at code_orange', '2019-2-14', 3),
 ('Intern', 'Active', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4),
-('Open House', 'Active', 'Has visited the code_orange Open House and expressed interest', '2019-2-27', 5);
+('Intern', 'Active', 'First semester at code_ornange', '2019-2-27', 5);
 
 INSERT INTO Semesters(Semester, Year, MemberID) VALUES
 ('Fall', 2018, 1),
