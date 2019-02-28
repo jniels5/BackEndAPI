@@ -155,7 +155,7 @@ INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 2),
 ('Intern', 'Active', 'First semester at code_orange', '2019-2-14', 3),
 ('Intern', 'Active', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4),
-('Intern', 'Active', 'First semester at code_ornange', '2019-2-27', 5);
+('Intern', 'Active', 'First semester at code_orange', '2019-2-27', 5);
 
 INSERT INTO Semesters(Semester, Year, MemberID) VALUES
 ('Fall', 2018, 1),
