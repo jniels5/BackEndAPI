@@ -128,8 +128,7 @@ INSERT INTO AccountLabs(AcctID, LabID) VALUES
 (1, 1);
 
 INSERT INTO Notifications(Type, Description, Name, Date, AcctID) VALUES
-('Alert', 'This user sucks', 'Not Me', '2019-2-12', 1),
-('Warning', 'Summer Internship Deadlines', 'Multiple Users', '2019-2-27', 1);
+('Alert', 'This user sucks', 'Not Me', '2019-2-12', 1);
 
 INSERT INTO Preferences(NavColor, AcctID) VALUES
 ('#202020', 1);
@@ -150,12 +149,12 @@ INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID
 ('Cody', 'Knight', 'Male', 'SP19', 'pulse14@live.com', 4, 1),
 ('Michael', 'Pacyga', 'Male', 'SP20', 'michagy@gmail.com', 5, 1);
 
+
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 2),
 ('Intern', 'Active', 'First semester at code_orange', '2019-2-14', 3),
-('Intern', 'Active', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4),
-('Intern', 'Active', 'First semester at code_orange', '2019-2-27', 5);
+('Intern', 'Active', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4);
 
 INSERT INTO Semesters(Semester, Year, MemberID) VALUES
 ('Fall', 2018, 1),
