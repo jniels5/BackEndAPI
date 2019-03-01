@@ -300,7 +300,7 @@ app.get('/jeremy/thisismyswamp', function(request, response) {
       console.log(error.sql)
     }
   });
-  connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('OpenHouse', 'Contacted', 'Reached out, awaiting response', '2019-2-27', 6);", function (error, results, fields) {
+  connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('OpenHouse', 'Contacted', 'Reached out, awaiting response', '2019-2-27', 5);", function (error, results, fields) {
     if(error) {
       console.log(error.sql)
     }
