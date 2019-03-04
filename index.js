@@ -248,8 +248,8 @@ app.post('/notifications/options/post', function(request,response) {
   });
 });
 
-app.get('/notifications/options/gets', function(request,response) {
-  connection.query('SELECT Name, Description, Date FROM Notifications', function (error, results, fields) {
+app.get('/notifications/options/NotRead', function(request,response) {
+  connection.query('SELECT COUNT(*) FROM Notifications WHERE Notifications.IsRead = 0', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
