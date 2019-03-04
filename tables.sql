@@ -128,7 +128,7 @@ INSERT INTO Labs(Abbrev, School, City, State) VALUES
 INSERT INTO AccountLabs(AcctID, LabID) VALUES
 (1, 1);
 
-INSERT INTO Notifications(Type, Description, Name, Date, AcctID) VALUES
+INSERT INTO Notifications(Type, Description, Name, Date, IsRead, AcctID) VALUES
 ('Alert', 'This user cool', 'Not Me', '2019-2-12', 0, 1),
 ('Alert', 'This user pool', 'Not You', '2020-2-12', 1, 1);
 
