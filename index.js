@@ -293,6 +293,17 @@ app.get('/stats/search/grad', function(request,response) {
   });
 });
 
+app.get('/stats/search/all', function(request,response) {
+  connection.query('SELECT MemberID AS "Innovator ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradYear as "Expected Graduation", Email, AssetID AS "Asset ID", LabID AS "Current Lab" FROM Members', function (error, results, fields) {
+        if(error) {
+            response.json({select_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 // runfile is failing with SQL files, no error output. Table modifications done here
 app.get('/jeremy/thisismyswamp', function(request, response) {
   connection.query("INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES ('Rick', 'Danger', 'Male', 'SP20', 'example@fake.com', NULL, 1);", function (error, results, fields) {
