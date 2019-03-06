@@ -304,6 +304,18 @@ app.get('/stats/search/all', function(request,response) {
   });
 });
 
+//get emails
+app.get('/email/get', function(request,response) {
+  connection.query('SELECT Email FROM Members', function (error, results, fields) {
+    if(error) {
+      response.json({navColor_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
 // runfile is failing with SQL files, no error output. Table modifications done here
 app.get('/jeremy/thisismyswamp', function(request, response) {
   connection.query("INSERT INTO Members(FirstName, LastName, Gender, GradYear, Email, AssetID, LabID) VALUES ('Rick', 'Danger', 'Male', 'SP20', 'example@fake.com', NULL, 1);", function (error, results, fields) {
