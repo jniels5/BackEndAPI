@@ -166,7 +166,7 @@ app.get('/metrics/total/interns', function(request,response) {
 
 //"total and grad year" counters; hardcoded to previous 2 semesters
 app.get('/metrics/totalCurr', function(request,response) {
-  connection.query('SELECT COUNT(*) "Total" FROM Members, Semesters WHERE Members.MemberID = Semesters.Member ID AND Semesters.Semester = "Spring" AND Semesters.Year = 2019', function (error, results, fields) {
+  connection.query('SELECT COUNT(*) "Total" FROM Members, Semesters WHERE Members.MemberID = Semesters.MemberID AND Semesters.Semester = "Spring" AND Semesters.Year = 2019', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
@@ -188,7 +188,7 @@ app.get('/metrics/totalCurr/Grad', function(request,response) {
 });
 
 app.get('/metrics/totalPast1', function(request,response) {
-  connection.query('SELECT COUNT(*) "Total1" FROM Members, Semesters WHERE Members.MemberID = Semesters.Member ID AND Semesters.Semester = "Fall" AND Semesters.Year = 2018', function (error, results, fields) {
+  connection.query('SELECT COUNT(*) "Total1" FROM Members, Semesters WHERE Members.MemberID = Semesters.MemberID AND Semesters.Semester = "Fall" AND Semesters.Year = 2018', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
