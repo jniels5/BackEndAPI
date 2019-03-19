@@ -164,9 +164,9 @@ app.get('/metrics/total/interns', function(request,response) {
   });
 });
 
-//"per gender" counters
-app.get('/metrics/total/male', function(request,response) {
-  connection.query('SELECT COUNT(*) "Males" FROM Members WHERE Members.Gender = "Male"', function (error, results, fields) {
+//"total and grad year" counters; hardcoded to previous 2 semesters
+app.get('/metrics/totalCurr', function(request,response) {
+  connection.query('SELECT COUNT(*) "Total" FROM Members, Semesters WHERE Members.MemberID = Semesters.Member ID AND Semesters.Semester = "Spring" AND Semesters.Year = 2019', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
@@ -176,8 +176,8 @@ app.get('/metrics/total/male', function(request,response) {
   });
 });
 
-app.get('/metrics/total/female', function(request,response) {
-  connection.query('SELECT COUNT(*) "Females" FROM Members WHERE Members.Gender = "Female"', function (error, results, fields) {
+app.get('/metrics/totalCurr/Grad', function(request,response) {
+  connection.query('SELECT COUNT(*) "GradCurr" FROM Members, Semesters WHERE Members.MemberID = Semesters.MemberID AND Semesters.Semester = "Spring" AND Semesters.Year = 2019 AND Members.GradSemester = Semesters.Semester AND Members.GradYear = Semesters.Year', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
@@ -187,8 +187,8 @@ app.get('/metrics/total/female', function(request,response) {
   });
 });
 
-app.get('/metrics/total/other', function(request,response) {
-  connection.query('SELECT COUNT(*) "Nonbinary" FROM Members WHERE Members.Gender = "Nonbinary"', function (error, results, fields) {
+app.get('/metrics/totalPast1', function(request,response) {
+  connection.query('SELECT COUNT(*) "Total1" FROM Members, Semesters WHERE Members.MemberID = Semesters.Member ID AND Semesters.Semester = "Fall" AND Semesters.Year = 2018', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
@@ -197,10 +197,22 @@ app.get('/metrics/total/other', function(request,response) {
     }
   });
 });
+
+app.get('/metrics/totalPast1/Grad', function(request,response) {
+  connection.query('SELECT COUNT(*) "GradCurr1" FROM Members, Semesters WHERE Members.MemberID = Semesters.MemberID AND Semesters.Semester = "Fall" AND Semesters.Year = 2018 AND Members.GradSemester = Semesters.Semester AND Members.GradYear = Semesters.Year', function (error, results, fields) {
+    if(error) {
+      response.json({Metrics_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
 
 //Count Open House
 app.get('/metrics/total/OH', function(request,response) {
-  connection.query('SELECT COUNT(*) "OpenHouse" FROM Role WHERE Role.Type = "Open House"', function (error, results, fields) {
+  connection.query('SELECT COUNT(*) "OpenHouse" FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Open House"', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
