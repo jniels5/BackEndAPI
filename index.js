@@ -294,7 +294,7 @@ app.get('/stats/search/grad', function(request,response) {
 });
 
 app.get('/stats/search/all', function(request,response) {
-  connection.query('SELECT MemberID AS "]ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members', function (error, results, fields) {
+  connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members', function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
