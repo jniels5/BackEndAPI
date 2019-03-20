@@ -12,34 +12,6 @@ DROP TABLE IF EXISTS AccountLabs;
 DROP TABLE IF EXISTS Labs;
 DROP TABLE IF EXISTS Accounts;
 
-DROP TABLE IF EXISTS Projects;
-DROP TABLE IF EXISTS TeamMembers;
-DROP TABLE IF EXISTS Teams;
-DROP TABLE IF EXISTS Semesters;
-DROP TABLE IF EXISTS Role;
-DROP TABLE IF EXISTS Members;
-DROP TABLE IF EXISTS Assets;
-DROP TABLE IF EXISTS Metrics;
-DROP TABLE IF EXISTS Preferences;
-DROP TABLE IF EXISTS Notifications;
-DROP TABLE IF EXISTS AccountLabs;
-DROP TABLE IF EXISTS Labs;
-DROP TABLE IF EXISTS Accounts;
-
-DROP TABLE IF EXISTS Projects;
-DROP TABLE IF EXISTS TeamMembers;
-DROP TABLE IF EXISTS Teams;
-DROP TABLE IF EXISTS Semesters;
-DROP TABLE IF EXISTS Role;
-DROP TABLE IF EXISTS Members;
-DROP TABLE IF EXISTS Assets;
-DROP TABLE IF EXISTS Metrics;
-DROP TABLE IF EXISTS Preferences;
-DROP TABLE IF EXISTS Notifications;
-DROP TABLE IF EXISTS AccountLabs;
-DROP TABLE IF EXISTS Labs;
-DROP TABLE IF EXISTS Accounts;
-
 CREATE TABLE Accounts
 (AcctID int auto_increment PRIMARY KEY,
 Username VARCHAR(128),
@@ -173,7 +145,6 @@ INSERT INTO Members(MemberID, FirstName, LastName, Gender, GradSemester, GradYea
 (4, 'Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1);
 
 INSERT INTO Members(MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
-(5, 'Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
 (6, 'Mike', 'Brenner', 'Male', NULL, NULL, NULL, 'michaelbrenner@discover.com', NULL, 1),
 (7, 'Brady', 'Goldsworthy', 'Male', 'Spring', 2019, NULL, 'bradygoldsworthy@discover.com', NULL, 1),
 (8, 'Justin', 'Dupre', 'Male', NULL , NULL, NULL, 'justindupre@discover.com', NULL, 1);
