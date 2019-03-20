@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS Projects;
 DROP TABLE IF EXISTS TeamMembers;
 DROP TABLE IF EXISTS Teams;
-DROP TABLE IF EXISTS Semesters;
 DROP TABLE IF EXISTS Role;
 DROP TABLE IF EXISTS Members;
 DROP TABLE IF EXISTS Assets;
@@ -67,7 +66,7 @@ LabID int,
 FOREIGN KEY (LabID) REFERENCES Labs(LabID));
 
 CREATE TABLE Members
-(MemberID int auto_increment PRIMARY KEY,
+(MemberID int PRIMARY KEY,
 FirstName VARCHAR(20),
 LastName VARCHAR(20),
 Gender VARCHAR(15),
@@ -81,7 +80,7 @@ FOREIGN KEY (AssetID) REFERENCES Assets(AssetID),
 FOREIGN KEY (LabID) REFERENCES Labs(LabID));
 
 CREATE TABLE Role
-(RoleID int auto_increment PRIMARY KEY,
+(RoleID int PRIMARY KEY,
 Type VARCHAR(25),
 Status VARCHAR(25),
 Description VARCHAR(255),
@@ -89,16 +88,10 @@ Date DATE,
 MemberID int NOT NULL,
 FOREIGN KEY (MemberID) REFERENCES Members(MemberID));
 
-CREATE TABLE Semesters
-(SemesterID int auto_increment PRIMARY KEY,
-Semester VARCHAR(6),
-Year int,
-MemberID int,
-FOREIGN KEY (MemberID) REFERENCES Members(MemberID));
-
 CREATE TABLE Teams
-(TeamID int auto_increment PRIMARY KEY,
+(TeamID int PRIMARY KEY,
 TeamName VARCHAR(20),
+TeamNumber int,
 Semester VARCHAR(4),
 LabID int,
 FOREIGN KEY(LabID) REFERENCES Labs(LabID));
@@ -144,54 +137,98 @@ INSERT INTO Assets(AssetID, Type, Description, IsImaged, LabID) VALUES
 ( 20108969, 'Laptop', 'Apple MacBook Pro', 1, 1),
 ( 12345678, 'Laptop', 'Apple MacBook Pro', 1, 1);
 
-INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
-('Jeremy', 'Nielson', 'Male', 'Spring', 2019, 'saktirshinu@gmail.com', 'jeremynielson@discover.com', 20100206, 1),
-('Sean', 'Wallace', 'Male', 'Spring', 2020, 'walis846@gmail.com', 'seanwallace@discover.com', 20100464, 1),
-('Cole', 'Braswell', 'Male', 'Spring', 2020, 'braswellcole@outlook.com', 'colebraswell@discover.com', 20100217, 1),
-('Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
-('Mike', 'Brenner', 'Male', NULL, NULL, NULL, 'michaelbrenner@discover.com', NULL, 1),
-('Mary', 'Sue', 'Female', 'Fall', 2019, 'abc@xyz.com', 'something@discover.com', 12345678, 1),
-('Susan', 'Joe', 'Female', 'Spring', 2020, 'susanjoe@xyz.com', NULL, NULL, 1),
-('Lucy', 'Lola', 'Female', 'Spring', 2020, 'lucy123@xyz.com', NULL, NULL, 1);
+INSERT INTO Members(MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
+(1, 'Jeremy', 'Nielson', 'Male', 'Spring', 2019, 'saktirshinu@gmail.com', 'jeremynielson@discover.com', 20100206, 1),
+(2, 'Sean', 'Wallace', 'Male', 'Spring', 2020, 'walis846@gmail.com', 'seanwallace@discover.com', 20100464, 1),
+(3, 'Cole', 'Braswell', 'Male', 'Spring', 2020, 'braswellcole@outlook.com', 'colebraswell@discover.com', 20100217, 1),
+(4, 'Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
+(5, 'Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
+(6, 'Mike', 'Brenner', 'Male', NULL, NULL, NULL, 'michaelbrenner@discover.com', NULL, 1),
+(7, 'Brady', 'Goldsworthy', 'Male', 'Spring', 2019, NULL, 'bradygoldsworthy@discover.com', NULL, 1),
+(8, 'Justin', 'Dupre', 'Male', NULL , NULL, NULL, 'justindupre@discover.com', NULL, 1),
+(9, 'Bradley', 'Protano', 'Male', 'Fall', 2018, NULL, 'bradleyprotano@discover.com', NULL, 1),
+(10, 'Katie', 'Berendt', 'Female', 'Fall', 2019, NULL, 'katieberendt@discover.com', NULL, 1),
+(11, 'Jackie', 'Salim', 'Female', 'Spring', 2019, NULL,'jacquelinesalim@discover.com', NULL, 2),
+(12, 'Nahom', 'Gebremichael', 'Male', NULL, NULL, NULL, 'nahomgebremichael@discover.com', NULL, 2),
+(13, 'Thomas', 'Franczak', 'Male', NULL, NULL, NULL, 'thomasfranczak@discover.com', NULL, 2),
+(14, 'Kyle', 'Wilson', 'Male', NULL, NULL, NULL, 'kylewilson@discover.com', NULL, 2),
+(15, 'Ben', 'Lane', 'Male', NULL, NULL, NULL, 'benlane@discover.com', NULL, 3),
+(16, 'Kevin', 'Miyata', 'Male', NULL, NULL, NULL, 'kevimiyata@discover.com', NULL, 3),
+(17, 'James', 'Bonasera', 'Male', NULL, NULL, NULL, 'jamesbonasera@discover.com', NULL, 3),
+(18, 'Kris', 'Schrader', 'Female', NULL, NULL, NULL, 'krisschrader@discover.com', NULL, 3),
+(19, 'Samuel', 'Rutledge', 'Male', NULL, NULL, NULL, 'samuelrutledge@discover.com', NULL, 3),
+(20, 'Nicholas', 'Swanson', 'Male', NULL, NULL, NULL, 'nicholasswanson@discover.com', NULL, 3),
+(21, 'Alex', 'Boyle', 'Male', NULL, NULL, NULL, 'alexboyle@discover.com', NULL, 4),
+(22, 'Amy', 'Jakopin', 'Female', NULL, NULL, NULL, 'amyjakopin@discover.com', NULL, 4),
+(23, 'Andrew', 'Slade', 'Male', NULL, NULL, NULL, 'andrewslade@discover.com', NULL, 4),
+(24, 'Kristen', 'Arms', 'Female', NULL, NULL, NULL, 'kristenarms@discover.com', NULL, 4),
+(25, 'Shiva', 'Singh', 'Male', NULL, NULL, NULL, 'shivasingh@discover.com', NULL, 4),
+(26, 'Dylan', 'Drake', 'Male', NULL, NULL, NULL, 'dylandrake@discover.com', NULL, 5),
+(27, 'Jane', 'Swift', 'Female', NULL, NULL, NULL, 'janeswift@discover.com', NULL, 5),
+(28, 'Kwaku', 'Agyemang', 'Male', NULL, NULL, NULL, 'kwakuagyemang@discover.com', NULL, 5),
+(29, 'Nathanael', 'Isola', 'Male', NULL, NULL, NULL, 'nathanaelisola@discover.com', NULL, 5),
+(30, 'Quinton', 'Lee', 'Male', NULL, NULL, NULL, 'quintonlee@discover.com', NULL, 5),
+(31, 'Adam', 'Remes', 'Male', NULL, NULL, NULL, 'adamremes@discover.com', NULL, 6),
+(32, 'Elly', 'Jdaidany', 'Male', NULL, NULL, NULL, 'ellyjdaidany@discover.com', NULL, 6),
+(33, 'Jessica', 'Guenther', 'Female', NULL, NULL, NULL, 'jessicaguenther@discover.com', NULL, 6),
+(34, 'Spencer', 'Yoder', 'Male', NULL, NULL, NULL, 'spenceryoder@discover.com', NULL, 6),
+(35, 'Vishy', 'Singh', 'Male', NULL, NULL, NULL, 'vishysingh@discover.com', NULL, 6),
+(36, 'Nicholas', 'Glaviano', 'Male', NULL, NULL, NULL, 'nicholasglaviano@discover.com', NULL, 6),
+(37, 'Javier', 'Gomez', 'Male', NULL, NULL, NULL, 'javiergomez@discover.com', NULL, 7),
+(38, 'Cameron', 'Badenoch', 'Male', NULL, NULL, NULL, 'cameronbadenoch@discover.com', NULL, 7),
+(39, 'Krystal', 'McIntyre-Miller', 'Female', NULL, NULL, NULL, 'krystalmcintyremiller@discover.com', NULL, 7),
+(40, 'Nicholas', 'Rosso', 'Male', NULL, NULL, NULL, 'nicholasrosso@discover.com', NULL, 7),
+(41, 'Tyler', 'Havener', 'Male', NULL, NULL, NULL, 'tylerhavener@discover.com', NULL, 7),
+(42, 'Mary', 'Sue', 'Female', 'Fall', 2019, 'abc@xyz.com', 'something@discover.com', 12345678, 1),
+(43, 'Susan', 'Joe', 'Female', 'Spring', 2020, 'susanjoe@xyz.com', NULL, NULL, 1),
+(44, 'Lucy', 'Lola', 'Female', 'Spring', 2020, 'lucy123@xyz.com', NULL, NULL, 1);
 
-INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
-('Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 2),
-('Intern', 'Active', 'First semester at code_orange', '2019-2-14', 3),
-('Intern', 'Active', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4),
-('Product Owner', 'Active', 'Product Owner for Team 11.', '2019-3-19', 5),
-('Intern', 'Active', 'First semester at code_orange. Graduates Fall 2019', '2019-2-14', 6),
-('Applicant', 'Submitted', 'Applicantion Submitted, awaiting approval', '2019-3-12', 7),
-('Open House', 'Visited', 'Checked in at open house', '2019-3-12', 8);
+INSERT INTO Role(RoleID, Type, Status, Description, Date, MemberID) VALUES
+(1, 'Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
+(2, 'Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 2),
+(3, 'Intern', 'Active', 'First semester at code_orange', '2019-2-14', 3),
+(4, 'Intern', 'Active', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4),
+(5, 'Product Owner', 'Active', 'Product Owner for Team 11.', '2019-3-19', 5),
+(6, 'Intern', 'Active', 'First semester at code_orange. Graduates Fall 2019', '2019-2-14', 41),
+(7, 'Applicant', 'Submitted', 'Applicantion Submitted, awaiting approval', '2019-3-12', 42),
+(8, 'Open House', 'Visited', 'Checked in at open house', '2019-3-12', 43);
 
-INSERT INTO Semesters(Semester, Year, MemberID) VALUES
-('Fall', 2018, 1),
-('Spring', 2019, 1),
-('Fall', 2018, 2),
-('Spring', 2019, 2),
-('Spring', 2019, 3),
-('Spring', 2019, 4);
-
-INSERT INTO Teams(TeamName, Semester, LabID) VALUES
-('Team1', 'SP19', 1),
-('Team2', 'SP19', 1),
-('Team3', 'SP19', 1),
-('Team4', 'SP19', 1),
-('Team5', 'SP19', 1),
-('Team7', 'SP19', 1),
-('Team8', 'SP19', 1),
-('Team9', 'SP19', 1),
-('Team10', 'SP19', 1),
-('Team11', 'SP19', 1),
-('Team12', 'SP19', 1),
-('Team13', 'SP19', 1),
-('Team14', 'SP19', 1);
+INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, LabID) VALUES
+(1, 'Scurvy', 1, 'FA18', 1),
+(2, 'Team X', 2, 'FA18', 1),
+(3, 'Triton', 3, 'FA18', 1),
+(4, 'aVendors', 4, 'FA18', 1),
+(5, 'Wi-fiVe', 5, 'FA18', 1),
+(6, 'Et Confusa Novum', 6, 'FA18', 1),
+(7, 'Team 777', 7, 'FA18', 1),
+(8, 'Atlas', 1, 'SP19', 1),
+(9, 'Team2', 2, 'SP19', 1),
+(10,'Team3', 3, 'SP19', 1),
+(11, 'Team4', 4, 'SP19', 1),
+(12, 'Team5', 5, 'SP19', 1),
+(13, 'Team6', 6, 'SP19', 1),
+(14, 'Team7', 7, 'SP19', 1),
+(15, 'Team8', 8, 'SP19', 1),
+(16, 'Team9', 9, 'SP19', 1),
+(17, 'Team10', 10, 'SP19', 1),
+(18, 'Epic Gamerz', 11, 'SP19', 1),
+(19, 'Team12', 12,'SP19', 1),
+(20, 'Team13', 13, 'SP19', 1),
+(21, 'Team14', 14, 'SP19', 1);
 
 INSERT INTO TeamMembers(TeamID, MemberID) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4);
+(18, 1),
+(18, 2),
+(18, 3),
+(18, 4),
+(18, 5);
 
 INSERT INTO Projects(Name, Type, Description, TeamID) VALUES
-('Applicant Tracking & Dashboard', 'Website', 'Keep track of all applicants, interns, and hires from the code_orange project', 1);
+('NIU Lab Website', 'Website', 'Program Information: description, projects, employment, upcoming events, etc', 1),
+('Feedback Bubbles', 'Mobile App', 'App to allow feedback for meeting attendees', 2),
+('Talent Acquisition', 'Mobile App', 'Capture Candidate info (resume, etc) electronically, replacing paperwork', 3),
+('Vendor Contact History Website', 'Website', 'Tool to track/update vendor info across Discover', 4),
+('Mgmt Approal/Delegation Tool', 'Website', 'One site for management to get all todo items needing action/decision', 5),
+('NIU Innovation App', 'Mobile App', 'Create app that allows students to connect within the space', 6),
+('Change log rewrite', 'Website', 'Create change log to improve tracking of production impacting projects', 7),
+('Applicant Tracking & Dashboard', 'Website', 'Keep track of all applicants, interns, and hires from the code_orange project', 18);
