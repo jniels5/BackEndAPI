@@ -164,7 +164,7 @@ INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, LabID) VALUES
 (7, 'Team 777', 7, 'FA18', 1),
 (8, 'Atlas', 1, 'SP19', 1),
 (9, 'Team2', 2, 'SP19', 1),
-(10,'Team3', 3, 'SP19', 1),
+(10, 'Team3', 3, 'SP19', 1),
 (11, 'Team4', 4, 'SP19', 1),
 (12, 'Team5', 5, 'SP19', 1),
 (13, 'Team6', 6, 'SP19', 1),
