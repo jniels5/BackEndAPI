@@ -171,16 +171,7 @@ INSERT INTO Members(MemberID, FirstName, LastName, Gender, GradSemester, GradYea
 (2, 'Sean', 'Wallace', 'Male', 'Spring', 2020, 'walis846@gmail.com', 'seanwallace@discover.com', 20100464, 1),
 (3, 'Cole', 'Braswell', 'Male', 'Spring', 2020, 'braswellcole@outlook.com', 'colebraswell@discover.com', 20100217, 1),
 (4, 'Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
-(5, 'Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
-(6, 'Mike', 'Brenner', 'Male', NULL, NULL, NULL, 'michaelbrenner@discover.com', NULL, 1),
-(7, 'Brady', 'Goldsworthy', 'Male', 'Spring', 2019, NULL, 'bradygoldsworthy@discover.com', NULL, 1),
-(8, 'Justin', 'Dupre', 'Male', NULL , NULL, NULL, 'justindupre@discover.com', NULL, 1),
-(9, 'Bradley', 'Protano', 'Male', 'Fall', 2018, NULL, 'bradleyprotano@discover.com', NULL, 1),
-(10, 'Katie', 'Berendt', 'Female', 'Fall', 2019, NULL, 'katieberendt@discover.com', NULL, 1),
-(11, 'Jackie', 'Salim', 'Female', 'Spring', 2019, NULL,'jacquelinesalim@discover.com', NULL, 2),
-(12, 'Nahom', 'Gebremichael', 'Male', NULL, NULL, NULL, 'nahomgebremichael@discover.com', NULL, 2),
-(13, 'Thomas', 'Franczak', 'Male', NULL, NULL, NULL, 'thomasfranczak@discover.com', NULL, 2),
-(14, 'Kyle', 'Wilson', 'Male', NULL, NULL, NULL, 'kylewilson@discover.com', NULL, 2);
+(5, 'Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1);
 
 INSERT INTO Role(RoleID, Type, Status, Description, Date, MemberID) VALUES
 (1, 'Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
