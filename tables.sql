@@ -12,6 +12,34 @@ DROP TABLE IF EXISTS AccountLabs;
 DROP TABLE IF EXISTS Labs;
 DROP TABLE IF EXISTS Accounts;
 
+DROP TABLE IF EXISTS Projects;
+DROP TABLE IF EXISTS TeamMembers;
+DROP TABLE IF EXISTS Teams;
+DROP TABLE IF EXISTS Semesters;
+DROP TABLE IF EXISTS Role;
+DROP TABLE IF EXISTS Members;
+DROP TABLE IF EXISTS Assets;
+DROP TABLE IF EXISTS Metrics;
+DROP TABLE IF EXISTS Preferences;
+DROP TABLE IF EXISTS Notifications;
+DROP TABLE IF EXISTS AccountLabs;
+DROP TABLE IF EXISTS Labs;
+DROP TABLE IF EXISTS Accounts;
+
+DROP TABLE IF EXISTS Projects;
+DROP TABLE IF EXISTS TeamMembers;
+DROP TABLE IF EXISTS Teams;
+DROP TABLE IF EXISTS Semesters;
+DROP TABLE IF EXISTS Role;
+DROP TABLE IF EXISTS Members;
+DROP TABLE IF EXISTS Assets;
+DROP TABLE IF EXISTS Metrics;
+DROP TABLE IF EXISTS Preferences;
+DROP TABLE IF EXISTS Notifications;
+DROP TABLE IF EXISTS AccountLabs;
+DROP TABLE IF EXISTS Labs;
+DROP TABLE IF EXISTS Accounts;
+
 CREATE TABLE Accounts
 (AcctID int auto_increment PRIMARY KEY,
 Username VARCHAR(128),
@@ -139,12 +167,7 @@ INSERT INTO Assets(AssetID, Type, Description, IsImaged, LabID) VALUES
 ( 12345678, 'Laptop', 'Apple MacBook Pro', 1, 1);
 
 INSERT INTO Members(MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
-(1, 'Jeremy', 'Nielson', 'Male', 'Spring', 2019, 'saktirshinu@gmail.com', 'jeremynielson@discover.com', 20100206, 1),
-(2, 'Sean', 'Wallace', 'Male', 'Spring', 2020, 'walis846@gmail.com', 'seanwallace@discover.com', 20100464, 1),
-(3, 'Cole', 'Braswell', 'Male', 'Spring', 2020, 'braswellcole@outlook.com', 'colebraswell@discover.com', 20100217, 1),
-(4, 'Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
-(5, 'Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
-(6, 'Mike', 'Brenner', 'Male', NULL, NULL, NULL, 'michaelbrenner@discover.com', NULL, 1);
+(1, 'Jeremy', 'Nielson', 'Male', 'Spring', 2019, 'saktirshinu@gmail.com', 'jeremynielson@discover.com', 20100206, 1);
 
 INSERT INTO Role(RoleID, Type, Status, Description, Date, MemberID) VALUES
 (1, 'Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
@@ -152,9 +175,9 @@ INSERT INTO Role(RoleID, Type, Status, Description, Date, MemberID) VALUES
 (3, 'Intern', 'Active', 'First semester at code_orange', '2019-2-14', 3),
 (4, 'Intern', 'Active', 'First semester at code_orange. Graduates Spring 2019', '2019-2-14', 4),
 (5, 'Product Owner', 'Active', 'Product Owner for Team 11.', '2019-3-19', 5),
-(6, 'Intern', 'Active', 'First semester at code_orange. Graduates Fall 2019', '2019-2-14', 41),
-(7, 'Applicant', 'Submitted', 'Applicantion Submitted, awaiting approval', '2019-3-12', 42),
-(8, 'Open House', 'Visited', 'Checked in at open house', '2019-3-12', 43);
+(6, 'Intern', 'Active', 'First semester at code_orange. Graduates Fall 2019', '2019-2-14', 42),
+(7, 'Applicant', 'Submitted', 'Applicantion Submitted, awaiting approval', '2019-3-12', 43),
+(8, 'Open House', 'Visited', 'Checked in at open house', '2019-3-12', 44);
 
 INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, LabID) VALUES
 (1, 'Scurvy', 1, 'FA18', 1),
