@@ -131,13 +131,15 @@ INSERT INTO Preferences(NavColor, AcctID) VALUES
 INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
 ('Total', 'Number of students', 1, 1);
 
+SET FOREIGN_KEY_CHECKS=0
+
 INSERT INTO Assets(AssetID, Type, Description, IsImaged, LabID) VALUES
-( 20100206, 'Laptop', 'Apple MacBook Pro', 1, 1),
-( 20100464, 'Laptop', 'Apple MacBook Pro', 1, 1),
-( 20100217, 'Laptop', 'Apple MacBook Pro', 1, 1),
-( 20108969, 'Laptop', 'Apple MacBook Pro', 1, 1),
-( 20108939, 'Laptop', 'Apple MacBook Pro', 1, 1),
-( 12345678, 'Laptop', 'Apple MacBook Pro', 1, 1);
+(20100206, 'Laptop', 'Apple MacBook Pro', 1, 1),
+(20100464, 'Laptop', 'Apple MacBook Pro', 1, 1),
+(20100217, 'Laptop', 'Apple MacBook Pro', 1, 1),
+(20108969, 'Laptop', 'Apple MacBook Pro', 1, 1),
+(20108939, 'Laptop', 'Apple MacBook Pro', 1, 1),
+(12345678, 'Laptop', 'Apple MacBook Pro', 1, 1);
 
 INSERT INTO Members(MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
 (1, 'Jeremy', 'Nielson', 'Male', 'Spring', 2019, 'saktirshinu@gmail.com', 'jeremynielson@discover.com', 20100206, 1),
@@ -184,6 +186,8 @@ INSERT INTO Members(MemberID, FirstName, LastName, Gender, GradSemester, GradYea
 (42, 'Mary', 'Sue', 'Female', 'Fall', 2019, 'abc@xyz.com', 'something@discover.com', 12345678, 1),
 (43, 'Susan', 'Joe', 'Female', 'Spring', 2020, 'susanjoe@xyz.com', NULL, NULL, 1),
 (44, 'Lucy', 'Lola', 'Female', 'Spring', 2020, 'lucy123@xyz.com', NULL, NULL, 1);
+
+SET FOREIGN_KEY_CHECKS=1
 
 INSERT INTO Role(RoleID, Type, Status, Description, Date, MemberID) VALUES
 (1, 'Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
