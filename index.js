@@ -352,6 +352,13 @@ app.post('/checkin', function(request,response) {
         }
         else {
           connection.query('SELECT MemberID FROM Members WHERE FirstName = "' + entry.FirstName + '" AND LastName = "' + entry.LastName + '"')
+          if(error) {
+              response.json({
+                checkin_status: "failed",
+                checkin_error: error,
+              });
+          }
+          else {
             response.json({
               checkin_status: "success",
             });
