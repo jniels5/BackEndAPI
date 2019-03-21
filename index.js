@@ -351,7 +351,7 @@ app.post('/checkin', function(request,response) {
             });
         }
         else {
-          connection.query('SELECT MemberID FROM Members WHERE FirstName = "' + entry.FirstName + '" AND LastName = "' + entry.LastName + '"')
+          connection.query('SELECT MemberID FROM Members WHERE FirstName = "' + entry.FirstName + '" AND LastName = "' + entry.LastName + '"', function (error, results, fields) {
           if(error) {
               response.json({
                 checkin_status: "failed",
@@ -360,12 +360,13 @@ app.post('/checkin', function(request,response) {
           }
           else {
             response.json({
-              checkin_status: "success",
+              checkin_status: "success"
             });
-            response.json(results);
-        }
+          }
+        });
+      }
+    });
   });
-});
 
 //runs a specified sql file (**Needs error handling**)
 app.get('/runfile/:file', function(request,response) {
