@@ -131,7 +131,7 @@ INSERT INTO Preferences(NavColor, AcctID) VALUES
 INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
 ('Total', 'Number of students', 1, 1);
 
-SET FOREIGN_KEY_CHECKS=0
+SET FOREIGN_KEY_CHECKS = 0;
 
 INSERT INTO Assets(AssetID, Type, Description, IsImaged, LabID) VALUES
 (20100206, 'Laptop', 'Apple MacBook Pro', 1, 1),
@@ -187,7 +187,7 @@ INSERT INTO Members(MemberID, FirstName, LastName, Gender, GradSemester, GradYea
 (43, 'Susan', 'Joe', 'Female', 'Spring', 2020, 'susanjoe@xyz.com', NULL, NULL, 1),
 (44, 'Lucy', 'Lola', 'Female', 'Spring', 2020, 'lucy123@xyz.com', NULL, NULL, 1);
 
-SET FOREIGN_KEY_CHECKS=1
+SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO Role(RoleID, Type, Status, Description, Date, MemberID) VALUES
 (1, 'Intern', 'Full-time hire', 'Has accepted full time position at DFS. Expected to work following graduation', '2019-2-12', 1),
