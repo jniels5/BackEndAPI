@@ -134,6 +134,7 @@ INSERT INTO Metrics(Type, Description, IsActive, PrefID) VALUES
 SET FOREIGN_KEY_CHECKS = 0;
 
 INSERT INTO Assets(AssetID, Type, Description, IsImaged, LabID) VALUES
+(10000000, 'N/A', 'N/a', 0, 1),
 (20100206, 'Laptop', 'Apple MacBook Pro', 1, 1),
 (20100464, 'Laptop', 'Apple MacBook Pro', 1, 1),
 (20100217, 'Laptop', 'Apple MacBook Pro', 1, 1),

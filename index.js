@@ -328,12 +328,35 @@ app.get('/email/get', function(request,response) {
   });
 });
 
-// runfile is failing with SQL files, no error output. Table modifications done here
-app.get('/jeremy/thisismyswamp', function(request, response) {
-  connection.query(``, function (error, results, fields) {
-    if(error) {
-      console.log(error.sql)
-    }
+//Enters guest info into db
+app.post('/checkin', function(request,response) {
+  //used in connection.query
+  var entry = {
+    FirstName: request.body.firstName,
+    LastName:  request.body.lastName,
+    Gender: NULL,
+    GradSemester: NULL,
+    GradYear: request.body.gradYear,
+    Email: request.body.email,
+    WorkEmail: NULL,
+    AssetID: 10000000,
+    LabID: 1
+  };
+
+  connection.query('INSERT INTO Members set ?', entry, function (error, results, fields) {
+        if(error) {
+            response.json({
+              checkin_status: "failed",
+              checkin_error: error,
+            });
+        }
+        else {
+          connection.query('SELECT MemberID FROM Members WHERE FirstName = "' + entry.FirstName + '" AND LastName = "' + entry.LastName + '"')
+            response.json({
+              checkin_status: "success",
+            });
+            response.json(results);
+        }
   });
 });
 
