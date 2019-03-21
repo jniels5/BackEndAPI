@@ -334,11 +334,11 @@ app.post('/checkin', function(request,response) {
   var entry = {
     FirstName: request.body.firstName,
     LastName:  request.body.lastName,
-    Gender: NULL,
-    GradSemester: NULL,
+    Gender: '',
+    GradSemester: '',
     GradYear: request.body.gradYear,
     Email: request.body.email,
-    WorkEmail: NULL,
+    WorkEmail: '',
     AssetID: 10000000,
     LabID: 1
   };
