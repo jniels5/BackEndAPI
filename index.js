@@ -346,7 +346,7 @@ app.post('/checkin', function(request,response) {
   connection.query('INSERT INTO Members set ?', entry, function (error, results, fields) {
         if(error) {
             response.json({
-              checkin_status: "failed",
+              checkin_status: "failed 1",
               checkin_error: error,
             });
         }
@@ -354,7 +354,7 @@ app.post('/checkin', function(request,response) {
           connection.query('SELECT MemberID FROM Members WHERE FirstName = "' + entry.FirstName + '" AND LastName = "' + entry.LastName + '"', function (error, results, fields) {
           if(error) {
               response.json({
-                checkin_status: "failed",
+                checkin_status: "failed 2",
                 checkin_error: error,
               });
           }
