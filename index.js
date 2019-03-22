@@ -187,8 +187,8 @@ app.get('/metrics/totalCurr/Grad', function(request,response) {
   });
 });
 
-app.get('/metrics/totalCurr', function(request,response) {
-  connection.query('SELECT COUNT(*) "Total" FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID AND Teams.Semester = "FA18"', function (error, results, fields) {
+app.get('/metrics/totalCurr1', function(request,response) {
+  connection.query('SELECT COUNT(*) "Total1" FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID AND Teams.Semester = "FA18"', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
@@ -198,8 +198,8 @@ app.get('/metrics/totalCurr', function(request,response) {
   });
 });
 
-app.get('/metrics/totalCurr/Grad', function(request,response) {
-  connection.query('SELECT COUNT(*) "GradCurr" FROM TeamMembers, Teams, Members WHERE TeamMembers.TeamID = Teams.TeamID AND Members.MemberID = TeamMembers.MemberID AND Teams.Semester = "FA18" AND Members.GradSemester = "Fall" AND Members.GradYear = "2018"', function (error, results, fields) {
+app.get('/metrics/totalCurr1/Grad', function(request,response) {
+  connection.query('SELECT COUNT(*) "GradCurr1" FROM TeamMembers, Teams, Members WHERE TeamMembers.TeamID = Teams.TeamID AND Members.MemberID = TeamMembers.MemberID AND Teams.Semester = "FA18" AND Members.GradSemester = "Fall" AND Members.GradYear = "2018"', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
