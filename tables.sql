@@ -181,7 +181,7 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Cameron', 'Badenoch', 'Male', NULL, NULL, NULL, 'cameronbadenoch@discover.com', 10000000, 1),
 ('Krystal', 'McIntyre-Miller', 'Female', NULL, NULL, NULL, 'krystalmcintyremiller@discover.com', 10000000, 1),
 ('Nicholas', 'Rosso', 'Male', NULL, NULL, NULL, 'nicholasrosso@discover.com', 10000000, 1),
-('Tyler', 'Havener', 'Male', NULL, NULL, NULL, 'tylerhavener@discover.com', 10000000, 1),
+('Tyler', 'Havener', 'Male', NULL, NULL, NULL, 'tylerhavener@discover.com', 10000000, 1);
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS', '2019-2-12', 1),
@@ -225,7 +225,7 @@ INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 38),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 39),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 40),
-('Former Intern', 'Inactive', 'Not brought back', '2019-2-14', 41),
+('Former Intern', 'Inactive', 'Not brought back', '2019-2-14', 41);
 
 INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, LabID) VALUES
 (1, 'Scurvy', 1, 'FA18', 1),
@@ -237,7 +237,7 @@ INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, LabID) VALUES
 (7, 'Team 777', 7, 'FA18', 1),
 (8, 'Atlas', 1, 'SP19', 1),
 (9, 'Dragon Riders', 2, 'SP19', 1),
-(10, 'Team3', 3, 'SP19', 1),
+(10, 'Triton', 3, 'SP19', 1),
 (11, 'Team4', 4, 'SP19', 1),
 (12, 'Team5', 5, 'SP19', 1),
 (13, 'Team6', 6, 'SP19', 1),
@@ -250,6 +250,7 @@ INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, LabID) VALUES
 (20, 'Team AR Matey', 13, 'SP19', 1);
 
 INSERT INTO TeamMembers(TeamID, MemberID) VALUES
+(1, 1),
 (18, 1),
 (18, 2),
 (18, 3),
@@ -264,7 +265,8 @@ INSERT INTO Projects(Name, Type, Description, TeamID) VALUES
 ('Mgmt Approal/Delegation Tool', 'Website', 'One site for management to get all todo items needing action/decision', 5),
 ('NIU Innovation App', 'Mobile App', 'Create app that allows students to connect within the space', 6),
 ('Change log rewrite', 'Website', 'Create change log to improve tracking of production impacting projects', 7),
-('code_orange website & Management Approval Tool', 'Website', 'Continue Optimizing and fixing code_orange website', 8),
-('Feedback Radar/ Valkyrie', 'Mobile App', 'Combine Feedback App with Valkyrie', 9),
-('Talent Acquisiton', 'Mobile App', '', 10),
+('MAP/code_orange Website', 'Website', 'Manager Approval Tool and code_orange website completion.', 8),
+('Feedback Radar/ Valkyrie', 'Mobile App', 'One stop shop application for intern information.', 9),
+('Talent Acquisiton', 'Mobile App', 'Job fair application that stores candidate infomation.', 10),
+('Vendor Contact History', 'Website', 'Application that manages vendor information', 11),
 ('Applicant Tracking & Dashboard', 'Website', 'Keep track of all applicants, interns, and hires from the code_orange project', 18);
