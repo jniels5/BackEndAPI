@@ -365,8 +365,8 @@ app.post('/checkin', function(request,response) {
               });
           }
           else {
-            var holding = response.json();
-            connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'First semester at code_orange', '2019-3-28', '" + holding.MemberID + "')")
+            var holding = result[0].MemberID;
+            connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'First semester at code_orange', '2019-3-28', '" + holding + "')")
             if(error) {
               response.json({
                 role_status: "FAILED"
