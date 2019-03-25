@@ -328,7 +328,13 @@ app.get('/email/get', function(request,response) {
   });
 });
 
-//Enters guest info into db
+//
+//  Atlas - Backend API Calls for code_orange website
+//
+
+
+
+// Checkin page for guests
 app.post('/checkin', function(request,response) {
   //used in connection.query
   var entry = {
@@ -346,7 +352,7 @@ app.post('/checkin', function(request,response) {
   connection.query('INSERT INTO Members set ?', entry, function (error, results, fields) {
         if(error) {
             response.json({
-              checkin_status: "failed 1",
+              checkin_status: "Insert Failed",
               checkin_error: error,
             });
         }
@@ -354,14 +360,13 @@ app.post('/checkin', function(request,response) {
           connection.query('SELECT MemberID FROM Members WHERE FirstName = "' + entry.FirstName + '" AND LastName = "' + entry.LastName + '"', function (error, results, fields) {
           if(error) {
               response.json({
-                checkin_status: "failed 2",
+                checkin_status: "Testing Failed",
                 checkin_error: error,
               });
           }
           else {
-            response.json({
-              checkin_status: "success"
-            });
+            var holding = response.json();
+            connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'First semester at code_orange', '2019-3-28', '" + holding.MemberID + "')")
           }
         });
       }

@@ -141,8 +141,7 @@ INSERT INTO Assets(AssetID, Type, Description, IsImaged, LabID) VALUES
 (20100464, 'Laptop', 'Apple MacBook Pro', 1, 1),
 (20100217, 'Laptop', 'Apple MacBook Pro', 1, 1),
 (20108969, 'Laptop', 'Apple MacBook Pro', 1, 1),
-(20108939, 'Laptop', 'Apple MacBook Pro', 1, 1),
-(12345678, 'Laptop', 'Apple MacBook Pro', 1, 1);
+(20108939, 'Laptop', 'Apple MacBook Pro', 1, 1);
 
 INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
 ('Jeremy', 'Nielson', 'Male', 'Spring', 2019, 'saktirshinu@gmail.com', 'jeremynielson@discover.com', 20100206, 1),
