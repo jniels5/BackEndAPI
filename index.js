@@ -391,7 +391,7 @@ app.get('/select/teamPageData/:semester', function(request,response) {
                     'Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, ' +
                     'Projects.RDS FROM Members JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                     'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID JOIN Projects ON Projects.TeamID = Teams.TeamID ' +
-                    ' AND Teams.Semester = ' + request.params.semester, function (error, results, fields) {
+                    ' AND Teams.Semester = "' + request.params.semester + '"', function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
@@ -408,7 +408,7 @@ app.get('/select/table/Members/team/:team/:semester', function(request,response)
                     'Projects.RDS FROM Members JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                     'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID JOIN Projects ON Projects.TeamID = Teams.TeamID ' +
                     'WHERE Teams.TeamID = ' + request.params.team +
-                    ' AND Teams.Semester = ' + request.params.semester + ' ORDER BY FirstName', function (error, results, fields) {
+                    ' AND Teams.Semester = "' + request.params.semester + '" ORDER BY FirstName', function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
