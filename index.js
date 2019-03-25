@@ -386,8 +386,19 @@ app.post('/checkin', function(request,response) {
   });
 
 // Select Info for Teams page
-app.get('/select/table/Members/team/:team', function(request,response) {
-  connection.query('SELECT Members.FirstName, Members.LastName, Teams.TeamName, Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, Projects.RDS FROM Members, Teams, Projects WHERE Teams.TeamID = ' + request.params.team + ' AND ORDER BY FirstName', function (error, results, fields) {
+app.get('/select/table/Members/team/SP19/:team', function(request,response) {
+  connection.query('SELECT Members.FirstName, Members.LastName, Teams.TeamName, Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, Projects.RDS FROM Members, Teams, Projects WHERE Teams.TeamID = ' + request.params.team + ' AND Teams.Semester = "SP19" ORDER BY FirstName', function (error, results, fields) {
+        if(error) {
+            response.json({select_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+app.get('/select/table/Members/team/FA18/:team', function(request,response) {
+  connection.query('SELECT Members.FirstName, Members.LastName, Teams.TeamName, Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, Projects.RDS FROM Members, Teams, Projects WHERE Teams.TeamID = ' + request.params.team + ' AND Teams.Semester = "FA18" ORDER BY FirstName', function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
