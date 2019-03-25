@@ -387,7 +387,7 @@ app.post('/checkin', function(request,response) {
 
 // Select Info for Teams page
 app.get('/select/table/Members/team/SP19/:team', function(request,response) {
-  connection.query('SELECT Members.FirstName, Members.LastName, Teams.TeamName, Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, Projects.RDS FROM Members, Teams, Projects WHERE Teams.TeamID = ' + request.params.team + ' AND Teams.Semester = "SP19" ORDER BY FirstName', function (error, results, fields) {
+  connection.query('SELECT Members.FirstName, Members.LastName, Teams.TeamName, Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, Projects.RDS FROM Members JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID JOIN Teams ON Teams.TeamID = TeamMembers.TeamID JOIN Projects ON Projects.TeamID = Teams.TeamID WHERE Teams.TeamID = ' + request.params.team + ' AND Teams.Semester = "SP19" ORDER BY FirstName', function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
@@ -398,7 +398,7 @@ app.get('/select/table/Members/team/SP19/:team', function(request,response) {
 });
 
 app.get('/select/table/Members/team/FA18/:team', function(request,response) {
-  connection.query('SELECT Members.FirstName, Members.LastName, Teams.TeamName, Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, Projects.RDS FROM Members, Teams, Projects WHERE Teams.TeamID = ' + request.params.team + ' AND Teams.Semester = "FA18" ORDER BY FirstName', function (error, results, fields) {
+  connection.query('SELECT Members.FirstName, Members.LastName, Teams.TeamName, Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, Projects.RDS FROM Members JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID JOIN Teams ON Teams.TeamID = TeamMembers.TeamID JOIN Projects ON Projects.TeamID = Teams.TeamID WHERE Teams.TeamID = ' + request.params.team + ' AND Teams.Semester = "FA18" ORDER BY FirstName', function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
