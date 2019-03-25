@@ -365,8 +365,8 @@ app.post('/checkin', function(request,response) {
               });
           }
           else {
-            var holding = result[0].MemberID;
-            connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'First semester at code_orange', '2019-3-28', '" + holding + "')")
+            var holding = results[0].MemberID;
+            connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'First semester at code_orange', '2019-3-28', '" + holding + "')", function (error, results, fields) {
             if(error) {
               response.json({
                 role_status: "FAILED"
@@ -378,9 +378,10 @@ app.post('/checkin', function(request,response) {
                   role_status: "SUCCESS"
                 });
             }
-          }
+            });
+          };
         });
-      }
+      };
     });
   });
 
