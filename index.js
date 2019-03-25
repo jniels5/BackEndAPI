@@ -385,6 +385,22 @@ app.post('/checkin', function(request,response) {
     });
   });
 
+// Select Info for Teams page
+app.get('/select/table/Members/team/:team', function(request,response) {
+  connection.query('SELECT Members.FirstName, Members.LastName, Teams.TeamName, Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, Projects.RDS FROM Members, Teams, Projects WHERE Teams.TeamID = ' + request.params.team + ' AND ORDER BY FirstName', function (error, results, fields) {
+        if(error) {
+            response.json({select_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+//
+// RUNFILE Section . . .
+//
+
 //runs a specified sql file (**Needs error handling**)
 app.get('/runfile/:file', function(request,response) {
   try{
