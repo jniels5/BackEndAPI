@@ -144,48 +144,86 @@ INSERT INTO Assets(AssetID, Type, Description, IsImaged, LabID) VALUES
 (20108969, 'Laptop', 'Apple MacBook Pro', 1, 1),
 (20108939, 'Laptop', 'Apple MacBook Pro', 1, 1);
 
+/* FA18 Starting Interns */
 INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
 ('Jeremy', 'Nielson', 'Male', 'Spring', 2019, 'saktirshinu@gmail.com', 'jeremynielson@discover.com', 20100206, 1),
 ('Sean', 'Wallace', 'Male', 'Spring', 2020, 'walis846@gmail.com', 'seanwallace@discover.com', 20100464, 1),
 ('Cole', 'Braswell', 'Male', 'Spring', 2020, 'braswellcole@outlook.com', 'colebraswell@discover.com', 20100217, 1),
 ('Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
 ('Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
+
 ('Mike', 'Brenner', 'Male', NULL, NULL, NULL, 'michaelbrenner@discover.com', 10000000, 1),
 ('Brady', 'Goldsworthy', 'Male', 'Spring', 2019, NULL, 'bradygoldsworthy@discover.com', 10000000, 1),
 ('Justin', 'Dupre', 'Male', NULL , NULL, NULL, 'justindupre@discover.com', 10000000, 1),
 ('Bradley', 'Protano', 'Male', 'Fall', 2018, NULL, 'bradleyprotano@discover.com', 10000000, 1),
 ('Katie', 'Berendt', 'Female', 'Fall', 2019, NULL, 'katieberendt@discover.com', 10000000, 1),
+
 ('Jackie', 'Salim', 'Female', 'Spring', 2019, NULL,'jacquelinesalim@discover.com', 10000000, 1),
 ('Nahom', 'Gebremichael', 'Male', NULL, NULL, NULL, 'nahomgebremichael@discover.com', 10000000, 1),
-('Thomas', 'Franczak', 'Male', NULL, NULL, NULL, 'thomasfranczak@discover.com', 10000000, 1),
+('Thomas', 'Franczak', 'Male', NULL, NULL, 'tfranczak@niu.edu', 'thomasfranczak@discover.com', 10000000, 1),
 ('Kyle', 'Wilson', 'Male', NULL, NULL, NULL, 'kylewilson@discover.com', 10000000, 1),
-('Ben', 'Lane', 'Male', NULL, NULL, NULL, 'benlane@discover.com', 10000000, 1),
-('Kevin', 'Miyata', 'Male', NULL, NULL, NULL, 'kevimiyata@discover.com', 10000000, 1),
-('James', 'Bonasera', 'Male', NULL, NULL, NULL, 'jamesbonasera@discover.com', 10000000, 1),
+('Ben', 'Lane', 'Male', NULL, NULL, 'LiftPort@gmail.com', 'benlane@discover.com', 10000000, 1),
+
+('Kevin', 'Miyata', 'Male', NULL, NULL, 'kjm015@yahoo.com', 'kevinmiyata@discover.com', 10000000, 1),
+('James', 'Bonasera', 'Male', NULL, NULL, 'jabonasera@gmail.com', 'jamesbonasera@discover.com', 10000000, 1),
 ('Kris', 'Schrader', 'Female', NULL, NULL, NULL, 'krisschrader@discover.com', 10000000, 1),
 ('Samuel', 'Rutledge', 'Male', NULL, NULL, NULL, 'samuelrutledge@discover.com', 10000000, 1),
 ('Nicholas', 'Swanson', 'Male', NULL, NULL, NULL, 'nicholasswanson@discover.com', 10000000, 1),
+
 ('Alex', 'Boyle', 'Male', NULL, NULL, NULL, 'alexboyle@discover.com', 10000000, 1),
-('Amy', 'Jakopin', 'Female', NULL, NULL, NULL, 'amyjakopin@discover.com', 10000000, 1),
+('Amy', 'Jakopin', 'Female', NULL, NULL, 'amyjakopin@gmail.com', 'amyjakopin@discover.com', 10000000, 1),
 ('Andrew', 'Slade', 'Male', NULL, NULL, NULL, 'andrewslade@discover.com', 10000000, 1),
-('Kristen', 'Arms', 'Female', NULL, NULL, NULL, 'kristenarms@discover.com', 10000000, 1),
-('Shiva', 'Singh', 'Male', NULL, NULL, NULL, 'shivasingh@discover.com', 10000000, 1),
-('Dylan', 'Drake', 'Male', NULL, NULL, NULL, 'dylandrake@discover.com', 10000000, 1),
-('Jane', 'Swift', 'Female', NULL, NULL, NULL, 'janeswift@discover.com', 10000000, 1),
+('Kristen', 'Arms', 'Female', NULL, NULL, 'kristena.etruscan@gmail.com', 'kristenarms@discover.com', 10000000, 1),
+('Shiva', 'Singh', 'Male', NULL, NULL, 'shivasingh@outlook.com', 'shivasingh@discover.com', 10000000, 1),
+
+('Dylan', 'Drake', 'Male', NULL, NULL, 'dyldrake21@gmail.com', 'dylandrake@discover.com', 10000000, 1),
+('Jane', 'Swift', 'Female', NULL, NULL, 'j.e.swift711@gmail.com', 'janeswift@discover.com', 10000000, 1),
 ('Kwaku', 'Agyemang', 'Male', NULL, NULL, NULL, 'kwakuagyemang@discover.com', 10000000, 1),
 ('Nathanael', 'Isola', 'Male', NULL, NULL, NULL, 'nathanaelisola@discover.com', 10000000, 1),
 ('Quinton', 'Lee', 'Male', NULL, NULL, NULL, 'quintonlee@discover.com', 10000000, 1),
+
 ('Adam', 'Remes', 'Male', NULL, NULL, NULL, 'adamremes@discover.com', 10000000, 1),
-('Elly', 'Jdaidany', 'Male', NULL, NULL, NULL, 'ellyjdaidany@discover.com', 10000000, 1),
-('Jessica', 'Guenther', 'Female', NULL, NULL, NULL, 'jessicaguenther@discover.com', 10000000, 1),
+('Elly', 'Jdaidany', 'Male', NULL, NULL, 'ellyjda@gmail.com', 'ellyjdaidany@discover.com', 10000000, 1),
+('Jessica', 'Guenther', 'Female', NULL, NULL, 'jessica.h.guenther@gmail.com', 'jessicaguenther@discover.com', 10000000, 1),
 ('Spencer', 'Yoder', 'Male', NULL, NULL, NULL, 'spenceryoder@discover.com', 10000000, 1),
 ('Vishy', 'Singh', 'Male', NULL, NULL, NULL, 'vishysingh@discover.com', 10000000, 1),
+
 ('Nicholas', 'Glaviano', 'Male', NULL, NULL, NULL, 'nicholasglaviano@discover.com', 10000000, 1),
 ('Javier', 'Gomez', 'Male', NULL, NULL, NULL, 'javiergomez@discover.com', 10000000, 1),
 ('Cameron', 'Badenoch', 'Male', NULL, NULL, NULL, 'cameronbadenoch@discover.com', 10000000, 1),
 ('Krystal', 'McIntyre-Miller', 'Female', NULL, NULL, NULL, 'krystalmcintyremiller@discover.com', 10000000, 1),
 ('Nicholas', 'Rosso', 'Male', NULL, NULL, NULL, 'nicholasrosso@discover.com', 10000000, 1),
+
 ('Tyler', 'Havener', 'Male', NULL, NULL, NULL, 'tylerhavener@discover.com', 10000000, 1);
+
+/* SP19 Starting Interns */
+INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
+('Alan', 'Fikar', 'Male', NULL, NULL, 'alan.fikar@gmail.com', 'alanfikar@discover.com', 10000000, 1),
+('Matt', 'Blauw', 'Male', NULL, NULL, 'matthewjblauw@gmail.com', 'mattblauw@discover.com', 10000000, 1),
+('Patrick', 'Klesyk', 'Male', NULL, NULL, 'pklesyk@gmail.com', 'patrickklesyk@discover.com', 10000000, 1),
+('Lucas', 'Damler', 'Male', NULL, NULL, 'ldamler@gmail.com', 'lucasdamler@discover.com', 10000000, 1),
+
+('Purvin', 'Patel', 'Male', NULL, NULL, 'purvin08@ieee.org', 'purvinpatel@discover.com', 10000000, 1),
+('Smit', 'Patel', 'Male', NULL, NULL, 'mrsmitp16@gmail.com', 'smitpatel@discover.com', 10000000, 1),
+('Connor', 'Petruzzi', 'Male', NULL, NULL, 'connor61095@comcast.net', 'connorpetruzzi@discover.com', 10000000, 1),
+('Connor', 'Pekovic', 'Male', NULL, NULL, 'connorpekovic1@gmail.com', 'connorpekovic@discover.com', 10000000, 1),
+
+('Jennifer', 'Ho', 'Female', NULL, NULL, 'jennifer.ho30@gmail.com', 'jenniferho@discover.com', 10000000, 1),
+('Akshay', 'Patel', 'Male', NULL, NULL, 'ap95@ieee.org', 'akshaypatel@discover.com', 10000000, 1),
+('Cody', 'Farrey', 'Male', NULL, NULL, 'codyfarrey@gmail.com', 'codyfarrey@discover.com', 10000000, 1),
+('Noah', 'Miller', 'Male', NULL, NULL, 'nmillercontact@gmail.com', 'noahmiller@discover.com', 10000000, 1),
+
+('Kevin', 'Kang', 'Male', NULL, NULL, 'kevinfkang@gmail.com', 'kevinkang@discover.com', 10000000, 1),
+('Marco', 'Martinez', 'Male', NULL, NULL, 'marco.antoni.martinez@gmail.com', 'marcomartinez@discover.com', 10000000, 1),
+('Eduardo', 'Leanos', 'Male', NULL, NULL, 'edleanos@gmail.com', 'eduardoleanos@discover.com', 10000000, 1),
+('Cody', 'McAntire', 'Male', NULL, NULL, 'z1859456@students.niu.edu', 'codymcantire@discover.com', 10000000, 1),
+
+('Axil', 'Patel', 'Male', NULL, NULL, 'axil95@gmail.com', 'axilpatel@discover.com', 10000000, 1),
+('Phillip', 'Boffa', 'Male', NULL, NULL, 'phillipboffa@gmail.com', 'phillipboffa@discover.com', 10000000, 1),
+('Aaron', 'Jones', 'Male', NULL, NULL, 'aaroncjones17@gmail.com', 'aaronjones@discover.com', 10000000, 1),
+('Anthony', 'Calcagno', 'Male', NULL, NULL, 'z1829706@students.niu.edu', 'anthonycalcagno@discover.com', 10000000, 1),
+
+
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS', '2019-2-12', 1),

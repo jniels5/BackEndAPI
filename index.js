@@ -387,7 +387,7 @@ app.post('/checkin', function(request,response) {
 
 // Select Info for Teams page
 app.get('/select/teamPageData/:semester', function(request,response) {
-  connection.query('SELECT Teams.TeamName, Teams.Semester, Teams.TeamNumber, ' +
+  connection.query('SELECT Teams.TeamName, Teams.Semester, Teams.TeamNumber, Teams.PhotoPath' +
                     'Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, ' +
                     'Projects.RDS FROM Teams JOIN Projects ON Projects.TeamID = Teams.TeamID ' +
                     ' AND Teams.Semester = "' + request.params.semester + '"', function (error, results, fields) {
