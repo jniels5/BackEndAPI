@@ -156,8 +156,9 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Brady', 'Goldsworthy', 'Male', 'Spring', 2019, NULL, 'bradygoldsworthy@discover.com', 10000000, 1),
 ('Justin', 'Dupre', 'Male', NULL , NULL, NULL, 'justindupre@discover.com', 10000000, 1),
 ('Bradley', 'Protano', 'Male', 'Fall', 2018, NULL, 'bradleyprotano@discover.com', 10000000, 1),
-('Katie', 'Berendt', 'Female', 'Fall', 2019, NULL, 'katieberendt@discover.com', 10000000, 1),
+('Katie', 'Berendt', 'Female', 'Fall', 2019, 'kber0167@gmail.com', 'katieberendt@discover.com', 10000000, 1),
 
+/*10*/
 ('Jackie', 'Salim', 'Female', 'Spring', 2019, NULL,'jacquelinesalim@discover.com', 10000000, 1),
 ('Nahom', 'Gebremichael', 'Male', NULL, NULL, NULL, 'nahomgebremichael@discover.com', 10000000, 1),
 ('Thomas', 'Franczak', 'Male', NULL, NULL, 'tfranczak@niu.edu', 'thomasfranczak@discover.com', 10000000, 1),
@@ -170,7 +171,8 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Samuel', 'Rutledge', 'Male', NULL, NULL, NULL, 'samuelrutledge@discover.com', 10000000, 1),
 ('Nicholas', 'Swanson', 'Male', NULL, NULL, NULL, 'nicholasswanson@discover.com', 10000000, 1),
 
-('Alex', 'Boyle', 'Male', NULL, NULL, NULL, 'alexboyle@discover.com', 10000000, 1),
+/*20*/
+('Alex', 'Boyle', 'Male', NULL, NULL, 'aboyle75@gmail.com', 'alexboyle@discover.com', 10000000, 1),
 ('Amy', 'Jakopin', 'Female', NULL, NULL, 'amyjakopin@gmail.com', 'amyjakopin@discover.com', 10000000, 1),
 ('Andrew', 'Slade', 'Male', NULL, NULL, NULL, 'andrewslade@discover.com', 10000000, 1),
 ('Kristen', 'Arms', 'Female', NULL, NULL, 'kristena.etruscan@gmail.com', 'kristenarms@discover.com', 10000000, 1),
@@ -178,10 +180,11 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 
 ('Dylan', 'Drake', 'Male', NULL, NULL, 'dyldrake21@gmail.com', 'dylandrake@discover.com', 10000000, 1),
 ('Jane', 'Swift', 'Female', NULL, NULL, 'j.e.swift711@gmail.com', 'janeswift@discover.com', 10000000, 1),
-('Kwaku', 'Agyemang', 'Male', NULL, NULL, NULL, 'kwakuagyemang@discover.com', 10000000, 1),
+('Kwaku', 'Agyemang', 'Male', NULL, NULL, 'mynhiz@gmail.com', 'kwakuagyemang@discover.com', 10000000, 1),
 ('Nathanael', 'Isola', 'Male', NULL, NULL, NULL, 'nathanaelisola@discover.com', 10000000, 1),
 ('Quinton', 'Lee', 'Male', NULL, NULL, NULL, 'quintonlee@discover.com', 10000000, 1),
 
+/*30*/
 ('Adam', 'Remes', 'Male', NULL, NULL, NULL, 'adamremes@discover.com', 10000000, 1),
 ('Elly', 'Jdaidany', 'Male', NULL, NULL, 'ellyjda@gmail.com', 'ellyjdaidany@discover.com', 10000000, 1),
 ('Jessica', 'Guenther', 'Female', NULL, NULL, 'jessica.h.guenther@gmail.com', 'jessicaguenther@discover.com', 10000000, 1),
@@ -190,10 +193,11 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 
 ('Nicholas', 'Glaviano', 'Male', NULL, NULL, NULL, 'nicholasglaviano@discover.com', 10000000, 1),
 ('Javier', 'Gomez', 'Male', NULL, NULL, NULL, 'javiergomez@discover.com', 10000000, 1),
-('Cameron', 'Badenoch', 'Male', NULL, NULL, NULL, 'cameronbadenoch@discover.com', 10000000, 1),
-('Krystal', 'McIntyre-Miller', 'Female', NULL, NULL, NULL, 'krystalmcintyremiller@discover.com', 10000000, 1),
-('Nicholas', 'Rosso', 'Male', NULL, NULL, NULL, 'nicholasrosso@discover.com', 10000000, 1),
+('Cameron', 'Badenoch', 'Male', NULL, NULL, 'cam_badenoch10@live.com', 'cameronbadenoch@discover.com', 10000000, 1),
+('Krystal', 'McIntyre-Miller', 'Female', NULL, NULL, 'z1779194@students.niu.edu', 'krystalmcintyremiller@discover.com', 10000000, 1),
+('Nicholas', 'Rosso', 'Male', NULL, NULL, 'nicholasrosso@comcast.net', 'nicholasrosso@discover.com', 10000000, 1),
 
+/*40*/
 ('Tyler', 'Havener', 'Male', NULL, NULL, NULL, 'tylerhavener@discover.com', 10000000, 1);
 
 /* SP19 Starting Interns */
@@ -221,7 +225,24 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Axil', 'Patel', 'Male', NULL, NULL, 'axil95@gmail.com', 'axilpatel@discover.com', 10000000, 1),
 ('Phillip', 'Boffa', 'Male', NULL, NULL, 'phillipboffa@gmail.com', 'phillipboffa@discover.com', 10000000, 1),
 ('Aaron', 'Jones', 'Male', NULL, NULL, 'aaroncjones17@gmail.com', 'aaronjones@discover.com', 10000000, 1),
-('Anthony', 'Calcagno', 'Male', NULL, NULL, 'z1829706@students.niu.edu', 'anthonycalcagno@discover.com', 10000000, 1);
+('Anthony', 'Calcagno', 'Male', NULL, NULL, 'z1829706@students.niu.edu', 'anthonycalcagno@discover.com', 10000000, 1),
+
+('Zachary', 'Hueneke', 'Male', NULL, NULL, 'zhueneke@gmail.com', 'zacharyhueneke@discover.com', 10000000, 1),
+('Crystal', 'Ritchey', 'Female', NULL, NULL, 'crystalmritchey@gmail.com', 'crystalritchey@discover.com', 10000000, 1),
+('Dean', 'LaBarbera', 'Male', NULL, NULL, 'deanmichaellabarbera@hotmail.com', 'deanbarbera@discover.com', 10000000, 1),
+('Josh', 'Ruge', 'Male', NULL, NULL, 'joshruge@gmail.com', 'joshruge@discover.com', 10000000, 1),
+
+('Jeremy', 'Torossian', 'Male', NULL, NULL, 'jtorossiananimation@gmail.com', 'jeremytorossian@discover.com', 10000000, 1),
+('Tanner', 'Martin', 'Male', NULL, NULL, 'z1800126@students.niu.edu', 'tannermartin@discover.com', 10000000, 1),
+('Aleena', 'Ahmad', 'Female', NULL, NULL, 'aleenaahmed85@gmail.com', 'aleenaahmed@discover.com', 10000000, 1),
+('Daniel', "O'Malley", 'Male', NULL, NULL, 'daniel.omalley@live.com', 'danielomalley@discover.com', 10000000, 1),
+
+('Byron', 'Hogan', 'Male', NULL, NULL, 'Z1825194@students.niu.edu', 'hoganbyron@discover.com', 10000000, 1),
+('Charles', 'Dawes', 'Male', NULL, NULL, 'charliedawes@yahoo.com', 'charlesdawes@discover.com', 10000000, 1),
+('Samuel', 'Piecz', 'Male', NULL, NULL, 'samuel.piecz@gmail.com', 'samuelpiecz@discover.com', 10000000, 1),
+('Adelaide', 'Adams', 'Male', NULL, NULL, 'adelaide527@gmail.com', 'adelaideadams@discover.com', 10000000, 1),
+
+
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS', '2019-2-12', 1),
@@ -297,6 +318,17 @@ INSERT INTO TeamMembers(TeamID, MemberID) VALUES
 (5, 26), (5, 27), (5, 28), (5, 29), (5, 30),
 (6, 31), (6, 32), (6, 33), (6, 34), (6, 35), (6, 36),
 (7, 37), (7, 38), (7, 39), (7, 40), (7, 41),
+
+/*SP19*/
+(8, 42), (8, 43), (8, 44), (8, 45), (8, 26), (8, 27),
+(9, 32), (9, 46), (9, 47), (9, 48), (9, 49), (9, 33), (9, 13),
+(10, 50), (10, 51), (10, 52), (10, 53), (10, 15), (10, 16),
+(11, 54), (11, 55), (11, 56), (11, 57), (11, 25), (11, 24),
+(12, 58), (12, 59), (12, 60), (12, 61), (12, 18), (12, 22),
+(13, 62), (13, 63), (13, 64), (13, 65), (13, 28), (13, 21),
+(14, 66), (14, 67), (14, 68), (14, 69), (14, 38), (14, 39),
+(15, 70), (15, 71), (15, 72), (15, 73), (15, 40), (15, 10),
+
 (18, 1), (18, 2), (18, 3), (18, 4), (18, 5);
 
 INSERT INTO Projects(Name, Type, Description, Paragraph, FrontEnd, BackEnd, RDS, TeamID) VALUES
