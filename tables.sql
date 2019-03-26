@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Projects;
+5DROP TABLE IF EXISTS Projects;
 DROP TABLE IF EXISTS TeamMembers;
 DROP TABLE IF EXISTS Teams;
 DROP TABLE IF EXISTS Semesters;
@@ -152,53 +152,51 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
 ('Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
 
-('Mike', 'Brenner', 'Male', NULL, NULL, NULL, 'michaelbrenner@discover.com', 10000000, 1),
-('Brady', 'Goldsworthy', 'Male', 'Spring', 2019, NULL, 'bradygoldsworthy@discover.com', 10000000, 1),
-('Justin', 'Dupre', 'Male', NULL , NULL, NULL, 'justindupre@discover.com', 10000000, 1),
+('Brady', 'Goldsworthy', 'Male', 'Spring', 2019, 'goldsworthybrady@gmail.com', 'bradygoldsworthy@discover.com', 10000000, 1),
+('Justin', 'Dupre', 'Male', NULL , NULL, 'jdupre@niu.edu', 'justindupre@discover.com', 10000000, 1),
 ('Bradley', 'Protano', 'Male', 'Fall', 2018, NULL, 'bradleyprotano@discover.com', 10000000, 1),
 ('Katie', 'Berendt', 'Female', 'Fall', 2019, 'kber0167@gmail.com', 'katieberendt@discover.com', 10000000, 1),
+('Jackie', 'Salim', 'Female', 'Spring', 2019, 'z1761458@students.niu.edu','jacquelinesalim@discover.com', 10000000, 1),
 
 /*10*/
-('Jackie', 'Salim', 'Female', 'Spring', 2019, NULL,'jacquelinesalim@discover.com', 10000000, 1),
-('Nahom', 'Gebremichael', 'Male', NULL, NULL, NULL, 'nahomgebremichael@discover.com', 10000000, 1),
+('Nahom', 'Gebremichael', 'Male', NULL, NULL, 'nahomgm@live.com', 'nahomgebremichael@discover.com', 10000000, 1),
 ('Thomas', 'Franczak', 'Male', NULL, NULL, 'tfranczak@niu.edu', 'thomasfranczak@discover.com', 10000000, 1),
 ('Kyle', 'Wilson', 'Male', NULL, NULL, NULL, 'kylewilson@discover.com', 10000000, 1),
 ('Ben', 'Lane', 'Male', NULL, NULL, 'LiftPort@gmail.com', 'benlane@discover.com', 10000000, 1),
-
 ('Kevin', 'Miyata', 'Male', NULL, NULL, 'kjm015@yahoo.com', 'kevinmiyata@discover.com', 10000000, 1),
+
 ('James', 'Bonasera', 'Male', NULL, NULL, 'jabonasera@gmail.com', 'jamesbonasera@discover.com', 10000000, 1),
-('Kris', 'Schrader', 'Female', NULL, NULL, NULL, 'krisschrader@discover.com', 10000000, 1),
+('Kris', 'Schrader', 'Female', NULL, NULL, 'krissschrader@gmail.com', 'krisschrader@discover.com', 10000000, 1),
 ('Samuel', 'Rutledge', 'Male', NULL, NULL, NULL, 'samuelrutledge@discover.com', 10000000, 1),
 ('Nicholas', 'Swanson', 'Male', NULL, NULL, NULL, 'nicholasswanson@discover.com', 10000000, 1),
+('Alex', 'Boyle', 'Male', NULL, NULL, 'aboyle75@gmail.com', 'alexboyle@discover.com', 10000000, 1),
 
 /*20*/
-('Alex', 'Boyle', 'Male', NULL, NULL, 'aboyle75@gmail.com', 'alexboyle@discover.com', 10000000, 1),
 ('Amy', 'Jakopin', 'Female', NULL, NULL, 'amyjakopin@gmail.com', 'amyjakopin@discover.com', 10000000, 1),
 ('Andrew', 'Slade', 'Male', NULL, NULL, NULL, 'andrewslade@discover.com', 10000000, 1),
 ('Kristen', 'Arms', 'Female', NULL, NULL, 'kristena.etruscan@gmail.com', 'kristenarms@discover.com', 10000000, 1),
 ('Shiva', 'Singh', 'Male', NULL, NULL, 'shivasingh@outlook.com', 'shivasingh@discover.com', 10000000, 1),
-
 ('Dylan', 'Drake', 'Male', NULL, NULL, 'dyldrake21@gmail.com', 'dylandrake@discover.com', 10000000, 1),
+
 ('Jane', 'Swift', 'Female', NULL, NULL, 'j.e.swift711@gmail.com', 'janeswift@discover.com', 10000000, 1),
 ('Kwaku', 'Agyemang', 'Male', NULL, NULL, 'mynhiz@gmail.com', 'kwakuagyemang@discover.com', 10000000, 1),
 ('Nathanael', 'Isola', 'Male', NULL, NULL, NULL, 'nathanaelisola@discover.com', 10000000, 1),
-('Quinton', 'Lee', 'Male', NULL, NULL, NULL, 'quintonlee@discover.com', 10000000, 1),
+('Quinton', 'Lee', 'Male', NULL, NULL, 'quivistis@gmail.com', 'quintonlee@discover.com', 10000000, 1),
+('Adam', 'Remes', 'Male', NULL, NULL, 'adam.j.remes@gmail.com', 'adamremes@discover.com', 10000000, 1),
 
 /*30*/
-('Adam', 'Remes', 'Male', NULL, NULL, NULL, 'adamremes@discover.com', 10000000, 1),
 ('Elly', 'Jdaidany', 'Male', NULL, NULL, 'ellyjda@gmail.com', 'ellyjdaidany@discover.com', 10000000, 1),
 ('Jessica', 'Guenther', 'Female', NULL, NULL, 'jessica.h.guenther@gmail.com', 'jessicaguenther@discover.com', 10000000, 1),
 ('Spencer', 'Yoder', 'Male', NULL, NULL, NULL, 'spenceryoder@discover.com', 10000000, 1),
-('Vishy', 'Singh', 'Male', NULL, NULL, NULL, 'vishysingh@discover.com', 10000000, 1),
-
+('Vishy', 'Singh', 'Male', NULL, NULL, 'vishysingh@outlook.com', 'vishysingh@discover.com', 10000000, 1),
 ('Nicholas', 'Glaviano', 'Male', NULL, NULL, NULL, 'nicholasglaviano@discover.com', 10000000, 1),
+
 ('Javier', 'Gomez', 'Male', NULL, NULL, NULL, 'javiergomez@discover.com', 10000000, 1),
 ('Cameron', 'Badenoch', 'Male', NULL, NULL, 'cam_badenoch10@live.com', 'cameronbadenoch@discover.com', 10000000, 1),
 ('Krystal', 'McIntyre-Miller', 'Female', NULL, NULL, 'z1779194@students.niu.edu', 'krystalmcintyremiller@discover.com', 10000000, 1),
 ('Nicholas', 'Rosso', 'Male', NULL, NULL, 'nicholasrosso@comcast.net', 'nicholasrosso@discover.com', 10000000, 1),
-
-/*40*/
 ('Tyler', 'Havener', 'Male', NULL, NULL, NULL, 'tylerhavener@discover.com', 10000000, 1);
+/*40*/
 
 /* SP19 Starting Interns */
 INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
@@ -242,7 +240,27 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Samuel', 'Piecz', 'Male', NULL, NULL, 'samuel.piecz@gmail.com', 'samuelpiecz@discover.com', 10000000, 1),
 ('Adelaide', 'Adams', 'Male', NULL, NULL, 'adelaide527@gmail.com', 'adelaideadams@discover.com', 10000000, 1),
 
+('Kevin', 'Pallikunnel', 'Male', NULL, NULL, 'oapallikunnel@gmail.com', 'kevinpallikunnel@discover.com', 10000000, 1),
+('Henry', 'Pelesh', 'Male', NULL, NULL, 'hjpelesh@gmail.com', 'henrypelesh@discover.com', 10000000, 1),
+('Daniel', 'Facundo', 'Male', NULL, NULL, 'daniel8facundo@gmail.com', 'danielfacundo@discover.com', 10000000, 1),
+('Angelo', 'Cruz', 'Male', NULL, NULL, 'angelo.t.cruz1@gmail.com', 'angelocruz@discover.com', 10000000, 1),
 
+('Haley', 'Nuber', 'Male', NULL, NULL, 'haleynuber@gmail.com', 'haleynuber@discover.com', 10000000, 1),
+('Uzair', 'Ahmed', 'Male', NULL, NULL, 'uzairmasood92@hotmail.com', 'uzairahmed@discover.com', 10000000, 1),
+('Yousef', 'Saigh', 'Male', NULL, NULL, 'yousefsaigh@gmail.com', 'yousefsaigh@discover.com', 10000000, 1),
+('Payton', 'Suchomel', 'Male', NULL, NULL, 'suchomelpayton@gmail.com', 'paytonsuchomel@discover.com', 10000000, 1),
+
+('Kenneth', 'Nguyen', 'Male', NULL, NULL, 'kennethtringuyen@gmail.com', 'kennethnguyen@discover.com', 10000000, 1),
+('Dishant', 'Patel', 'Male', NULL, NULL, 'pateldishant17@gmail.com', 'dishantpatel@discover.com', 10000000, 1),
+('Edgar', 'Villafuente', 'Male', NULL, NULL, 'edgar.villafuente96@gmail.com', 'edgarvillafuente@discover.com', 10000000, 1),
+('Aivree', 'Gomez', 'Male', NULL, NULL, 'aivree@live.com', 'aivreegomez@discover.com', 10000000, 1),
+
+('Mohammad', 'Khan', 'Male', NULL, NULL, 'z1819675@students.niu.edu', 'mohammadkhan@discover.com', 10000000, 1),
+('Harshita', 'Kothamasu', 'Female', NULL, NULL, 'harshitakoth11@gmail.com', 'harshitakothamasu@discover.com', 10000000, 1),
+('Gonzalo', 'Pantoja', 'Male', NULL, NULL, 'gonzalopantoja@ieee.org', 'gonzalopantoja@discover.com', 10000000, 1),
+('Adithya', 'Attavane', 'Male', NULL, NULL, 'aattavane1@niu,edu', 'adithyaattavane@discover.com', 10000000, 1),
+
+('Mike', 'Brenner', 'Male', NULL, NULL, NULL, 'michaelbrenner@discover.com', 10000000, 1);
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS', '2019-2-12', 1),
@@ -250,7 +268,6 @@ INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Active', 'First semester at code_orange', '2019-2-14', 3),
 ('Intern', 'Active', 'First semester at code_orange.', '2019-2-14', 4),
 ('Intern', 'Active', 'First semester at code_orange.', '2019-2-14', 5),
-('Product Owner', 'Active', 'Product Owner for Team 11.', '2019-3-19', 5),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 6),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 7),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 8),
@@ -259,34 +276,82 @@ INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 11),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 12),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 13),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 14),
+('Former Intern', 'Unknown', 'Working second semester', '2019-2-14', 14),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 15),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 16),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 17),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 18),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 19),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 20),
+('Former Intern', 'Unknown', 'Worked one semester', '2019-2-14', 19),
+('Former Intern', 'Unknown', 'Worked one semester', '2019-2-14', 20),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 21),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 22),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 23),
+('Former Intern', 'Grad Student', 'Worked one semester. Focusing on degree.', '2019-2-14', 23),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 24),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 25),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 26),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 27),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 28),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 29),
+('Former Intern', 'Unknown', 'Working second semester at code_orange', '2019-2-14', 29),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 30),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 31),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 32),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 33),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 34),
+('Former Intern', 'Unknown', 'Worked one semester', '2019-2-14', 34),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 35),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 36),
-('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 37),
+('Former Intern', 'Unknown', 'Worked one semester', '2019-2-14', 36),
+('Former Intern', 'Unknown', 'Worked one semester', '2019-2-14', 37),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 38),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 39),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 40),
-('Former Intern', 'Inactive', 'Not brought back', '2019-2-14', 41);
+('Former Intern', 'Inactive', 'Not brought back', '2019-2-14', 41),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 42),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 43),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 44),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 45),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 46),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 47),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 48),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 49),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 50),
+('Intern', 'Active', 'Working first semester.', '2019-2-14', 51),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 52),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 53),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 54),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 55),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 56),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 57),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 58),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 59),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 60),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 61),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 62),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 63),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 64),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 65),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 66),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 67),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 68),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 69),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 70),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 71),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 72),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 73),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 74),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 75),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 76),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 77),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 78),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 79),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 80),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 81),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 82),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 83),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 84),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 85),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 86),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 87),
+('Intern', 'Active', 'Working first semester.', '2019-2-15', 88),
+('Product Owner', 'Active', 'Manages Team 11 and the Lab', '2019-2-15', 89);
 
 INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, PhotoPath, LabID) VALUES
 (1, 'Scurvy', 1, 'FA18', '../Assets/Teams/FA18/GroupPhoto/thebestteam (2 of 3) compressed.JPG', 1),
@@ -328,8 +393,11 @@ INSERT INTO TeamMembers(TeamID, MemberID) VALUES
 (13, 62), (13, 63), (13, 64), (13, 65), (13, 28), (13, 21),
 (14, 66), (14, 67), (14, 68), (14, 69), (14, 38), (14, 39),
 (15, 70), (15, 71), (15, 72), (15, 73), (15, 40), (15, 10),
-
-(18, 1), (18, 2), (18, 3), (18, 4), (18, 5);
+(16, 74), (16, 75), (16, 76), (16, 77), (16, 18), (16, 8),
+(17, 78), (17, 79), (17, 80), (17, 81), (17, 7), (17, 31),
+(18, 1), (18, 2), (18, 3), (18, 4), (18, 5),
+(19, 82), (19, 83), (19, 84), (19, 85), (19, 11), (19, 12),
+(20, 86), (20, 87), (20, 88), (20, 89), (20, 35), (20, 30);
 
 INSERT INTO Projects(Name, Type, Description, Paragraph, FrontEnd, BackEnd, RDS, TeamID) VALUES
 ('code_orange Website', 'Website', 'Program Information: description, projects, employment, upcoming events, etc', 'The code_orange website is designed to be the face of the lab as it is outward facing. Anyone can check out the website and learn about the lab, ongoing projects, and how to apply to the program. We built everything you see right now!', 'React', 'Node.JS', 'MySQL', 1),
