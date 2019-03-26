@@ -94,6 +94,7 @@ CREATE TABLE Teams
 TeamName VARCHAR(20),
 TeamNumber int,
 Semester VARCHAR(4),
+PhotoPath VARCHAR(100),
 LabID int,
 FOREIGN KEY(LabID) REFERENCES Labs(LabID));
 
@@ -230,27 +231,27 @@ INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 40),
 ('Former Intern', 'Inactive', 'Not brought back', '2019-2-14', 41);
 
-INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, LabID) VALUES
-(1, 'Scurvy', 1, 'FA18', 1),
-(2, 'Team X', 2, 'FA18', 1),
-(3, 'Triton', 3, 'FA18', 1),
-(4, 'aVendors', 4, 'FA18', 1),
-(5, 'Wi-fiVe', 5, 'FA18', 1),
-(6, 'Et Confusa Novum', 6, 'FA18', 1),
-(7, 'Team 777', 7, 'FA18', 1),
-(8, 'Atlas', 1, 'SP19', 1),
-(9, 'Dragon Riders', 2, 'SP19', 1),
-(10, 'Triton', 3, 'SP19', 1),
-(11, 'Team 4', 4, 'SP19', 1),
-(12, 'Team Covrt', 5, 'SP19', 1),
-(13, 'Team 6', 6, 'SP19', 1),
-(14, 'Team 777', 7, 'SP19', 1),
-(15, 'Xbox_360', 8, 'SP19', 1),
-(16, 'Team Pulse', 9, 'SP19', 1),
-(17, 'Don Juan', 10, 'SP19', 1),
-(18, 'Epic Gamerz', 11, 'SP19', 1),
-(19, '12Bricks', 12,'SP19', 1),
-(20, 'Team AR Matey', 13, 'SP19', 1);
+INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, PhotoPath, LabID) VALUES
+(1, 'Scurvy', 1, 'FA18', '../Assets/Teams/FA18/GroupPhoto/thebestteam (2 of 3) compressed.JPG', 1),
+(2, 'Team X', 2, 'FA18', '../Assets/Teams/FA18/GroupPhoto/Team2.JPG', 1),
+(3, 'Triton', 3, 'FA18', '../Assets/Teams/FA18/GroupPhoto/Team3.JPG', 1),
+(4, 'aVendors', 4, 'FA18', '../Assets/Teams/FA18/GroupPhoto/Team4.JPG', 1),
+(5, 'Wi-fiVe', 5, 'FA18', '../Assets/Teams/FA18/GroupPhoto/Team5.JPG', 1),
+(6, 'Et Confusa Novum', 6, 'FA18', '../Assets/Teams/FA18/GroupPhoto/Team6.JPG', 1),
+(7, 'Team 777', 7, 'FA18', '../Assets/Teams/FA18/GroupPhoto/Team7.JPG', 1),
+(8, 'Atlas', 1, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(9, 'Dragon Riders', 2, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(10, 'Triton', 3, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(11, 'Team 4', 4, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(12, 'Team Covrt', 5, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(13, 'Team 6', 6, 'SP19',  '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(14, 'Team 777', 7, 'SP19',  '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(15, 'Xbox_360', 8, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(16, 'Team Pulse', 9, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(17, 'Don Juan', 10, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(18, 'Epic Gamerz', 11, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(19, '12Bricks', 12,'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1),
+(20, 'Team AR Matey', 13, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1);
 
 INSERT INTO TeamMembers(TeamID, MemberID) VALUES
 (1, 1), (1, 7), (1, 8), (1, 9), (1, 10),
