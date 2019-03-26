@@ -147,56 +147,53 @@ INSERT INTO Assets(AssetID, Type, Description, IsImaged, LabID) VALUES
 /* FA18 Starting Interns */
 INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
 ('Jeremy', 'Nielson', 'Male', 'Spring', 2019, 'saktirshinu@gmail.com', 'jeremynielson@discover.com', 20100206, 1),
-('Sean', 'Wallace', 'Male', 'Spring', 2020, 'walis846@gmail.com', 'seanwallace@discover.com', 20100464, 1),
-('Cole', 'Braswell', 'Male', 'Spring', 2020, 'braswellcole@outlook.com', 'colebraswell@discover.com', 20100217, 1),
-('Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
-('Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
-
 ('Brady', 'Goldsworthy', 'Male', 'Spring', 2019, 'goldsworthybrady@gmail.com', 'bradygoldsworthy@discover.com', 10000000, 1),
 ('Justin', 'Dupre', 'Male', NULL , NULL, 'jdupre@niu.edu', 'justindupre@discover.com', 10000000, 1),
 ('Bradley', 'Protano', 'Male', 'Fall', 2018, NULL, 'bradleyprotano@discover.com', 10000000, 1),
 ('Katie', 'Berendt', 'Female', 'Fall', 2019, 'kber0167@gmail.com', 'katieberendt@discover.com', 10000000, 1),
-('Jackie', 'Salim', 'Female', 'Spring', 2019, 'z1761458@students.niu.edu','jacquelinesalim@discover.com', 10000000, 1),
 
-/*10*/
+('Jackie', 'Salim', 'Female', 'Spring', 2019, 'z1761458@students.niu.edu','jacquelinesalim@discover.com', 10000000, 1),
 ('Nahom', 'Gebremichael', 'Male', NULL, NULL, 'nahomgm@live.com', 'nahomgebremichael@discover.com', 10000000, 1),
 ('Thomas', 'Franczak', 'Male', NULL, NULL, 'tfranczak@niu.edu', 'thomasfranczak@discover.com', 10000000, 1),
 ('Kyle', 'Wilson', 'Male', NULL, NULL, NULL, 'kylewilson@discover.com', 10000000, 1),
+('Sean', 'Wallace', 'Male', 'Spring', 2020, 'walis846@gmail.com', 'seanwallace@discover.com', 20100464, 1),
+
+/*10*/
 ('Ben', 'Lane', 'Male', NULL, NULL, 'LiftPort@gmail.com', 'benlane@discover.com', 10000000, 1),
 ('Kevin', 'Miyata', 'Male', NULL, NULL, 'kjm015@yahoo.com', 'kevinmiyata@discover.com', 10000000, 1),
-
 ('James', 'Bonasera', 'Male', NULL, NULL, 'jabonasera@gmail.com', 'jamesbonasera@discover.com', 10000000, 1),
 ('Kris', 'Schrader', 'Female', NULL, NULL, 'krissschrader@gmail.com', 'krisschrader@discover.com', 10000000, 1),
 ('Samuel', 'Rutledge', 'Male', NULL, NULL, NULL, 'samuelrutledge@discover.com', 10000000, 1),
+
 ('Nicholas', 'Swanson', 'Male', NULL, NULL, NULL, 'nicholasswanson@discover.com', 10000000, 1),
 ('Alex', 'Boyle', 'Male', NULL, NULL, 'aboyle75@gmail.com', 'alexboyle@discover.com', 10000000, 1),
-
-/*20*/
 ('Amy', 'Jakopin', 'Female', NULL, NULL, 'amyjakopin@gmail.com', 'amyjakopin@discover.com', 10000000, 1),
 ('Andrew', 'Slade', 'Male', NULL, NULL, NULL, 'andrewslade@discover.com', 10000000, 1),
 ('Kristen', 'Arms', 'Female', NULL, NULL, 'kristena.etruscan@gmail.com', 'kristenarms@discover.com', 10000000, 1),
+
+/*20*/
 ('Shiva', 'Singh', 'Male', NULL, NULL, 'shivasingh@outlook.com', 'shivasingh@discover.com', 10000000, 1),
 ('Dylan', 'Drake', 'Male', NULL, NULL, 'dyldrake21@gmail.com', 'dylandrake@discover.com', 10000000, 1),
-
 ('Jane', 'Swift', 'Female', NULL, NULL, 'j.e.swift711@gmail.com', 'janeswift@discover.com', 10000000, 1),
 ('Kwaku', 'Agyemang', 'Male', NULL, NULL, 'mynhiz@gmail.com', 'kwakuagyemang@discover.com', 10000000, 1),
 ('Nathanael', 'Isola', 'Male', NULL, NULL, NULL, 'nathanaelisola@discover.com', 10000000, 1),
+
 ('Quinton', 'Lee', 'Male', NULL, NULL, 'quivistis@gmail.com', 'quintonlee@discover.com', 10000000, 1),
 ('Adam', 'Remes', 'Male', NULL, NULL, 'adam.j.remes@gmail.com', 'adamremes@discover.com', 10000000, 1),
-
-/*30*/
 ('Elly', 'Jdaidany', 'Male', NULL, NULL, 'ellyjda@gmail.com', 'ellyjdaidany@discover.com', 10000000, 1),
 ('Jessica', 'Guenther', 'Female', NULL, NULL, 'jessica.h.guenther@gmail.com', 'jessicaguenther@discover.com', 10000000, 1),
 ('Spencer', 'Yoder', 'Male', NULL, NULL, NULL, 'spenceryoder@discover.com', 10000000, 1),
+
+/*30*/
 ('Vishy', 'Singh', 'Male', NULL, NULL, 'vishysingh@outlook.com', 'vishysingh@discover.com', 10000000, 1),
 ('Nicholas', 'Glaviano', 'Male', NULL, NULL, NULL, 'nicholasglaviano@discover.com', 10000000, 1),
-
 ('Javier', 'Gomez', 'Male', NULL, NULL, NULL, 'javiergomez@discover.com', 10000000, 1),
 ('Cameron', 'Badenoch', 'Male', NULL, NULL, 'cam_badenoch10@live.com', 'cameronbadenoch@discover.com', 10000000, 1),
 ('Krystal', 'McIntyre-Miller', 'Female', NULL, NULL, 'z1779194@students.niu.edu', 'krystalmcintyremiller@discover.com', 10000000, 1),
+
+/*35*/
 ('Nicholas', 'Rosso', 'Male', NULL, NULL, 'nicholasrosso@comcast.net', 'nicholasrosso@discover.com', 10000000, 1),
 ('Tyler', 'Havener', 'Male', NULL, NULL, NULL, 'tylerhavener@discover.com', 10000000, 1);
-/*40*/
 
 /* SP19 Starting Interns */
 INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, WorkEmail, AssetID, LabID) VALUES
@@ -249,6 +246,10 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Uzair', 'Ahmed', 'Male', NULL, NULL, 'uzairmasood92@hotmail.com', 'uzairahmed@discover.com', 10000000, 1),
 ('Yousef', 'Saigh', 'Male', NULL, NULL, 'yousefsaigh@gmail.com', 'yousefsaigh@discover.com', 10000000, 1),
 ('Payton', 'Suchomel', 'Male', NULL, NULL, 'suchomelpayton@gmail.com', 'paytonsuchomel@discover.com', 10000000, 1),
+
+('Cole', 'Braswell', 'Male', 'Spring', 2020, 'braswellcole@outlook.com', 'colebraswell@discover.com', 20100217, 1),
+('Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
+('Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
 
 ('Kenneth', 'Nguyen', 'Male', NULL, NULL, 'kennethtringuyen@gmail.com', 'kennethnguyen@discover.com', 10000000, 1),
 ('Dishant', 'Patel', 'Male', NULL, NULL, 'pateldishant17@gmail.com', 'dishantpatel@discover.com', 10000000, 1),
@@ -376,28 +377,28 @@ INSERT INTO Teams(TeamID, TeamName, TeamNumber, Semester, PhotoPath, LabID) VALU
 (20, 'Team AR Matey', 13, 'SP19', '../Assets/Teams/SP19/GroupPhoto/default.JPG', 1);
 
 INSERT INTO TeamMembers(TeamID, MemberID) VALUES
-(1, 1), (1, 7), (1, 8), (1, 9), (1, 10),
-(2, 2), (2, 11), (2, 12), (2, 13), (2, 14),
-(3, 15), (3, 16), (3, 17), (3, 18), (3, 19), (3, 20),
-(4, 21), (4, 22), (4, 23), (4, 24),(4, 25),
-(5, 26), (5, 27), (5, 28), (5, 29), (5, 30),
-(6, 31), (6, 32), (6, 33), (6, 34), (6, 35), (6, 36),
-(7, 37), (7, 38), (7, 39), (7, 40), (7, 41),
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
+(2, 6), (2, 7), (2, 8), (2, 9), (2, 10),
+(3, 11), (3, 12), (3, 13), (3, 14), (3, 15), (3, 16),
+(4, 17), (4, 18), (4, 19), (4, 20),(4, 21),
+(5, 22), (5, 23), (5, 24), (5, 25), (5, 36),
+(6, 27), (6, 28), (6, 29), (6, 30), (6, 31), (6, 32),
+(7, 33), (7, 34), (7, 35), (7, 36), (7, 37),
 
 /*SP19*/
-(8, 42), (8, 43), (8, 44), (8, 45), (8, 26), (8, 27),
-(9, 32), (9, 46), (9, 47), (9, 48), (9, 49), (9, 33), (9, 13),
-(10, 50), (10, 51), (10, 52), (10, 53), (10, 15), (10, 16),
-(11, 54), (11, 55), (11, 56), (11, 57), (11, 25), (11, 24),
-(12, 58), (12, 59), (12, 60), (12, 61), (12, 18), (12, 22),
-(13, 62), (13, 63), (13, 64), (13, 65), (13, 28), (13, 21),
-(14, 66), (14, 67), (14, 68), (14, 69), (14, 38), (14, 39),
-(15, 70), (15, 71), (15, 72), (15, 73), (15, 40), (15, 10),
-(16, 74), (16, 75), (16, 76), (16, 77), (16, 18), (16, 8),
-(17, 78), (17, 79), (17, 80), (17, 81), (17, 7), (17, 31),
-(18, 1), (18, 2), (18, 3), (18, 4), (18, 5),
-(19, 82), (19, 83), (19, 84), (19, 85), (19, 11), (19, 12),
-(20, 86), (20, 87), (20, 88), (20, 89), (20, 35), (20, 30);
+(8, 38), (8, 39), (8, 40), (8, 41), (8, 26), (8, 27),
+(9, 32), (9, 42), (9, 43), (9, 44), (9, 45), (9, 33), (9, 13),
+(10, 46), (10, 47), (10, 48), (10, 49), (10, 15), (10, 16),
+(11, 50), (11, 51), (11, 52), (11, 53), (11, 25), (11, 24),
+(12, 54), (12, 55), (12, 56), (12, 57), (12, 18), (12, 22),
+(13, 58), (13, 59), (13, 60), (13, 61), (13, 28), (13, 21),
+(14, 62), (14, 63), (14, 64), (14, 65), (14, 38), (14, 39),
+(15, 66), (15, 67), (15, 68), (15, 69), (15, 40), (15, 10),
+(16, 70), (16, 71), (16, 72), (16, 73), (16, 18), (16, 8),
+(17, 74), (17, 75), (17, 76), (17, 77), (17, 7), (17, 31),
+(18, 1), (18, 10), (18, 88), (18, 89), (18, 80),
+(19, 81), (19, 82), (19, 83), (19, 84), (19, 11), (19, 12),
+(20, 85), (20, 86), (20, 87), (20, 88), (20, 35), (20, 30);
 
 INSERT INTO Projects(Name, Type, Description, Paragraph, FrontEnd, BackEnd, RDS, TeamID) VALUES
 ('code_orange Website', 'Website', 'Program Information: description, projects, employment, upcoming events, etc', 'The code_orange website is designed to be the face of the lab as it is outward facing. Anyone can check out the website and learn about the lab, ongoing projects, and how to apply to the program. We built everything you see right now!', 'React', 'Node.JS', 'MySQL', 1),
