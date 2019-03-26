@@ -221,7 +221,7 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Axil', 'Patel', 'Male', NULL, NULL, 'axil95@gmail.com', 'axilpatel@discover.com', 10000000, 1),
 ('Phillip', 'Boffa', 'Male', NULL, NULL, 'phillipboffa@gmail.com', 'phillipboffa@discover.com', 10000000, 1),
 ('Aaron', 'Jones', 'Male', NULL, NULL, 'aaroncjones17@gmail.com', 'aaronjones@discover.com', 10000000, 1),
-('Anthony', 'Calcagno', 'Male', NULL, NULL, 'z1829706@students.niu.edu', 'anthonycalcagno@discover.com', 10000000, 1),
+('Anthony', 'Calcagno', 'Male', NULL, NULL, 'z1829706@students.niu.edu', 'anthonycalcagno@discover.com', 10000000, 1);
 
 
 
