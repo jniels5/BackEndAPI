@@ -318,7 +318,7 @@ app.get('/stats/search/all', function(request,response) {
 
 //get emails
 app.get('/email/get', function(request,response) {
-  connection.query('SELECT EMAIL FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern"', function (error, results, fields) {
+  connection.query('SELECT EMAIL FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern AND Members.Email is not NULL"', function (error, results, fields) {
     if(error) {
       response.json({navColor_get: "failed"});
     }
