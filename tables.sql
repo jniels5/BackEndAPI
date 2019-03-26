@@ -223,8 +223,6 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Aaron', 'Jones', 'Male', NULL, NULL, 'aaroncjones17@gmail.com', 'aaronjones@discover.com', 10000000, 1),
 ('Anthony', 'Calcagno', 'Male', NULL, NULL, 'z1829706@students.niu.edu', 'anthonycalcagno@discover.com', 10000000, 1);
 
-
-
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
 ('Intern', 'Full-time hire', 'Has accepted full time position at DFS', '2019-2-12', 1),
 ('Intern', 'Active', 'Working second semester at code_orange', '2019-2-14', 2),
