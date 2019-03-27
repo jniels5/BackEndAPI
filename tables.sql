@@ -249,7 +249,7 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 
 ('Cole', 'Braswell', 'Male', 'Spring', 2020, 'braswellcole@outlook.com', 'colebraswell@discover.com', 20100217, 1),
 ('Cody', 'Knight', 'Male', 'Spring', 2019, 'pulse14@live.com', 'codyknight@discover.com', 20108969, 1),
-('Michael', 'Pacyga', 'Male', 'Spring', 2020, NULL, 'michaelpacyga@discover.com', 20108939, 1),
+('Michael', 'Pacyga', 'Male', 'Spring', 2020, 'michagy@gmail.com', 'michaelpacyga@discover.com', 20108939, 1),
 
 ('Kenneth', 'Nguyen', 'Male', NULL, NULL, 'kennethtringuyen@gmail.com', 'kennethnguyen@discover.com', 10000000, 1),
 ('Dishant', 'Patel', 'Male', NULL, NULL, 'pateldishant17@gmail.com', 'dishantpatel@discover.com', 10000000, 1),
