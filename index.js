@@ -275,7 +275,7 @@ app.get('/notifications/options/NotRead', function(request,response) {
 app.get('/stats/search/first', function(request,response) {
   connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members WHERE FirstName = '  + request.query.Search, function (error, results, fields) {
         if(error) {
-            response.json({select_status: "failed"});
+            response.json({first_select: "failed"});
         }
         else {
             response.json(results);
@@ -286,7 +286,7 @@ app.get('/stats/search/first', function(request,response) {
 app.get('/stats/search/last', function(request,response) {
   connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members WHERE LastName = '  + request.query.Search, function (error, results, fields) {
         if(error) {
-            response.json({select_status: "failed"});
+            response.json({last_select: "failed"});
         }
         else {
             response.json(results);
@@ -297,7 +297,7 @@ app.get('/stats/search/last', function(request,response) {
 app.get('/stats/search/grad', function(request,response) {
   connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members WHERE GradYear = '  + request.query.Search, function (error, results, fields) {
         if(error) {
-            response.json({select_status: "failed"});
+            response.json({grad_select: "failed"});
         }
         else {
             response.json(results);
@@ -308,7 +308,19 @@ app.get('/stats/search/grad', function(request,response) {
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members', function (error, results, fields) {
         if(error) {
-            response.json({select_status: "failed"});
+            response.json({all_select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+// Teams Info for Stats page
+app.get('/stats/teams/semester', function(request,response) {
+  connection.query('SELECT TeamdID, TeamName, TeamNumber, TeamSemester, LabID FROM Teams WHERE TeamSemester = '  + request.query.Search, function (error, results, fields) {
+        if(error) {
+            response.json({teams_select: "failed"});
         }
         else {
             response.json(results);
@@ -328,11 +340,9 @@ app.get('/email/get', function(request,response) {
   });
 });
 
-//
-//  Atlas - Backend API Calls for code_orange website
-//
-
-
+//--------------------------------------------------------|
+//  Atlas - Backend API Calls for code_orange website     |
+//--------------------------------------------------------|
 
 // Checkin page for guests
 app.post('/checkin', function(request,response) {
