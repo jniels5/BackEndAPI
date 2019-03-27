@@ -318,7 +318,7 @@ app.get('/stats/search/all', function(request,response) {
 
 // Teams Info for Stats page
 app.get('/stats/teams/semester', function(request,response) {
-  connection.query('SELECT TeamdID, TeamName, TeamNumber, TeamSemester, LabID FROM Teams WHERE TeamSemester = '  + request.query.Search, function (error, results, fields) {
+  connection.query('SELECT TeamdID, TeamName, TeamNumber, Semester, LabID FROM Teams WHERE Semester = '  + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({teams_select: "failed"});
         }
