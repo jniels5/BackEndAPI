@@ -355,6 +355,7 @@ app.post('/checkin', function(request,response) {
     GradYear: request.body.gradYear,
     Email: request.body.email,
     WorkEmail: '',
+    Major: request.body.major,
     AssetID: 10000000,
     LabID: 1
   };
