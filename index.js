@@ -6,7 +6,7 @@ var cors = require('cors')
 var app = express()
 var nodemailer = require('nodemailer')
 var fs = require('fs');
-var json2csv = require('json2csv');
+const json2csv = require('json2csv').parse;
 
 var whitelist = [
   'localhost:3000/',
@@ -366,11 +366,6 @@ app.get("/csv/table.csv", function (req, res) {
   });
 
   json2csv({ data: data, fields: fields }, function(err, csv) {
-    fs.writeFile('file.csv', csv, function(err) { //currently saves file to app's root directory
-      if (err) throw err;
-      console.log('file saved');
-    });
-
     res.setHeader('Content-disposition', 'attachment; filename=table.csv');
     res.set('Content-Type', 'text/csv');
     res.status(200).send(csv);
