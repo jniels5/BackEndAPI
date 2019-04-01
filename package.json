@@ -16,6 +16,7 @@
     "execsql": "latest",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
+    "json2csv": "^4.4.1",
     "mongodb": "^3.1.12",
     "mysql": "^2.16.0",
     "nodemailer": "^5.1.1",

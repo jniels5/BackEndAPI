@@ -5,6 +5,7 @@ var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
 var nodemailer = require('nodemailer')
+var fs = require('fs');
 
 var whitelist = [
   'localhost:3000/',
@@ -337,6 +338,41 @@ app.get('/email/get', function(request,response) {
     else {
       response.json(results);
     }
+  });
+});
+
+//Local test
+app.get("/csv/table.csv", function (req, res) {
+  var fields = [];
+  var data = [];
+
+  connection.query('SHOW columns FROM Members', function (error, results, fields) {
+        if(error) {
+            response.json({all_select: "failed"});
+        }
+        else {
+            fields = response.json(results);
+        }
+  });
+
+  connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members', function (error, results, fields) {
+        if(error) {
+            response.json({all_select: "failed"});
+        }
+        else {
+            data = response.json(results);
+        }
+  });
+
+  json2csv({ data: data, fields: fields }, function(err, csv) {
+    fs.writeFile('file.csv', csv, function(err) { //currently saves file to app's root directory
+      if (err) throw err;
+      console.log('file saved');
+    });
+
+    res.setHeader('Content-disposition', 'attachment; filename=table.csv');
+    res.set('Content-Type', 'text/csv');
+    res.status(200).send(csv);
   });
 });
 
