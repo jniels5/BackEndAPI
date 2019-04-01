@@ -349,19 +349,19 @@ app.get("/csv/table.csv", function (req, res) {
 
   connection.query('SHOW columns FROM Members', function (error, results, fields) {
         if(error) {
-            response.json({all_select: "failed"});
+            res.json({all_select: "failed"});
         }
         else {
-            fields = response.json(results);
+            fields = res.json(results);
         }
   });
 
   connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members', function (error, results, fields) {
         if(error) {
-            response.json({all_select: "failed"});
+            res.json({all_select: "failed"});
         }
         else {
-            data = response.json(results);
+            data = res.json(results);
         }
   });
 
