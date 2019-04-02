@@ -118,7 +118,7 @@ app.get('/describe/:table', function(request,response) {
 });
 
 // Describe table structure
-app.get('/showmewhatyougot', function(request,response) {
+app.get('/show/tables', function(request,response) {
   connection.query('SHOW Tables', function (error, results, fields) {
         if(error) {
             response.json({describe_status: "failed"});
