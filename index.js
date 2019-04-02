@@ -524,7 +524,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
   });
 });
 
-app.get('/remove/reservation/all', function(request,response) {
+app.get('/delete/reservations', function(request,response) {
   //used in connection.query
 
   connection.query('DELETE FROM Reservations', function (error, results, fields) {
