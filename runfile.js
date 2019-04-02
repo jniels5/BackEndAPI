@@ -1,6 +1,6 @@
 /*
 call execFile to run an sql file
-*/
+
 
 var fs = require('fs');
 var _ = require('underscore');
@@ -47,3 +47,4 @@ function execFile(connection, filename, response, callback) {
 exports.exec = exec;
 exports.execFile = execFile;
 exports.execNodeMailer = execNodeMailer;
+*/

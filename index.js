@@ -466,20 +466,6 @@ app.get('/select/table/Members/team/:team/:semester', function(request,response)
   });
 });
 
-//Create Reservation Table
-app.get('/create/reserve/', function(request,response) {
-  connection.query('CREATE TABLE Reservations (ReserveID int auto_increment PRIMARY KEY, ' +
-                   'Description VARCHAR(255), Email VARCHAR(320), Start TIME, End TIME, ' +
-                   'Date DATE, RoomID int, TeamID int, FOREIGN KEY(TeamID) REFERENCES Teams(TeamID));', function (error, results, fields) {
-    if(error) {
-      response.json({email_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
   var entry = {
@@ -521,13 +507,11 @@ app.post('/insert/reserve/', function(request,response) {
     });
   });
 
-
-
 //
 // RUNFILE Section . . .
 //
 
-//runs a specified sql file (**Needs error handling**)
+/*runs a specified sql file (**Needs error handling**)
 app.get('/runfile/:file', function(request,response) {
   try{
       runfile.execFile(connection, './' + request.params.file, response);
@@ -541,6 +525,7 @@ app.get('/runfile/:file', function(request,response) {
   }
   response.json({runfile_status: "Success"});
 });
+*/
 
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'))
