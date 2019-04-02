@@ -466,6 +466,63 @@ app.get('/select/table/Members/team/:team/:semester', function(request,response)
   });
 });
 
+//Create Reservation Table
+app.get('/create/reserve/', function(request,response) {
+  connection.query('CREATE TABLE Reservations (ReserveID int auto_increment PRIMARY KEY, ' +
+                   'Description VARCHAR(255), Email VARCHAR(320), Start TIME, End TIME, ' +
+                   'Date DATE, RoomID int, TeamID int, FOREIGN KEY(TeamID) REFERENCES Teams(TeamID));', function (error, results, fields) {
+    if(error) {
+      response.json({email_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+app.post('/insert/reserve/', function(request,response) {
+  //used in connection.query
+  var entry = {
+    Description: request.body.Description,
+    Email: request.body.Email,
+    Start: request.body.Start,
+    End: request.body.End,
+    Date: request.body.Date,
+    RoomID: request.body.RoomID,
+    TeamID: request.body.TeamID
+  };
+
+  connection.query('INSERT INTO Reservations set ?', entry, function (error, results, fields) {
+    if(error) {
+        response.json({
+          checkin_status: "failed",
+          checkin_error: error,
+          RoomID: request.body.RoomID,
+          TeamID: request.body.TeamID,
+          Email: request.body.Email,
+          Start:  request.body.Start,
+          End: request.body.End,
+          Date: request.body.Date,
+          Description: request.body.Description
+        });
+    }
+    else {
+        response.json({
+          checkin_status: "success",
+          RoomID: request.body.RoomID,
+          TeamID: request.body.TeamID,
+          Email: request.body.Email,
+          Start:  request.body.Start,
+          End: request.body.End,
+          Date: request.body.Date,
+          Description: request.body.Description
+        });
+      }
+    });
+  });
+
+
+
 //
 // RUNFILE Section . . .
 //

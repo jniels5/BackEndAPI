@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS Projects;
 DROP TABLE IF EXISTS TeamMembers;
+DROP TABLE IF EXISTS Reservations;
 DROP TABLE IF EXISTS Teams;
 DROP TABLE IF EXISTS Semesters;
 DROP TABLE IF EXISTS Role;
@@ -75,7 +76,7 @@ GradSemester VARCHAR(6),
 GradYear int,
 Email VARCHAR(320),
 WorkEmail VARCHAR(320),
-Major VARCHAR(75), 
+Major VARCHAR(75),
 AssetID int,
 LabID int,
 FOREIGN KEY (AssetID) REFERENCES Assets(AssetID),
@@ -98,6 +99,17 @@ Semester VARCHAR(4),
 PhotoPath VARCHAR(100),
 LabID int,
 FOREIGN KEY(LabID) REFERENCES Labs(LabID));
+
+CREATE TABLE Reservations
+(ReserveID int auto_increment PRIMARY KEY,
+Description VARCHAR(255),
+Email VARCHAR(320),
+Start TIME,
+End TIME,
+Date DATE,
+RoomID int,
+TeamID int,
+FOREIGN KEY(TeamID) REFERENCES Teams(TeamID));
 
 CREATE TABLE TeamMembers
 (TeamID int NOT NULL,
