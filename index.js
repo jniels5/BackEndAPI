@@ -490,6 +490,22 @@ app.get('/select/table/Members/team/:team/:semester', function(request,response)
   });
 });
 
+// Used to get database information on Room Reservations
+app.get('/select/Reservation/:day', function(request,response) {
+
+  connection.query('SELECT ReserveID, Start, End, RoomID, TeamID, Description, Email, Date FROM Reservations WHERE Date = "' + request.params.day + 'T00:00:00.000Z"', function (error, results, fields) {
+        if(error) {
+            response.json( {
+              select_reserve_status: "failed",
+              select_error: error
+            });
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
   var entry = {
