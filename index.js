@@ -344,28 +344,35 @@ app.get('/email/get', function(request,response) {
 
 //Local test
 app.get("/csv/table.csv", function (req, res) {
-  var fields = [];
-  var data = [];
+  var resFields = [];
+  var resData = [];
 
-  connection.query('SHOW columns FROM Members', function (error, results, fields) {
+  connection.query('SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_NAME` = "Members"', function (error, rows, results, fields) {
         if(error) {
-            res.json({all_select: "failed"});
+            response.json({all_select: "failed"});
         }
         else {
-            fields = res.json(results);
+            for (var i = 0; i < rows.length; i++) {
+              resFields.push(rows[i]);
+            }
+            console.log(resFields);
         }
   });
 
-  connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members', function (error, results, fields) {
+  connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members', function (error, rows, results, fields) {
         if(error) {
-            res.json({all_select: "failed"});
+            response.json({all_select: "failed"});
         }
         else {
-            data = res.json(results);
+          for (var i = 0; i < rows.length; i++) {
+            resData.push(rows[i]);
+          }
+          console.log(resData);
+          response.json({we_made_it: "this_far"});
         }
   });
 
-  json2csv({ data: data, fields: fields }, function(err, csv) {
+  json2csv({ data: resData, fields: resFields }, function(err, csv) {
     res.setHeader('Content-disposition', 'attachment; filename=table.csv');
     res.set('Content-Type', 'text/csv');
     res.status(200).send(csv);
