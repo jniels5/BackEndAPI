@@ -105,6 +105,30 @@ app.get('/select/table/:table', function(request,response) {
   });
 });
 
+// Describe table structure
+app.get('/describe/:table', function(request,response) {
+  connection.query('DESCRIBE '  + request.params.table, function (error, results, fields) {
+        if(error) {
+            response.json({describe_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+// Describe table structure
+app.get('/showmewhatyougot', function(request,response) {
+  connection.query('SHOW Tables', function (error, results, fields) {
+        if(error) {
+            response.json({describe_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 // Login Page Stuff
 app.get('/login/check/', function(request,response) {
   connection.query('SELECT AcctID FROM Accounts', function (error, results, fields) {
