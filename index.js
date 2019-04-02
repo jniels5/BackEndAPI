@@ -373,7 +373,7 @@ app.get("/csv/table.csv", function (req, res) {
 
   connection.query('SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_NAME` = "Members"', function (error, rows, results, fields) {
         if(error) {
-            response.json({all_select: "failed"});
+            res.json({all_select: "failed"});
         }
         else {
             for (var i = 0; i < rows.length; i++) {
@@ -385,14 +385,14 @@ app.get("/csv/table.csv", function (req, res) {
 
   connection.query('SELECT MemberID AS "ID", FirstName AS "First Name", LastName AS "Last Name", Gender, GradSemester as "Semester", GradYear as "Year", Email, AssetID AS "Asset ID", LabID AS "Lab" FROM Members', function (error, rows, results, fields) {
         if(error) {
-            response.json({all_select: "failed"});
+            res.json({all_select: "failed"});
         }
         else {
           for (var i = 0; i < rows.length; i++) {
             resData.push(rows[i]);
           }
           console.log(resData);
-          response.json({we_made_it: "this_far"});
+          res.json({we_made_it: "this_far"});
         }
   });
 
