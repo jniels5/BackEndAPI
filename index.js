@@ -506,7 +506,7 @@ app.get('/select/Reservation/:day', function(request,response) {
   });
 });
 
-app.delete('/remove/reservation/:rID', function(request,response) {
+app.get('/remove/reservation/:rID', function(request,response) {
   //used in connection.query
 
   connection.query('DELETE FROM Reservations WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
@@ -524,7 +524,7 @@ app.delete('/remove/reservation/:rID', function(request,response) {
   });
 });
 
-app.delete('/remove/reservation/all', function(request,response) {
+app.get('/remove/reservation/all', function(request,response) {
   //used in connection.query
 
   connection.query('DELETE FROM Reservations', function (error, results, fields) {
