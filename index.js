@@ -366,6 +366,22 @@ app.get('/email/get', function(request,response) {
   });
 });
 
+app.get('/email/Intern/PO', function(request,response) {
+  connection.query('SELECT ' + request.body.ContactType + ' FROM Members ' +
+                   'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
+                   'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID '+
+                   'JOIN Role ON Role.MemberID = Members.MemberID ' +
+                   'WHERE' + request.body.Teams + request.body.Semester + ' AND ' +
+                   request.body.Role, function (error, results, fields) {
+    if(error) {
+      response.json({email_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
 //Local test
 app.get("/csv/table.csv", function (req, res) {
   var resFields = [];
@@ -582,26 +598,6 @@ app.post('/insert/reserve/', function(request,response) {
       }
     });
   });
-
-//
-// RUNFILE Section . . .
-//
-
-/*runs a specified sql file (**Needs error handling**)
-app.get('/runfile/:file', function(request,response) {
-  try{
-      runfile.execFile(connection, './' + request.params.file, response);
-  }
-  catch(error) {
-    response.json( {
-      runfile_status: "Failed",
-      runfile_error: error
-    });
-    return;
-  }
-  response.json({runfile_status: "Success"});
-});
-*/
 
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'))
