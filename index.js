@@ -34,7 +34,6 @@ var connection = mysql.createConnection({
   database : process.env.RDS_DB_NAME,
   multipleStatements: true //used for running an sql file
 });
-
 var conn_succ = false; //checks connection status, will probably get rid of this soon
 
 //connect to db
@@ -374,9 +373,11 @@ app.get('/email/Intern/PO', function(request,response) {
                    'WHERE' + request.body.Teams + request.body.Semester + ' AND ' +
                    request.body.Role, function (error, results, fields) {
     if(error) {
+      console.log(request.body);
       response.json({email_get: "failed"});
     }
     else {
+      console.log(request.body);
       response.json(results);
     }
   });
