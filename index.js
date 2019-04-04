@@ -366,19 +366,17 @@ app.get('/email/get', function(request,response) {
 });
 
 app.get('/email/Intern/PO', function(request,response) {
-  connection.query('SELECT ' + request.body.ContactType + ' FROM Members ' +
+  connection.query('SELECT ' + request.query.ContactType + ' FROM Members ' +
                    'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                    'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID '+
                    'JOIN Role ON Role.MemberID = Members.MemberID ' +
-                   'WHERE' + request.body.Teams + request.body.Semester + ' AND ' +
-                   request.body.Role, function (error, results, fields) {
+                   'WHERE' + request.query.Teams + request.query.Semester + ' AND ' +
+                   request.query.Role, function (error, results, fields) {
     if(error) {
-      console.log(request.body);
       response.json({email_get: "failed"});
     }
     else {
       console.log(request.body);
-      response.json(results);
     }
   });
 });
