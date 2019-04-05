@@ -353,7 +353,12 @@ app.get('/stats/teams/semester', function(request,response) {
   });
 });
 
-//get emails
+//
+//
+//    Email -
+//
+//
+
 app.get('/email/get', function(request,response) {
   connection.query('SELECT Members.Email FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Members.Email is not NULL', function (error, results, fields) {
     if(error) {
@@ -372,6 +377,19 @@ app.get('/email/Intern/PO', function(request,response) {
                    'JOIN Role ON Role.MemberID = Members.MemberID ' +
                    'WHERE ' + request.query.Teams + request.query.Semester + ' AND ' +
                    request.query.Role, function (error, results, fields) {
+    if(error) {
+      response.json({email_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+app.get('/email/Applicants/OH', function(request,response) {
+  connection.query('SELECT ' + request.query.ContactType + ' FROM Members ' +
+                   'JOIN Role ON Role.MemberID = Members.MemberID ' +
+                   'WHERE ' + request.query.Role, function (error, results, fields) {
     if(error) {
       response.json({email_get: "failed"});
     }
