@@ -140,8 +140,12 @@ app.get('/login/check/', function(request,response) {
   });
 });
 
-// Preferences Stuff
-// Navbar Color
+////////////////////////////////////////////////////
+//                                                //
+//    Navbar API Calls                            //
+//                                                //
+////////////////////////////////////////////////////
+
 app.get('/navbar/color/get', function(request,response) {
   connection.query('SELECT NavColor FROM Preferences', function (error, results, fields) {
     if(error) {
@@ -153,7 +157,6 @@ app.get('/navbar/color/get', function(request,response) {
   });
 });
 
-// updating Navigation Bar Color
 app.post('/navbar/color/post', function(request,response) {
   connection.query('UPDATE Preferences SET NavColor = "' + request.body.Color + '" WHERE AcctID = 1', function (error, results, fields) {
     if(error) {
@@ -165,7 +168,12 @@ app.post('/navbar/color/post', function(request,response) {
   });
 });
 
-// Metrics
+////////////////////////////////////////////////////
+//                                                //
+//    Metrics API Calls                           //
+//                                                //
+////////////////////////////////////////////////////
+
 app.get('/metrics/options/get', function(request,response) {
   connection.query('SELECT * FROM Metrics', function (error, results, fields) {
     if(error) {
@@ -177,7 +185,6 @@ app.get('/metrics/options/get', function(request,response) {
   });
 });
 
-// Count em up
 app.get('/metrics/total/interns', function(request,response) {
   connection.query('SELECT COUNT(*) "Count" FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Role.Status != "Not Active"', function (error, results, fields) {
     if(error) {
@@ -189,7 +196,6 @@ app.get('/metrics/total/interns', function(request,response) {
   });
 });
 
-//"total and grad year" counters; hardcoded to previous 2 semesters
 app.get('/metrics/totalCurr', function(request,response) {
   connection.query('SELECT COUNT(*) "Total" FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID AND Teams.Semester = "SP19"', function (error, results, fields) {
     if(error) {
@@ -234,8 +240,6 @@ app.get('/metrics/totalCurr1/Grad', function(request,response) {
   });
 });
 
-
-//Count Open House
 app.get('/metrics/total/OH', function(request,response) {
   connection.query('SELECT COUNT(*) "OpenHouse" FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Open House"', function (error, results, fields) {
     if(error) {
@@ -247,8 +251,6 @@ app.get('/metrics/total/OH', function(request,response) {
   });
 });
 
-// updating Metrics
-// needs to be looked at, how to change multiple metrics with just one statement if possible
 app.post('/metrics/options/post', function(request,response) {
   connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
     if(error) {
@@ -260,7 +262,12 @@ app.post('/metrics/options/post', function(request,response) {
   });
 });
 
-// Notifications
+////////////////////////////////////////////////////
+//                                                //
+//    Notifications API Calls                     //
+//                                                //
+////////////////////////////////////////////////////
+
 app.get('/notifications/options/get', function(request,response) {
   connection.query('SELECT * FROM Notifications', function (error, results, fields) {
     if(error) {
@@ -272,8 +279,6 @@ app.get('/notifications/options/get', function(request,response) {
   });
 });
 
-// updating Notification Preferences
-// same thing as "Updating Metrics"; needs to be looked at some more
 app.post('/notifications/options/post', function(request,response) {
   connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
     if(error) {
@@ -296,7 +301,12 @@ app.get('/notifications/options/NotRead', function(request,response) {
   });
 });
 
-// STATS TABLE QUERIES
+////////////////////////////////////////////////////
+//                                                //
+//    Statistics API Calls                        //
+//                                                //
+////////////////////////////////////////////////////
+
 app.get('/stats/search/first', function(request,response) {
   connection.query('SELECT MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID FROM Members WHERE FirstName = '  + request.query.Search, function (error, results, fields) {
         if(error) {
@@ -341,7 +351,6 @@ app.get('/stats/search/all', function(request,response) {
   });
 });
 
-// Teams Info for Stats page
 app.get('/stats/teams/semester', function(request,response) {
   connection.query('SELECT TeamdID, TeamName, TeamNumber, Semester, LabID FROM Teams WHERE Semester = '  + request.query.Search, function (error, results, fields) {
         if(error) {
@@ -353,11 +362,22 @@ app.get('/stats/teams/semester', function(request,response) {
   });
 });
 
-//
-//
-//    Email -
-//
-//
+app.get('/stats/teams/names', function(request,response) {
+  connection.query('SELECT TeamName, TeamNumber FROM Teams WHERE Semester = '  + request.query.Semester, function (error, results, fields) {
+        if(error) {
+            response.json({teams_select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+////////////////////////////////////////////////////
+//                                                //
+//    Email API Calls                             //
+//                                                //
+////////////////////////////////////////////////////
 
 app.get('/email/get', function(request,response) {
   connection.query('SELECT Members.Email FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Members.Email is not NULL', function (error, results, fields) {
@@ -399,7 +419,6 @@ app.get('/email/Applicants/OH', function(request,response) {
   });
 });
 
-//Local test
 app.get("/csv/table.csv", function (req, res) {
   var resFields = [];
   var resData = [];
@@ -436,9 +455,11 @@ app.get("/csv/table.csv", function (req, res) {
   });
 });
 
-//--------------------------------------------------------|
-//  Atlas - Backend API Calls for code_orange website     |
-//--------------------------------------------------------|
+///////////////////////////////////////////////////////////
+//                                                       //
+//  Atlas - Backend API Calls for code_orange website    //
+//                                                       //
+///////////////////////////////////////////////////////////
 
 // Checkin page for guests
 app.post('/checkin', function(request,response) {
@@ -615,6 +636,12 @@ app.post('/insert/reserve/', function(request,response) {
       }
     });
   });
+
+////////////////////////////////////////////////////
+//                                                //
+//    Misc API Calls                              //
+//                                                //
+////////////////////////////////////////////////////
 
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'))
