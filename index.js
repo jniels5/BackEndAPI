@@ -373,6 +373,17 @@ app.get('/stats/teams/names', function(request,response) {
   });
 });
 
+app.get('/stats/teams/names', function(request,response) {
+  connection.query('SELECT Semester FROM Teams GROUP BY Semester', function (error, results, fields) {
+        if(error) {
+            response.json({semester_select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 ////////////////////////////////////////////////////
 //                                                //
 //    Email API Calls                             //
