@@ -363,7 +363,7 @@ app.get('/stats/teams/semester', function(request,response) {
 });
 
 app.get('/stats/teams/names', function(request,response) {
-  connection.query('SELECT TeamName, TeamNumber FROM Teams WHERE Semester = '  + request.query.Semester, function (error, results, fields) {
+  connection.query('SELECT TeamName, TeamNumber FROM Teams WHERE '  + request.query.Semester, function (error, results, fields) {
         if(error) {
             response.json({teams_select: "failed"});
         }
