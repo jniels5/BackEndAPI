@@ -392,7 +392,7 @@ app.post('/stats/modal/post', function(request,response) {
     GradSemester: this.state.GradSemester,
     GradYear: this.state.GradYear,
     Email: this.state.Email,
-    AssetID: this.state.AssetID,
+    //AssetID: this.state.AssetID,
     MemberID: this.state.MemberID
   };
   connection.query('SET foreign_key_checks = 0; ' +
