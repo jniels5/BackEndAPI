@@ -654,6 +654,21 @@ app.post('/insert/reserve/', function(request,response) {
 //                                                //
 ////////////////////////////////////////////////////
 
+//runs a specified sql file (**Needs error handling**)
+app.get('/runfile/:file', function(request,response) {
+  try{
+      runfile.execFile(connection, './' + request.params.file, response);
+  }
+  catch(error) {
+    response.json( {
+      runfile_status: "Failed",
+      runfile_error: error
+    });
+    return;
+  }
+  response.json({runfile_status: "Success"});
+});
+
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'))
   });
