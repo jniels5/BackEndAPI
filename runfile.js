@@ -1,5 +1,5 @@
 
-call execFile to run an sql file
+//call execFile to run an sql file
 
 
 var fs = require('fs');

@@ -150,4 +150,4 @@ INSERT INTO Members(FirstName, LastName, Gender, GradSemester, GradYear, Email, 
 ('Christopher', 'Demkovich', 'Male', null, null, null, null, 10000000, 1);
 
 INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES
-('Former Intern', 'Quit', 'Stopped showing up to lab', '2019-2-12', 138),
+('Former Intern', 'Quit', 'Stopped showing up to lab', '2019-2-12', 138);
