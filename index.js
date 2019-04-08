@@ -383,7 +383,7 @@ app.get('/stats/lab/semesters', function(request,response) {
         }
   });
 });
- /*
+
 app.post('/stats/modal/post', function(request,response) {
   var entry = {
     FirstName: this.state.FirstName,
@@ -404,7 +404,7 @@ app.post('/stats/modal/post', function(request,response) {
     }
   });
 });
-*/
+
 ////////////////////////////////////////////////////
 //                                                //
 //    Email API Calls                             //
