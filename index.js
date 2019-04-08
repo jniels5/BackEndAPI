@@ -393,6 +393,7 @@ app.post('/stats/modal/post', function(request,response) {
     GradYear: this.state.GradYear,
     Email: this.state.Email,
     AssetID: this.state.AssetID,
+    MemberID: this.state.MemberID
   };
   connection.query('UPDATE Members SET ? WHERE MemberID = ' + request.query.MemberID, entry, function (error, results, fields) {
     if(error) {
