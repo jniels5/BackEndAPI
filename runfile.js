@@ -1,4 +1,4 @@
-/*
+
 call execFile to run an sql file
 
 
@@ -47,4 +47,3 @@ function execFile(connection, filename, response, callback) {
 exports.exec = exec;
 exports.execFile = execFile;
 exports.execNodeMailer = execNodeMailer;
-*/
