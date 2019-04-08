@@ -395,7 +395,9 @@ app.post('/stats/modal/post', function(request,response) {
     AssetID: this.state.AssetID,
     MemberID: this.state.MemberID
   };
-  connection.query('UPDATE Members SET ? WHERE MemberID = ' + request.query.MemberID, entry, function (error, results, fields) {
+  connection.query('SET foreign_key_checks = 0;' +
+	'UPDATE Members SET ? WHERE MemberID = ' + request.query.MemberID +
+	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
     if(error) {
       response.json({modal_post: "failed"});
     }
