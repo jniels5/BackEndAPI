@@ -383,7 +383,27 @@ app.get('/stats/lab/semesters', function(request,response) {
         }
   });
 });
-
+ /*
+app.post('/stats/modal/post', function(request,response) {
+  var entry = {
+    FirstName: this.state.FirstName,
+    LastName: this.state.LastName,
+    Gender: this.state.Gender,
+    GradSemester: this.state.GradSemester,
+    GradYear: this.state.GradYear,
+    Email: this.state.Email,
+    AssetID: this.state.AssetID,
+  };
+  connection.query('UPDATE Members SET ? WHERE MemberID = ' + request.query.MemberID, entry, function (error, results, fields) {
+    if(error) {
+      response.json({modal_post: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+*/
 ////////////////////////////////////////////////////
 //                                                //
 //    Email API Calls                             //
