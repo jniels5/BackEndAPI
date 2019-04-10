@@ -387,13 +387,13 @@ app.get('/stats/lab/semesters', function(request,response) {
 app.post('/stats/modal/post', function(request,response) {
   // used in connection.query
   var entry = {
-    FirstName: this.state.FirstName,
-    LastName: this.state.LastName,
-    Gender: this.state.Gender,
-    GradSemester: this.state.GradSemester,
-    GradYear: this.state.GradYear,
-    Email: this.state.Email,
-    MemberID: this.state.MemberID
+    FirstName: request.body.FirstName,
+    LastName: request.body.LastName,
+    Gender: request.body.Gender,
+    GradSemester: request.body.GradSemester,
+    GradYear: request.body.GradYear,
+    Email: request.body.Email,
+    MemberID: request.body.MemberID
   };
   connection.query('SET foreign_key_checks = 0; ' +
 	'UPDATE Members SET FirstName = ' + entry.FirstName +
