@@ -399,7 +399,7 @@ app.post('/stats/modal/post', function(request,response) {
 	'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID +
 	'; SET foreign_key_checks = 1;', entry, function (error, results, fields) {
     if(error) {
-      response.json({modal_post: "failed"});
+      response.json({modal_post: "failed " + error});
     }
     else {
       response.json(results);
