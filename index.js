@@ -385,6 +385,7 @@ app.get('/stats/lab/semesters', function(request,response) {
 });
 
 app.post('/stats/modal/post', function(request,response) {
+  // used in connection.query
   var entry = {
     FirstName: request.body.FirstName,
     LastName: request.body.LastName,
@@ -395,7 +396,18 @@ app.post('/stats/modal/post', function(request,response) {
     MemberID: request.body.MemberID
   };
   connection.query('SET foreign_key_checks = 0; ' +
+<<<<<<< HEAD
 	'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID +
+=======
+	'UPDATE Members SET FirstName = ' + entry.FirstName +
+  ', LastName = ' + entry.LastName +
+  ', Gender = ' + entry.Gender +
+  ', GradSemester = ' + entry.GradSemester +
+  ', GradYear = ' + entry.GradYear +
+  ', Email = ' + entry.Email +
+  ', MemberID = ' + entry.MemberID +
+  ' WHERE MemberID = ' + request.query.MemberID +
+>>>>>>> 7ffcc8f4225526c43f07a2702118ecfdfe9ad904
 	' SET foreign_key_checks = 1;', entry, function (error, results, fields) {
     if(error) {
       response.json({modal_post: "failed"});
