@@ -309,8 +309,8 @@ app.get('/notifications/options/NotRead', function(request,response) {
 
 app.get('/stats/search/first', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, FROM Members AS m, Role AS r ' +
-                   'WHERE r.MemberID = m.MemberID AND m.FirstName' + request.query.Search, function (error, results, fields) {
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
+                   'WHERE r.MemberID = m.MemberID AND m.FirstName = ' + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({first_select: "failed"});
         }
@@ -322,7 +322,7 @@ app.get('/stats/search/first', function(request,response) {
 
 app.get('/stats/search/last', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, FROM Members AS m, Role AS r ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
                    'WHERE r.MemberID = m.MemberID AND m.LastName = ' + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({last_select: "failed"});
@@ -335,7 +335,7 @@ app.get('/stats/search/last', function(request,response) {
 
 app.get('/stats/search/grad', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, FROM Members AS m, Role AS r ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
                    'WHERE r.MemberID = m.MemberID AND m.GradYear = ' + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({grad_select: "failed"});
