@@ -308,7 +308,10 @@ app.get('/notifications/options/NotRead', function(request,response) {
 ////////////////////////////////////////////////////
 
 app.get('/stats/search/first', function(request,response) {
-  connection.query('SELECT MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID FROM Members WHERE FirstName = '  + request.query.Search, function (error, results, fields) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, FROM Members AS m, Role AS r ' +
+                   'JOIN Role ON Role.MemberID = Members.MemberID ' +
+                   'WHERE FirstName = '  + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({first_select: "failed"});
         }
@@ -319,7 +322,9 @@ app.get('/stats/search/first', function(request,response) {
 });
 
 app.get('/stats/search/last', function(request,response) {
-  connection.query('SELECT MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID FROM Members WHERE LastName = '  + request.query.Search, function (error, results, fields) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, FROM Members AS m, Role AS r ' +
+                   'JOIN Role ON Role.MemberID = Members.MemberID WHERE LastName = '  + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({last_select: "failed"});
         }
@@ -330,7 +335,9 @@ app.get('/stats/search/last', function(request,response) {
 });
 
 app.get('/stats/search/grad', function(request,response) {
-  connection.query('SELECT MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID FROM Members WHERE GradYear = '  + request.query.Search, function (error, results, fields) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, FROM Members AS m, Role AS r ' +
+                   'JOIN Role ON Role.MemberID = Members.MemberID WHERE GradYear = '  + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({grad_select: "failed"});
         }
@@ -341,7 +348,9 @@ app.get('/stats/search/grad', function(request,response) {
 });
 
 app.get('/stats/search/all', function(request,response) {
-  connection.query('SELECT MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID FROM Members ', function (error, results, fields) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, FROM Members AS m, Role AS r ' +
+                   'JOIN Role ON Role.MemberID = Members.MemberID ' +, function (error, results, fields) {
         if(error) {
             response.json({all_select: "failed"});
         }
