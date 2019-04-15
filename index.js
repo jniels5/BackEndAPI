@@ -367,19 +367,19 @@ app.get('/stats/filter/status', function(request,response) {
   var Intern = '';
   var FullTime = '';
 
-  if (request.query.OpenHouse == true)
+  if (request.query.OpenHouse == "true")
   {
     OpenHouse = '"Open House", '
   }
-  else if (request.query.Applicants == true)
+  else if (request.query.Applicants == "true")
   {
     Applicant = '"Applicant", '
   }
-  else if (request.query.Interns == true)
+  else if (request.query.Interns == "true")
   {
     Intern = '"Intern", '
   }
-  else if (request.query.FullTimeHire == true)
+  else if (request.query.FullTimeHire == "true")
   {
     FullTime = '"Full-Time", '
   }
