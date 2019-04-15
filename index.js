@@ -397,6 +397,42 @@ app.get('/stats/filter/status', function(request,response) {
   });
 });
 
+app.get('/stats/filter/teams', function(request,response) {
+  var OpenHouse = '';
+  var Applicant = '';
+  var Intern = '';
+  var FullTime = '';
+
+  if (request.query.OpenHouse == "true")
+  {
+    OpenHouse = '"Open House", '
+  }
+  else if (request.query.Applicants == "true")
+  {
+    Applicant = '"Applicant", '
+  }
+  else if (request.query.Interns == "true")
+  {
+    Intern = '"Intern", '
+  }
+  else if (request.query.FullTimeHire == "true")
+  {
+    FullTime = '"Former Intern", '
+  }
+
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
+                   'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
+                   '"N/a" ) AND r.MemberID = m.MemberID', function (error, results, fields) {
+        if(error) {
+            response.json({Status_Select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 // Stats Page Info Calls . . .
 app.get('/stats/teams/semester', function(request,response) {
   connection.query('SELECT TeamdID, TeamName, TeamNumber, Semester, LabID FROM Teams WHERE Semester = '  + request.query.Search, function (error, results, fields) {
@@ -443,14 +479,30 @@ app.post('/stats/modal/post', function(request,response) {
     Email: request.body.Email,
     MemberID: request.body.MemberID
   };
+
+  var roleEntry = {
+    Type: request.body.Type,
+    Status: request.body.Status,
+    Description: request.body.Description,
+    Date: request.body.Date
+  }
+
   connection.query('SET foreign_key_checks = 0; ' +
-	'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID +
-	'; SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+	'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
+	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
     if(error) {
       response.json({modal_post: "failed: " + error, entry: entry});
     }
     else {
-      response.json(results);
+      connection.query('SET foreign_key_checks = 0; ' +
+      'UPDATE Role SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
+    	'SET foreign_key_checks = 1;', roleEntry, function (error, results, fields) {
+        if(error) {
+          response.json({modal_post: "failed: " + error, entry: entry});
+        }
+        else {
+        }
+      });
     }
   });
 });
