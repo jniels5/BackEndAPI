@@ -307,6 +307,7 @@ app.get('/notifications/options/NotRead', function(request,response) {
 //                                                //
 ////////////////////////////////////////////////////
 
+// Stats Search Calls . . .
 app.get('/stats/search/first', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
                    'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
@@ -359,6 +360,44 @@ app.get('/stats/search/all', function(request,response) {
   });
 });
 
+// Stats Filter Calls . . .
+app.get('/stats/filter/status', function(request,response) {
+  var OpenHouse = '';
+  var Applicant = '';
+  var Intern = '';
+  var FullTime = '';
+
+  if (request.query.OpenHouse == true)
+  {
+    OpenHouse = '"Open House", '
+  }
+  else if (request.query.Applicants == true)
+  {
+    Applicant = '"Applicant", '
+  }
+  else if (request.query.Interns == true)
+  {
+    Intern = '"Intern", '
+  }
+  else if (request.query.FullTimeHire == true)
+  {
+    FullTime = '"Full-Time", '
+  }
+
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
+                   'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
+                   '"N/a" ) AND r.MemberID = m.MemberID', function (error, results, fields) {
+        if(error) {
+            response.json({Status_Select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+// Stats Page Info Calls . . .
 app.get('/stats/teams/semester', function(request,response) {
   connection.query('SELECT TeamdID, TeamName, TeamNumber, Semester, LabID FROM Teams WHERE Semester = '  + request.query.Search, function (error, results, fields) {
         if(error) {
@@ -392,6 +431,7 @@ app.get('/stats/lab/semesters', function(request,response) {
   });
 });
 
+// Stats Update Record Calls . . .
 app.post('/stats/modal/post', function(request,response) {
   // used in connection.query
   var entry = {
