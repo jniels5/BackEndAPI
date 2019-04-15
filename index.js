@@ -381,7 +381,7 @@ app.get('/stats/filter/status', function(request,response) {
   }
   else if (request.query.FullTimeHire == "true")
   {
-    FullTime = '"Full-Time", '
+    FullTime = '"Former Intern", '
   }
 
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
