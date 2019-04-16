@@ -385,9 +385,9 @@ app.get('/stats/filter/status', function(request,response) {
   }
 
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.TeamNumber, t.Semester FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
                    'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
-                   '"N/a" ) AND r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = "SP19"', function (error, results, fields) {
+                   '"N/a" ) AND r.MemberID = m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
