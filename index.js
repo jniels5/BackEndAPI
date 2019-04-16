@@ -310,8 +310,8 @@ app.get('/notifications/options/NotRead', function(request,response) {
 // Stats Search Calls . . .
 app.get('/stats/search/first', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
-                   'WHERE r.MemberID = m.MemberID AND m.FirstName = ' + request.query.Search, function (error, results, fields) {
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.TeamNumber, t.Semester  FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = "SP19" AND m.FirstName = ' + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({first_select: "failed"});
         }
@@ -323,8 +323,8 @@ app.get('/stats/search/first', function(request,response) {
 
 app.get('/stats/search/last', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
-                   'WHERE r.MemberID = m.MemberID AND m.LastName = ' + request.query.Search, function (error, results, fields) {
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.TeamNumber, t.Semester FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = "SP19" AND m.LastName = ' + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({last_select: "failed"});
         }
@@ -336,8 +336,8 @@ app.get('/stats/search/last', function(request,response) {
 
 app.get('/stats/search/grad', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
-                   'WHERE r.MemberID = m.MemberID AND m.GradYear = ' + request.query.Search, function (error, results, fields) {
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.TeamNumber, t.Semester FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = "SP19" AND m.GradYear = ' + request.query.Search, function (error, results, fields) {
         if(error) {
             response.json({grad_select: "failed"});
         }
@@ -349,8 +349,8 @@ app.get('/stats/search/grad', function(request,response) {
 
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
-                   'WHERE r.MemberID = m.MemberID', function (error, results, fields) {
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.TeamNumber, t.Semester FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = "SP19"', function (error, results, fields) {
         if(error) {
             response.json({all_select: "failed"});
         }
@@ -425,17 +425,6 @@ app.get('/stats/teams/semester', function(request,response) {
 
 app.get('/stats/teams/names', function(request,response) {
   connection.query('SELECT TeamName, TeamNumber FROM Teams WHERE '  + request.query.Semester, function (error, results, fields) {
-        if(error) {
-            response.json({teams_select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-app.get('/stats/teams/members', function(request, response) {
-  connection.query('SELECT TeamMembers.TeamID, MemberID, TeamName, TeamNumber, Semester FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID AND Teams.Semester = "SP19"', function (error, results, fields) {
         if(error) {
             response.json({teams_select: "failed"});
         }
