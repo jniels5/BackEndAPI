@@ -373,6 +373,17 @@ app.get('/stats/teams/names', function(request,response) {
   });
 });
 
+app.get('/stats/teams/members', function(request, response) {
+  connection.query('SELECT TeamID, MemberID, TeamName, TeamNumber FROM TeamMembers, Members, Teams WHERE TeamMembers.TeamID = Teams.TeamID AND TeamMembers.MemberID = Members.MemberID', function (error, results, fields) {
+        if(error) {
+            response.json({teams_select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 app.get('/stats/lab/semesters', function(request,response) {
   connection.query('SELECT Semester FROM Teams GROUP BY Semester', function (error, results, fields) {
         if(error) {
