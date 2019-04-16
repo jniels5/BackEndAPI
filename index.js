@@ -398,32 +398,10 @@ app.get('/stats/filter/status', function(request,response) {
 });
 
 app.get('/stats/filter/teams', function(request,response) {
-  var OpenHouse = '';
-  var Applicant = '';
-  var Intern = '';
-  var FullTime = '';
 
-  if (request.query.OpenHouse == "true")
-  {
-    OpenHouse = '"Open House", '
-  }
-  else if (request.query.Applicants == "true")
-  {
-    Applicant = '"Applicant", '
-  }
-  else if (request.query.Interns == "true")
-  {
-    Intern = '"Intern", '
-  }
-  else if (request.query.FullTimeHire == "true")
-  {
-    FullTime = '"Former Intern", '
-  }
-
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
-                   'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
-                   '"N/a" ) AND r.MemberID = m.MemberID', function (error, results, fields) {
+  connection.query('SELECT t.TeamName, t.TeamNumber, p.Name, p.Type, p.Description FROM Teams AS t, Projects AS p' +
+                   'WHERE ' + request.query.Teams + 'p.TeamID = t.TeamID AND ' +
+                   'Semester = "' + request.query.Semester + '";', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
@@ -447,6 +425,17 @@ app.get('/stats/teams/semester', function(request,response) {
 
 app.get('/stats/teams/names', function(request,response) {
   connection.query('SELECT TeamName, TeamNumber FROM Teams WHERE '  + request.query.Semester, function (error, results, fields) {
+        if(error) {
+            response.json({teams_select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+app.get('/stats/teams/members', function(request, response) {
+  connection.query('SELECT TeamID, MemberID, TeamName, TeamNumber FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID', function (error, results, fields) {
         if(error) {
             response.json({teams_select: "failed"});
         }
