@@ -435,7 +435,7 @@ app.get('/stats/teams/names', function(request,response) {
 });
 
 app.get('/stats/teams/members', function(request, response) {
-  connection.query('SELECT TeamMembers.TeamID, MemberID, TeamName, TeamNumber FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID', function (error, results, fields) {
+  connection.query('SELECT TeamMembers.TeamID, MemberID, TeamName, TeamNumber, Semester FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID AND Teams.Semester = "SP19"', function (error, results, fields) {
         if(error) {
             response.json({teams_select: "failed"});
         }
