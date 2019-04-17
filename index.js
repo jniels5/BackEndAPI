@@ -399,8 +399,8 @@ app.get('/stats/filter/status', function(request,response) {
 
 app.get('/stats/filter/teams', function(request,response) {
 
-  connection.query('SELECT t.TeamName, t.TeamNumber, p.Name, p.Type, p.Description FROM Teams AS t, Projects AS p ' +
-                   'WHERE ' + request.query.Teams + ' p.TeamID = t.TeamID AND ' +
+  connection.query('SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, Projects.Description FROM Teams, Projects ' +
+                   'WHERE ' + request.query.Teams + ' Projects.TeamID = Teams.TeamID AND ' +
                    request.query.Semester + ';', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
