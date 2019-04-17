@@ -2,26 +2,26 @@ DROP TABLE IF EXISTS Delegations;
 DROP TABLE IF EXISTS ApprovalsHistory;
 
 CREATE TABLE Delegations
-(DelgationID int auto_increment PRIMARY KEY,
-Delegator LONG VARCHAR, 
-Email VARCHAR(320), 
-Delegatee LONG VARCHAR, 
-StartDate DATE,
-EndDate DATE,
-Description VARCHAR(255),
+(DelegationID int auto_increment PRIMARY KEY,
+Delegator LONG VARCHAR,
+Email VARCHAR(320),
+Delegatee LONG VARCHAR,
+StartDate DATE,
+EndDate DATE,
+Description VARCHAR(255),
 State INT,
-Status VARCHAR(255));
+Status VARCHAR(255));
 
 CREATE TABLE ApprovalsHistory
-(ApprovalID int auto_increment PRIMARY KEY,
-Email VARCHAR(320),
-FullName LONG VARCHAR,   
-Service VARCHAR(512),
-Description VARCHAR(255),
-RequestedBy LONG VARCHAR,
-RequestDate DATE,
-CloseDate DATE,
-Status VARCHAR(255));
+(ApprovalID int auto_increment PRIMARY KEY,
+Email VARCHAR(320),
+FullName LONG VARCHAR,
+Service VARCHAR(512),
+Description VARCHAR(255),
+RequestedBy LONG VARCAHR,
+RequestDate DATE,
+CloseDate DATE,
+Status VARCHAR(255));
 
 SET foreign_key_checks = 0;
 
