@@ -399,7 +399,7 @@ app.get('/stats/filter/status', function(request,response) {
 
 app.get('/stats/filter/teams', function(request,response) {
 
-  connection.query('SELECT t.TeamName, t.TeamNumber, p.Name, p.Type, p.Description FROM Teams AS t, Projects AS p' +
+  connection.query('SELECT t.TeamName, t.TeamNumber, p.Name, p.Type, p.Description FROM Teams AS t, Projects AS p ' +
                    'WHERE ' + request.query.Teams + ' p.TeamID = t.TeamID AND ' +
                    't.Semester = "' + request.query.Semester + '";', function (error, results, fields) {
         if(error) {
