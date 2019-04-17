@@ -18,7 +18,7 @@ Email VARCHAR(320),
 FullName LONG VARCHAR,
 Service VARCHAR(512),
 Description VARCHAR(255),
-RequestedBy LONG VARCAHR,
+RequestedBy LONG VARCHAR,
 RequestDate DATE,
 CloseDate DATE,
 Status VARCHAR(255));
