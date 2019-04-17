@@ -42,9 +42,9 @@ UPDATE Teams SET PhotoPath = "777_SP19.jpg" WHERE TeamID = 14;
 UPDATE Teams SET PhotoPath = "Xbox_360.jpg" WHERE TeamID = 15;
 UPDATE Teams SET PhotoPath = "Pulse.jpg" WHERE TeamID = 16;
 UPDATE Teams SET PhotoPath = "Don_Juan.jpg" WHERE TeamID = 17;
-UPDATE Teams SET PhotoPath = "EpicGamerz.jpg" WHERE TeamID = 5;
-UPDATE Teams SET PhotoPath = "12_Bricks.jpg" WHERE TeamID = 5;
-UPDATE Teams SET PhotoPath = "ARMatey.jpg" WHERE TeamID = 5;
+UPDATE Teams SET PhotoPath = "EpicGamerz.jpg" WHERE TeamID = 18;
+UPDATE Teams SET PhotoPath = "12_Bricks.jpg" WHERE TeamID = 19;
+UPDATE Teams SET PhotoPath = "ARMatey.jpg" WHERE TeamID = 20;
 
 UPDATE Projects SET BackEnd = "Node.JS" WHERE ProjectID = 12;
 UPDATE Projects SET BackEnd = "Node.JS" WHERE ProjectID = 19;
