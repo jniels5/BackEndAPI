@@ -599,9 +599,105 @@ app.post('/student/portal/update', function(request,response) {
 
 ///////////////////////////////////////////////////////////
 //                                                       //
-//  Atlas - Backend API Calls for code_orange website    //
+//  Atlas - Backend API Calls                            //
 //                                                       //
 ///////////////////////////////////////////////////////////
+
+//********************************************
+//  MAP API                                  *
+//********************************************
+
+app.post('/map/insert/delegations/', function(request,response) {
+  //used in connection.query
+  var entry = {
+    Delegator: request.body.Delegator,
+    Email: request.body.Email,
+    Delegatee: request.body.Delegatee,
+    StartDate: request.body.StartDate,
+    EndDate: request.body.EndDate,
+    Description: request.body.Description,
+    State: request.body.State,
+    Status: request.body.Status
+  };
+
+  connection.query('INSERT INTO Delegations set ?', entry, function (error, results, fields) {
+    if(error) {
+        response.json({
+          insert_delegation: "failed",
+          delegation_error: error,
+          Delegator: request.body.Delegator,
+          State: request.body.State,
+          Email: request.body.Email,
+          Delegatee:  request.body.Delegatee,
+          StartDate: request.body.StartDate,
+          EndDate: request.body.EndDate,
+          Description: request.body.Description,
+          Status: request.body.Status
+        });
+    }
+    else {
+        response.json({
+          delegation_status: "success",
+          Delegator: request.body.Delegator,
+          State: request.body.State,
+          Email: request.body.Email,
+          Delegatee:  request.body.Delegatee,
+          StartDate: request.body.StartDate,
+          EndDate: request.body.EndDate,
+          Description: request.body.Description,
+          Status: request.body.Status
+        });
+      }
+    });
+  });
+
+  app.post('/map/insert/approvals/', function(request,response) {
+    //used in connection.query
+    var entry = {
+      Email: request.body.Email,
+      FullName: request.body.FullName,
+      Service: request.body.Service,
+      Description: request.body.Description,
+      RequestedBy: request.body.RequestedBy,
+      RequestedDate: request.body.RequestedDate,
+      CloseDate: request.body.CloseDate,
+      Status: request.body.Status
+    };
+
+    connection.query('INSERT INTO ApprovalsHistory set ?', entry, function (error, results, fields) {
+      if(error) {
+          response.json({
+            approval_status: "failed",
+            approval_error: error,
+            FullName: request.body.FullName,
+            CloseDate: request.body.CloseDate,
+            Email: request.body.Email,
+            Service:  request.body.Service,
+            RequestedBy: request.body.RequestedBy,
+            RequestedDate: request.body.RequestedDate,
+            Description: request.body.Description,
+            Status: request.body.Status
+          });
+      }
+      else {
+          response.json({
+            approval_status: "success",
+            FullName: request.body.FullName,
+            CloseDate: request.body.CloseDate,
+            Email: request.body.Email,
+            Service:  request.body.Service,
+            RequestedBy: request.body.RequestedBy,
+            RequestedDate: request.body.RequestedDate,
+            Description: request.body.Description,
+            Status: request.body.Status
+          });
+        }
+      });
+    });
+
+//********************************************
+//  code_orange Website API                  *
+//********************************************
 
 // Checkin page for guests
 app.post('/checkin', function(request,response) {
