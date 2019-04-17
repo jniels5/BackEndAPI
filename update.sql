@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS Delegations;
 DROP TABLE IF EXISTS ApprovalsHistory;
 
 CREATE TABLE Delegations
-(delgationID int auto_increment PRIMARY KEY,
+(DelgationID int auto_increment PRIMARY KEY,
 Delegator LONG VARCHAR, 
 Email VARCHAR(320), 
 Delegatee LONG VARCHAR, 
@@ -13,7 +13,7 @@ State INT,
 Status VARCHAR(255));
 
 CREATE TABLE ApprovalsHistory
-ApprovalID int auto_increment PRIMARY KEY,
+(ApprovalID int auto_increment PRIMARY KEY,
 Email VARCHAR(320),
 FullName LONG VARCHAR,   
 Service VARCHAR(512),
