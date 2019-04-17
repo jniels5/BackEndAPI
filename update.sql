@@ -35,7 +35,7 @@ UPDATE Teams SET PhotoPath = "777_FA18.jpg" WHERE TeamID = 7;
 UPDATE Teams SET PhotoPath = "Atlas.jpg" WHERE TeamID = 8;
 UPDATE Teams SET PhotoPath = "Dragon_Riders.jpg" WHERE TeamID = 9;
 UPDATE Teams SET PhotoPath = "Triton_SP19.jpg" WHERE TeamID = 10;
-UPDATE Teams SET Teamame = "aVendors", PhotoPath = "aVendors_SP19.jpg" WHERE TeamID = 11;
+UPDATE Teams SET TeamName = "aVendors", PhotoPath = "aVendors_SP19.jpg" WHERE TeamID = 11;
 UPDATE Teams SET PhotoPath = "Covrt.jpg" WHERE TeamID = 12;
 UPDATE Teams SET PhotoPath = "Six.jpg" WHERE TeamID = 13;
 UPDATE Teams SET PhotoPath = "777_SP19.jpg" WHERE TeamID = 14;
