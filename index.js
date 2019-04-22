@@ -411,6 +411,38 @@ app.get('/stats/filter/teams', function(request,response) {
   });
 });
 
+// Stats Equipment stuff
+app.get('/stats/filter/equipment', function(request,response) {
+  var Laptops = '';
+  var Televisons = '';
+  var MobileDevices = '';
+
+  if (request.query.Laptops == "true")
+  {
+    Laptops = '"Laptop", '
+  }
+  else if (request.query.Televisions == "true")
+  {
+    Televisons = '"Television", '
+  }
+  else if (request.query.MobileDevices == "true")
+  {
+    MobileDevices = '"Mobile Device", '
+  }
+
+  connection.query('SELECT a.AssetID, a.Description, a.Type, m.FirstName, m.LastName ' +
+                   'FROM Members AS m, Assets AS a ' +
+                   'WHERE a.Type IN (' + Laptops + Televisons + MobileDevices +
+                   '"N/a" ) AND a.AssetID = m.AssetID AND a.AssetID != 10000000 AND a.IsImaged >= 0 GROUP BY a.AssetID', function (error, results, fields) {
+        if(error) {
+            response.json({Status_Select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 // Stats Page Info Calls . . .
 app.get('/stats/teams/semester', function(request,response) {
   connection.query('SELECT TeamdID, TeamName, TeamNumber, Semester, LabID FROM Teams WHERE Semester = '  + request.query.Search, function (error, results, fields) {
