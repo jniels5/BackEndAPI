@@ -349,7 +349,7 @@ app.get('/stats/search/grad', function(request,response) {
 
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, t.TeamNumber, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.Semester FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = "SP19"', function (error, results, fields) {
         if(error) {
             response.json({all_select: "failed"});
