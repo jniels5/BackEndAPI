@@ -309,9 +309,9 @@ app.get('/notifications/options/NotRead', function(request,response) {
 
 // Stats Search Calls . . .
 app.get('/stats/search/first', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, t.TeamNumber, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = ' + request.query.Semester + ' AND m.FirstName = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.FirstName = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({first_select: "failed"});
         }
@@ -322,9 +322,9 @@ app.get('/stats/search/first', function(request,response) {
 });
 
 app.get('/stats/search/last', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, t.TeamNumber, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = ' + request.query.Semester + ' AND m.LastName = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.LastName = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({last_select: "failed"});
         }
@@ -335,9 +335,9 @@ app.get('/stats/search/last', function(request,response) {
 });
 
 app.get('/stats/search/grad', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, t.TeamNumber, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = ' + request.query.Semester + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({grad_select: "failed"});
         }
@@ -348,9 +348,9 @@ app.get('/stats/search/grad', function(request,response) {
 });
 
 app.get('/stats/search/all', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, t.TeamNumber, m.GradSemester, ' +
-                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, t.TeamName, t.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({all_select: "failed"});
         }
