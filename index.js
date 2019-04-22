@@ -639,6 +639,8 @@ app.post('/student/portal/update', function(request,response) {
 //  MAP API                                  *
 //********************************************
 
+// Delegations
+
 app.post('/map/insert/delegations/', function(request,response) {
   //used in connection.query
   var entry = {
@@ -682,6 +684,59 @@ app.post('/map/insert/delegations/', function(request,response) {
       }
     });
   });
+
+  app.post('/map/update/delegations', function(request,response) {
+    // used in connection.query
+    var entry = {
+      Delegator: request.body.Delegator,
+      Email: request.body.Email,
+      Delegatee: request.body.Delegatee,
+      StartDate: request.body.StartDate,
+      EndDate: request.body.EndDate,
+      Description: request.body.Description,
+      State: request.body.State,
+      Status: request.body.Status
+    };
+
+    connection.query('SET foreign_key_checks = 0; ' +
+  	'UPDATE Delegations SET ? WHERE DelegationID = ' + request.body.DelegationID + ";" +
+  	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+      if(error) {
+        response.json({update_delegations: "failed"});
+      }
+      else {
+        response.json({update_delegations: "success"})
+      }
+    });
+  });
+
+  app.post('/map/delete/delegations', function(request,response) {
+    connection.query('SET foreign_key_checks = 0; ' +
+    'DELETE FROM Delegations;' +
+    'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+      if(error) {
+        response.json({delete_delegations: "failed"});
+      }
+      else {
+        response.json({delete_delegations: "success"})
+      }
+    });
+  });
+
+  app.post('/map/remove/delegation', function(request,response) {
+    connection.query('SET foreign_key_checks = 0; ' +
+    'DELETE FROM Delegations WHERE DelegationID = ' + request.body.DelegationID + ';' +
+    'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+      if(error) {
+        response.json({remove_delegation: "failed"});
+      }
+      else {
+        response.json({remove_delegation: "success"})
+      }
+    });
+  });
+
+  // Approvals
 
 app.post('/map/insert/approvals/', function(request,response) {
     //used in connection.query
