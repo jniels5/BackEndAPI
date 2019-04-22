@@ -431,9 +431,9 @@ app.get('/stats/filter/equipment', function(request,response) {
   }
 
   connection.query('SELECT a.AssetID, a.Description, a.Type, m.FirstName, m.LastName ' +
-                   'FROM Members AS m, Assets AS a ' +
+                   'FROM Assets a LEFT JOIN Members m ON m.AssetID = a.AssetID ' +
                    'WHERE a.Type IN (' + Laptops + Televisons + MobileDevices +
-                   '"N/a" ) AND a.AssetID = m.AssetID AND a.AssetID != 10000000 AND a.IsImaged >= 0 GROUP BY a.AssetID', function (error, results, fields) {
+                   '"N/a" ) AND a.AssetID != 10000000 AND a.IsImaged >= 0 GROUP BY a.AssetID', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
@@ -683,7 +683,7 @@ app.post('/map/insert/delegations/', function(request,response) {
     });
   });
 
-  app.post('/map/insert/approvals/', function(request,response) {
+app.post('/map/insert/approvals/', function(request,response) {
     //used in connection.query
     var entry = {
       Email: request.body.Email,
