@@ -104,18 +104,6 @@ app.get('/select/table/:table', function(request,response) {
   });
 });
 
-// Used to get All info from each table
-app.get('/TEST', function(request,response) {
-  connection.query('SHOW CREATE TABLE Projects', function (error, results, fields) {
-        if(error) {
-            response.json({select_status: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
 // Describe table structure
 app.get('/describe/:table', function(request,response) {
   connection.query('DESCRIBE '  + request.params.table, function (error, results, fields) {
@@ -411,8 +399,10 @@ app.get('/stats/filter/status', function(request,response) {
 
 app.get('/stats/filter/teams', function(request,response) {
 
-  connection.query('SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, Projects.Description FROM Teams, Projects ' +
-                   'WHERE ' + request.query.Teams + ' Projects.TeamID = Teams.TeamID AND ' +
+  connection.query('SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, Projects.Description FROM Teams ' +
+                   'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
+                   'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
+                   'WHERE ' + request.query.Teams +
                    request.query.Semester + ';', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
