@@ -863,7 +863,9 @@ app.post('/checkin', function(request,response) {
 app.get('/select/teamPageData/:semester', function(request,response) {
   connection.query('SELECT Teams.TeamName, Teams.Semester, Teams.TeamNumber, Teams.PhotoPath,' +
                     'Projects.Name, Projects.Description, Projects.Paragraph, Projects.FrontEnd, Projects.Backend, ' +
-                    'Projects.RDS FROM Teams JOIN Projects ON Projects.TeamID = Teams.TeamID ' +
+                    'Projects.RDS FROM Teams ' +
+                    'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
+                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                     ' AND Teams.Semester = "' + request.params.semester + '"', function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
