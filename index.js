@@ -847,6 +847,18 @@ app.post('/checkin', function(request,response) {
     });
   });
 
+  // Used to get All info from each table
+  app.get('/TEST', function(request,response) {
+    connection.query('SHOW CREATE TABLE Projects', function (error, results, fields) {
+          if(error) {
+              response.json({select_status: "failed"});
+          }
+          else {
+              response.json(results);
+          }
+    });
+  });
+
 // Select Info for Teams page
 app.get('/select/teamPageData/:semester', function(request,response) {
   connection.query('SELECT Teams.TeamName, Teams.Semester, Teams.TeamNumber, Teams.PhotoPath,' +
@@ -864,7 +876,7 @@ app.get('/select/teamPageData/:semester', function(request,response) {
 
 // Team Member Query
 app.get('/select/table/Members/team/:team/:semester', function(request,response) {
-  connection.query('SELECT Members.FirstName, Members.LastName FROM Members ' +
+  connection.query('SELECT Members.FirstName, Members.LastName, Members.WorkEmail FROM Members ' +
                     'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                     'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID JOIN Projects ON Projects.TeamID = Teams.TeamID ' +
                     'WHERE Teams.TeamNumber = ' + request.params.team + ' ' +
