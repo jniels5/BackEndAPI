@@ -387,7 +387,7 @@ app.get('/stats/filter/status', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.Gender, m.GradSemester, ' +
                    'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date FROM Members AS m, Role AS r ' +
                    'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
-                   '"N/a" ) AND r.MemberID = m.MemberID AND ' + request.query.Semester + ';', function (error, results, fields) {
+                   '"N/a" ) AND r.MemberID = m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
@@ -411,7 +411,6 @@ app.get('/stats/filter/teams', function(request,response) {
   });
 });
 
-// Stats Equipment stuff
 app.get('/stats/filter/equipment', function(request,response) {
   var Laptops = '';
   var Televisons = '';
@@ -514,6 +513,19 @@ app.post('/stats/modal/post', function(request,response) {
         }
       });
     }
+  });
+});
+
+// Stats Add Teams . . .
+app.get('/stats/lab/projects', function(request,response) {
+  connection.query('SELECT p.Name, t.Semester FROM Projects p ' +
+                   'LEFT JOIN Teams t ON p.TeamID = t.TeamID ORDER BY `Semester`, `Name`', function (error, results, fields) {
+        if(error) {
+            response.json({teams_select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
   });
 });
 
@@ -685,7 +697,7 @@ app.post('/map/insert/delegations/', function(request,response) {
     });
   });
 
-  app.post('/map/update/delegations', function(request,response) {
+app.post('/map/update/delegations', function(request,response) {
     // used in connection.query
     var entry = {
       Delegator: request.body.Delegator,
@@ -710,7 +722,7 @@ app.post('/map/insert/delegations/', function(request,response) {
     });
   });
 
-  app.post('/map/delete/delegations', function(request,response) {
+app.post('/map/delete/delegations', function(request,response) {
     connection.query('SET foreign_key_checks = 0; ' +
     'DELETE FROM Delegations;' +
     'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
@@ -723,7 +735,7 @@ app.post('/map/insert/delegations/', function(request,response) {
     });
   });
 
-  app.post('/map/remove/delegation', function(request,response) {
+app.post('/map/remove/delegation', function(request,response) {
     connection.query('SET foreign_key_checks = 0; ' +
     'DELETE FROM Delegations WHERE DelegationID = ' + request.body.DelegationID + ';' +
     'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
