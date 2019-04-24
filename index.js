@@ -722,7 +722,7 @@ app.post('/map/update/delegations', function(request,response) {
   });
 
 app.get('/map/delete/delegations', function(request,response) {
-    connection.query('DELETE FROM Delegations;', entry, function (error, results, fields) {
+    connection.query('DELETE FROM Delegations;', function (error, results, fields) {
       if(error) {
         response.json({delete_delegations: "failed"});
       }
@@ -733,7 +733,7 @@ app.get('/map/delete/delegations', function(request,response) {
   });
 
 app.get('/map/remove/delegation/:dID', function(request,response) {
-    connection.query('DELETE FROM Delegations WHERE DelegationID = ' + request.params.dID + ';', entry, function (error, results, fields) {
+    connection.query('DELETE FROM Delegations WHERE DelegationID = ' + request.params.dID + ';', function (error, results, fields) {
       if(error) {
         response.json({remove_delegation: "failed"});
       }
