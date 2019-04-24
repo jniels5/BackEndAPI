@@ -518,10 +518,9 @@ app.post('/stats/modal/post', function(request,response) {
 
 // Stats Add Teams . . .
 app.get('/stats/lab/projects', function(request,response) {
-  connection.query('SELECT p.Name, t.Semester FROM Projects p ' +
-                   'LEFT JOIN Teams t ON p.TeamID = t.TeamID ORDER BY `Semester`, `Name`', function (error, results, fields) {
+  connection.query('SELECT p.Name FROM Projects AS p, Teams at t WHERE t.Semester = ' + request.query.Semester + ' AND t.TeamID = p.TeamID ORDER BY `Name`', function (error, results, fields) {
         if(error) {
-            response.json({teams_select: "failed"});
+            response.json({Project_select: "failed"});
         }
         else {
             response.json(results);
