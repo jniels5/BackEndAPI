@@ -882,7 +882,7 @@ app.get('/select/table/Members/team/:team/:semester', function(request,response)
                     'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                     'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID ' +
                     'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
-                    'JOIN Projects ON Projects.ProjectID = TeamProjects.TeamID ' +
+                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                     'WHERE Teams.TeamNumber = ' + request.params.team + ' ' +
                     'AND Teams.Semester = "' + request.params.semester + '" ORDER BY FirstName', function (error, results, fields) {
         if(error) {
