@@ -1,7 +1,7 @@
 SET foreign_key_checks = 0;
 
-ALTER TABLE `Projects` DROP FOREIGN KEY `Projects_ibfk_1`;
-ALTER TABLE `Projects` DROP INDEX `Projects_ibfk_1`;
+ALTER TABLE `Projects` DROP FOREIGN KEY `TeamID`;
+ALTER TABLE `Projects` DROP INDEX `TeamID`;
 
 CREATE TABLE TeamProjects
 (TeamID int NOT NULL,
