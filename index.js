@@ -104,6 +104,18 @@ app.get('/select/table/:table', function(request,response) {
   });
 });
 
+// Used to get All info from each table
+app.get('/TEST', function(request,response) {
+  connection.query('SHOW CREATE TABLE Projects', function (error, results, fields) {
+        if(error) {
+            response.json({select_status: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 // Describe table structure
 app.get('/describe/:table', function(request,response) {
   connection.query('DESCRIBE '  + request.params.table, function (error, results, fields) {

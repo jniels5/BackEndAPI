@@ -27,7 +27,7 @@ INSERT INTO TeamProjects (TeamID, ProjectID) VALUES
 (17,17),
 (18,18),
 (19,19),
-(20,20),
+(20,20);
 
 DELETE FROM Projects WHERE ProjectID = 10;
 DELETE FROM Projects WHERE ProjectID = 11;
