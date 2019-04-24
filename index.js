@@ -866,7 +866,7 @@ app.get('/select/teamPageData/:semester', function(request,response) {
                     'Projects.RDS FROM Teams ' +
                     'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
                     'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
-                    ' AND Teams.Semester = "' + request.params.semester + '"', function (error, results, fields) {
+                    ' AND Teams.Semester = "' + request.params.semester + '" ORDER BY Teams.TeamNumber', function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
