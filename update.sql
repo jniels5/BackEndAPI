@@ -1,6 +1,5 @@
 SET foreign_key_checks = 0;
 
-ALTER TABLE `Projects` DROP FOREIGN KEY `TeamID`;
 ALTER TABLE `Projects` DROP INDEX `TeamID`;
 
 CREATE TABLE TeamProjects
