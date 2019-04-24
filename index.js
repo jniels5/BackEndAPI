@@ -880,7 +880,9 @@ app.get('/select/teamPageData/:semester', function(request,response) {
 app.get('/select/table/Members/team/:team/:semester', function(request,response) {
   connection.query('SELECT Members.FirstName, Members.LastName, Members.WorkEmail FROM Members ' +
                     'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
-                    'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID JOIN Projects ON Projects.TeamID = Teams.TeamID ' +
+                    'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID ' +
+                    'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
+                    'JOIN Projects ON Projects.ProjectID = TeamProjects.TeamID ' +
                     'WHERE Teams.TeamNumber = ' + request.params.team + ' ' +
                     'AND Teams.Semester = "' + request.params.semester + '" ORDER BY FirstName', function (error, results, fields) {
         if(error) {
