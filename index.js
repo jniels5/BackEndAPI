@@ -530,18 +530,18 @@ app.post('/stats/modal/post/teams', function(request,response) {
   var entry = {
     TeamName: request.body.TeamName,
     TeamNumber: request.body.TeamNumber,
-    TeamSemester: request.body.TeamSemester,
+    Semester: request.body.TeamSemester,
     PhotoPath: request.body.PhotoPath,
     LabID: request.body.LabID
   };
 
   var ProjectEntry = {
-    ProjectName: request.body.ProjectName,
-    ProjectDesc: request.body.ProjectDesc,
-    ProjectFend: request.body.ProjectFend,
-    ProjectBend: request.body.ProjectBend,
-    ProjectRDS: request.body.ProjectRDS,
-    ProjectPara: request.body.ProjectPara,
+    Name: request.body.ProjectName,
+    Description: request.body.ProjectDesc,
+    Paragraph: request.body.ProjectPara,
+    FrontEnd: request.body.ProjectFend,
+    BackEnd: request.body.ProjectBend,
+    RDS: request.body.ProjectRDS
   }
 
   connection.query('SET foreign_key_checks = 0; ' +
