@@ -405,9 +405,9 @@ app.get('/stats/filter/teams', function(request,response) {
 
   connection.query('SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, ' +
                    'Projects.Description, Projects.Paragraph, Projects.FrontEnd, ' +
-                   'Projects.Backend, Projects.RDS, Teams.Semester, FROM Teams ' +
-                   'LEFT JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
-                   'LEFT JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
+                   'Projects.Backend, Projects.RDS, Teams.Semester FROM Teams ' +
+                   'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
+                   'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                    'WHERE ' + request.query.Teams +
                    request.query.Semester + ';', function (error, results, fields) {
         if(error) {
