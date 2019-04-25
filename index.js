@@ -586,8 +586,8 @@ app.get('/student/portal/info', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, ' +
                    't.TeamNumber, t.TeamName, t.Semester, t.PhotoPath, t.LabID, ' +
                    'r.Type, r.Status, r.Description, r.Date ' +
-                   'p.Name, p.Description, p.Paragraph, p.FrontEnd, p.BackEnd, p.RDS '
-                   'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t, TeamProjects AS tp, Projects AS P ' +
+                   'p.Name, p.Description, p.Paragraph, p.FrontEnd, p.BackEnd, p.RDS ' +
+                   'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t, TeamProjects AS tp, Projects AS p ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID ' +
                    'AND t.TeamID = tp.TeamID AND tp.ProjectID = p.ProjectID AND m.WorkEmail = "' + request.query.WorkEmail + '"', function (error, results, fields) {
         if(error) {
