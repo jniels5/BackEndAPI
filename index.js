@@ -532,6 +532,25 @@ app.get('/stats/lab/projects', function(request,response) {
 
 ////////////////////////////////////////////////////
 //                                                //
+//    Student Portal                              //
+//                                                //
+////////////////////////////////////////////////////
+
+app.get('/student/info', function(request,response) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, m.GradSemester, ' +
+                   'm.GradYear, m.Email, m.AssetID, r.Type, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND m.WorkEmail = "' + request.query.Email + '"', function (error, results, fields) {
+        if(error) {
+            response.json({student_select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+////////////////////////////////////////////////////
+//                                                //
 //    Email API Calls                             //
 //                                                //
 ////////////////////////////////////////////////////
@@ -844,18 +863,6 @@ app.post('/checkin', function(request,response) {
           };
         });
       };
-    });
-  });
-
-  // Used to get All info from each table
-  app.get('/TEST', function(request,response) {
-    connection.query('SHOW CREATE TABLE Projects', function (error, results, fields) {
-          if(error) {
-              response.json({select_status: "failed"});
-          }
-          else {
-              response.json(results);
-          }
     });
   });
 
