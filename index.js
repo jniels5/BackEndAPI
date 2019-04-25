@@ -422,11 +422,11 @@ app.get('/stats/filter/equipment', function(request,response) {
   {
     Laptops = '"Laptop", '
   }
-  else if (request.query.Televisions == "true")
+  if (request.query.Televisions == "true")
   {
     Televisons = '"Television", '
   }
-  else if (request.query.MobileDevices == "true")
+  if (request.query.MobileDevices == "true")
   {
     MobileDevices = '"Mobile Device", '
   }
