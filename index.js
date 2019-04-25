@@ -308,6 +308,7 @@ app.get('/notifications/options/NotRead', function(request,response) {
 ////////////////////////////////////////////////////
 
 // Stats Search Calls . . .
+app.get('/stats/search/first', function(request,response) {
 connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                  'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.FirstName = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
