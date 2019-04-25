@@ -405,7 +405,8 @@ app.get('/stats/filter/teams', function(request,response) {
 
   connection.query('SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, ' +
                    'Projects.Description, Projects.Paragraph, Projects.FrontEnd, ' +
-                   'Projects.Backend, Projects.RDS, Teams.Semester FROM Teams ' +
+                   'Projects.Backend, Projects.RDS, Teams.Semester, Teams.PhotoPath, ' +
+                   'Teams.LabID, Teams.TeamID, Projects.ProjectID FROM Teams ' +
                    'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                    'WHERE ' + request.query.Teams +
@@ -514,6 +515,45 @@ app.post('/stats/modal/post', function(request,response) {
       connection.query('SET foreign_key_checks = 0; ' +
       'UPDATE Role SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
     	'SET foreign_key_checks = 1;', roleEntry, function (error, results, fields) {
+        if(error) {
+          response.json({modal_post: "failed: " + error, entry: entry});
+        }
+        else {
+        }
+      });
+    }
+  });
+});
+
+app.post('/stats/modal/post/teams', function(request,response) {
+  // used in connection.query
+  var entry = {
+    TeamName: request.body.TeamName,
+    TeamNumber: request.body.TeamNumber,
+    TeamSemester: request.body.TeamSemester,
+    PhotoPath: request.body.PhotoPath,
+    LabID: request.body.LabID
+  };
+
+  var ProjectEntry = {
+    ProjectName: request.body.ProjectName,
+    ProjectDesc: request.body.ProjectDesc,
+    ProjectFend: request.body.ProjectFend,
+    ProjectBend: request.body.ProjectBend,
+    ProjectRDS: request.body.ProjectRDS,
+    ProjectPara: request.body.ProjectPara,
+  }
+
+  connection.query('SET foreign_key_checks = 0; ' +
+	'UPDATE Teams SET ? WHERE TeamID = ' + request.body.TeamID + ";" +
+	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+    if(error) {
+      response.json({modal_post: "failed: " + error, entry: entry});
+    }
+    else {
+      connection.query('SET foreign_key_checks = 0; ' +
+      'UPDATE Projects SET ? WHERE ProjectID = ' + request.body.ProjectID + ";" +
+    	'SET foreign_key_checks = 1;', ProjectEntry, function (error, results, fields) {
         if(error) {
           response.json({modal_post: "failed: " + error, entry: entry});
         }
