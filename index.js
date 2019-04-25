@@ -403,7 +403,9 @@ app.get('/stats/filter/status', function(request,response) {
 
 app.get('/stats/filter/teams', function(request,response) {
 
-  connection.query('SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, Projects.Description FROM Teams ' +
+  connection.query('SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, ' +
+                   'Projects.Description, Projects.Paragraph, Projects.FrontEnd, ' +
+                   'Projects.Backend, Projects.RDS, Teams.Semester, FROM Teams ' +
                    'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                    'WHERE ' + request.query.Teams +
