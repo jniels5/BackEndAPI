@@ -589,13 +589,13 @@ app.get('/student/portal/info', function(request,response) {
                    'p.Name, p.Description, p.Paragraph, p.FrontEnd, p.BackEnd, p.RDS ' +
                    'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t, TeamProjects AS tp, Projects AS p ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID ' +
-                   'AND t.TeamID = tp.TeamID AND tp.ProjectID = p.ProjectID AND m.WorkEmail = "' + request.query.WorkEmail + '"', function (error, results, fields) {
+                   'AND t.TeamID = tp.TeamID AND tp.ProjectID = p.ProjectID AND m.WorkEmail = "' + request.query.WorkEmail + '" AND ', function (error, results, fields) {
         if(error) {
             response.json({student_select: "failed",
                            error: error});
         }
         else {
-            response.json(results);
+            response.json(results[results.length - 1]);
         }
   });
 });
