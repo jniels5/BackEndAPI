@@ -586,6 +586,7 @@ app.post('/stats/add/member', function(request,response) {
     GradYear: request.body.GradYear,
     Email: request.body.Email,
     WorkEmail: request.body.WorkEmail,
+    PhoneNum: request.body.PhoneNum,
     Major: '',
     AssetID: 10000000,
     LabID: 1
