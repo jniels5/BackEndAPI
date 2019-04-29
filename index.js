@@ -582,33 +582,42 @@ app.post('/stats/add/member', function(request,response) {
     FirstName: request.body.FirstName,
     LastName:  request.body.LastName,
     Gender: request.body.Gender,
-    GradSemester: '',
+    GradSemester: request.body.GradSemester,
     GradYear: request.body.GradYear,
     Email: request.body.Email,
-    WorkEmail: '',
-    Major: request.body.major,
+    WorkEmail: request.body.WorkEmail,
+    Major: '',
     AssetID: 10000000,
     LabID: 1
   };
 
+  var role = {
+    Type: request.body.Type,
+    Status: request.body.Status,
+    Description: request.body.Description,
+    Date: request.body.Date
+  }
+
   connection.query('INSERT INTO Members set ?', entry, function (error, results, fields) {
         if(error) {
             response.json({
-              checkin_status: "Insert Failed",
-              checkin_error: error,
+              add_member: "Insert Failed",
+              member_error: error,
             });
         }
         else {
           connection.query('SELECT MemberID FROM Members WHERE FirstName = "' + entry.FirstName + '" AND LastName = "' + entry.LastName + '"', function (error, results, fields) {
           if(error) {
               response.json({
-                checkin_status: "Testing Failed",
-                checkin_error: error,
+                membID_get: "Testing Failed",
+                membID_err: error,
               });
           }
           else {
             var holding = results[0].MemberID;
-            connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'Spring code_orange open house', '2019-3-28', '" + holding + "')", function (error, results, fields) {
+            connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) " +
+            "VALUES ('" + role.Type + "', '" + role.Status + "', '" +
+            role.Description + "', '" + role.Date + "', '" + holding + "')", function (error, results, fields) {
             if(error) {
               response.json({
                 role_status: "FAILED"
