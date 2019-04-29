@@ -1,6 +1,6 @@
 SET foreign_key_checks = 0;
 
-INSERT INTO TeamMembers (TeamID, MemberID) VALUES
-(18, 89);
+ALTER TABLE Members
+ADD COLUMN PhoneNum VARCHAR(15) AFTER WorkEmail;
 
 SET foreign_key_checks = 1;
