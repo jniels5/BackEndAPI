@@ -517,6 +517,57 @@ app.post('/stats/modal/post', function(request,response) {
   });
 });
 
+app.post('/stats/add/member', function(request,response) {
+  //used in connection.query
+  var entry = {
+    FirstName: request.body.FirstName,
+    LastName:  request.body.LastName,
+    Gender: request.body.Gender,
+    GradSemester: '',
+    GradYear: request.body.GradYear,
+    Email: request.body.Email,
+    WorkEmail: '',
+    Major: request.body.major,
+    AssetID: 10000000,
+    LabID: 1
+  };
+
+  connection.query('INSERT INTO Members set ?', entry, function (error, results, fields) {
+        if(error) {
+            response.json({
+              checkin_status: "Insert Failed",
+              checkin_error: error,
+            });
+        }
+        else {
+          connection.query('SELECT MemberID FROM Members WHERE FirstName = "' + entry.FirstName + '" AND LastName = "' + entry.LastName + '"', function (error, results, fields) {
+          if(error) {
+              response.json({
+                checkin_status: "Testing Failed",
+                checkin_error: error,
+              });
+          }
+          else {
+            var holding = results[0].MemberID;
+            connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'Spring code_orange open house', '2019-3-28', '" + holding + "')", function (error, results, fields) {
+            if(error) {
+              response.json({
+                role_status: "FAILED"
+              });
+            }
+            else
+            {
+                response.json({
+                  role_status: "SUCCESS"
+                });
+            }
+            });
+          };
+        });
+      };
+    });
+  });
+
 ////////////////////////////////////////////////////
 //                                                //
 //    Email API Calls                             //
