@@ -637,6 +637,24 @@ app.post('/stats/add/member', function(request,response) {
     });
   });
 
+app.post('/stats/add/asset', function(request,response) {
+  var entry = {
+    Type: request.body.Type,
+    Description: request.body.Description,
+    IsImaged: request.body.IsImaged
+  };
+  
+  connection.query('INSERT INTO Assets set ?', entry, function (error, results, fields) {
+        if(error) {
+            response.json({
+              add_asset: "Insert Failed",
+              asset_error: error,
+            });
+        } else {
+          }
+  });
+});
+
 ////////////////////////////////////////////////////
 //                                                //
 //    Student Portal                              //
