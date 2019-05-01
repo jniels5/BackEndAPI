@@ -639,11 +639,13 @@ app.post('/stats/add/member', function(request,response) {
 
 app.post('/stats/add/asset', function(request,response) {
   var entry = {
+    AssetID: request.body.AssetID,
     Type: request.body.Type,
     Description: request.body.Description,
-    IsImaged: request.body.IsImaged
+    IsImaged: request.body.IsImaged,
+    LabID: 1
   };
-  
+
   connection.query('INSERT INTO Assets set ?', entry, function (error, results, fields) {
         if(error) {
             response.json({
@@ -651,7 +653,10 @@ app.post('/stats/add/asset', function(request,response) {
               asset_error: error,
             });
         } else {
-          }
+          response.json({
+            add_asset: "Insert Failed"
+          });
+        }
   });
 });
 
