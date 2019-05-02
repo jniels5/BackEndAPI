@@ -566,7 +566,7 @@ app.post('/stats/modal/post/teams', function(request,response) {
 
 // Stats Add Teams . . .
 app.get('/stats/lab/projects', function(request,response) {
-  connection.query('SELECT p.Name FROM Projects AS p, Teams, TeamProjects as tp WHERE ' + request.query.Semester + 
+  connection.query('SELECT p.Name FROM Projects AS p, Teams, TeamProjects as tp WHERE ' + request.query.Semester +
                    ' AND p.ProjectID = tp.ProjectID AND tp.TeamID = Teams.TeamID ' +
                    'ORDER BY `Name`', function (error, results, fields) {
         if(error) {
@@ -639,6 +639,33 @@ app.post('/stats/add/member', function(request,response) {
     });
   });
 
+// Stats Add Projects . . .
+app.post('/stats/create/project', function(request,response) {
+  var entry = {
+    Name: request.body.Name,
+    Description: request.body.Description,
+    Type: request.body.Type,
+    FrontEnd: request.body.FrontEnd,
+    BackEnd: request.body.BackEnd,
+    RDS: request.body.RDS
+  };
+
+  connection.query('INSERT INTO Projects set ?', entry, function (error, results, fields) {
+        if(error) {
+            response.json({
+              create_project: "Insert Failed",
+              member_error: error,
+            });
+        }
+        else {
+            response.json({
+              create_project: "Success!"
+            })
+          };
+        });
+      });
+
+// Stats Add Assets . . .
 app.post('/stats/add/asset', function(request,response) {
   var entry = {
     AssetID: request.body.AssetID,
