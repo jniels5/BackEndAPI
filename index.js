@@ -569,7 +569,7 @@ app.get('/stats/lab/projects', function(request,response) {
   if (request.query.Semester == "unassigned")
   {
     connection.query('SELECT p.Name FROM Projects AS p, TeamProjects as tp WHERE ' +
-                     'p.ProjectID != tp.ProjectID ORDER BY `Name`', function (error, results, fields) {
+                     'p.ProjectID NOT IN (SELECT ProjectID FROM TeamProjects)', function (error, results, fields) {
           if(error) {
               response.json({Unassigned_select: "failed"});
           }
