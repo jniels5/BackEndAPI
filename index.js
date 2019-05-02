@@ -571,7 +571,7 @@ app.get('/stats/lab/projects', function(request,response) {
     connection.query('SELECT p.Name FROM Projects AS p, TeamProjects as tp WHERE ' +
                      'p.ProjectID != tp.ProjectID ORDER BY `Name`', function (error, results, fields) {
           if(error) {
-              response.json({Project_select: "failed"});
+              response.json({Unassigned_select: "failed"});
           }
           else {
               response.json(results);
