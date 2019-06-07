@@ -390,8 +390,8 @@ app.get('/stats/filter/status', function(request,response) {
                    'LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
                    'LEFT JOIN TeamMembers tm ON tm.MemberID = m.MemberID ' +
                    'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
-                   'WHERE (r.Type IN (' + Applicant + Intern + FullTime +
-                   '"N/a" ) AND ' + request.query.Semester + ') OR r.Type IN (' + OpenHouse + ') ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
+                   '"N/a" ) AND ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
