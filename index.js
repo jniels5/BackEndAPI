@@ -451,6 +451,20 @@ app.get('/stats/filter/equipment', function(request,response) {
   });
 });
 
+app.get('/stats/filter/newbs', function(request,response) {
+  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, r.Type, ' +
+                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
+                   'm.Gender FROM Members m LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
+                   'WHERE r.Type IN ( "Open House", "Applicant" ) ORDER BY m.MemberID', function (error, results, fields) {
+        if(error) {
+            response.json({newb_Select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 // Stats Page Info Calls . . .
 app.get('/stats/teams/semester', function(request,response) {
   connection.query('SELECT TeamdID, TeamName, TeamNumber, Semester, LabID FROM Teams WHERE Semester = '  + request.query.Search, function (error, results, fields) {
@@ -781,42 +795,6 @@ app.get('/email/Applicants/OH', function(request,response) {
     else {
       response.json(results);
     }
-  });
-});
-
-app.get("/csv/table.csv", function (req, res) {
-  var resFields = [];
-  var resData = [];
-
-  connection.query('SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_NAME` = "Members"', function (error, rows, results, fields) {
-        if(error) {
-            res.json({csv1_select: "failed"});
-        }
-        else {
-            for (var i = 0; i < rows.length; i++) {
-              resFields.push(rows[i]);
-            }
-            console.log(resFields);
-        }
-  });
-
-  connection.query('SELECT MemberID, FirstName, LastName, Gender, GradSemester, GradYear, Email, AssetID, LabID FROM Members', function (error, rows, results, fields) {
-        if(error) {
-            res.json({csv2_select: "failed"});
-        }
-        else {
-          for (var i = 0; i < rows.length; i++) {
-            resData.push(rows[i]);
-          }
-          console.log(resData);
-          res.json({we_made_it: "this_far"});
-        }
-  });
-
-  json2csv({ data: resData, fields: resFields }, function(err, csv) {
-    res.setHeader('Content-disposition', 'attachment; filename=table.csv');
-    res.set('Content-Type', 'text/csv');
-    res.status(200).send(csv);
   });
 });
 
