@@ -380,19 +380,9 @@ app.get('/stats/search/all', function(request,response) {
 
 // Stats Filter Calls . . .
 app.get('/stats/filter/status', function(request,response) {
-  var OpenHouse = '';
-  var Applicant = '';
   var Intern = '';
   var FullTime = '';
 
-  if (request.query.OpenHouse == "true")
-  {
-    OpenHouse = '"Open House", '
-  }
-  if (request.query.Applicants == "true")
-  {
-    Applicant = '"Applicant", '
-  }
   if (request.query.Interns == "true")
   {
     Intern = '"Intern", '
@@ -408,7 +398,7 @@ app.get('/stats/filter/status', function(request,response) {
                    'LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
                    'LEFT JOIN TeamMembers tm ON tm.MemberID = m.MemberID ' +
                    'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
-                   'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
+                   'WHERE r.Type IN (' + Intern + FullTime +
                    '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) +  + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
