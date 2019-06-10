@@ -1200,23 +1200,25 @@ app.get('/runfile/:file', function(request,response) {
   response.json({runfile_status: "Success"});
 });
 
-app.listen(app.get('port'), function() {
-    console.log("Node app is running at localhost:" + app.get('port'))
-  });
-
-app.get('/update/reserve/', function(request,response) {
-
-  connection.query('UPDATE Reservations SET Start = ' + request.params.Start + ' End = ' + request.params.End + 'Date = ' + request.params.Date + ' RoomID = ' + request.params.RoomID , function (error, results, fields) {
+app.post('/update/reserve', function(request,response) {
+  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.params.Start) + ', End = ' + mysql.escape(request.params.End) + ', Date = ' + mysql.escape(request.params.Date) + ', RoomID = ' + mysql.escape(request.params.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.params.ReserveID);
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
-              remove_status: "failed",
-              remove_error: error
+              update_status: "failed",
+              update_error: error
             });
         }
         else {
             response.json({
-              remove_status: "success",
+              update_status: "success",
             });
         }
   });
 });
+
+app.listen(app.get('port'), function() {
+    console.log("Node app is running at localhost:" + app.get('port'))
+  });
+
