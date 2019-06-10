@@ -1201,7 +1201,7 @@ app.get('/runfile/:file', function(request,response) {
 });
 
 app.post('/update/reserve', function(request,response) {
-  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.query.Start) + ', End = ' + mysql.escape(request.query.End) + ', Date = ' + mysql.escape(request.query.Date) + ', RoomID = ' + mysql.escape(request.query.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.query.ReserveID);
+  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
