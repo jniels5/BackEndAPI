@@ -1189,3 +1189,20 @@ app.get('/runfile/:file', function(request,response) {
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'))
   });
+
+app.get('/update/reserve/', function(request,response) {
+
+  connection.query('UPDATE Reservations SET Start = ' + request.params.Start + ' End = ' + request.params.End + 'Date = ' + request.params.Date + ' RoomID = ' + request.params.RoomID , function (error, results, fields) {
+        if(error) {
+            response.json({
+              remove_status: "failed",
+              remove_error: error
+            });
+        }
+        else {
+            response.json({
+              remove_status: "success",
+            });
+        }
+  });
+});
