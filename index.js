@@ -409,7 +409,7 @@ app.get('/stats/filter/status', function(request,response) {
                    'LEFT JOIN TeamMembers tm ON tm.MemberID = m.MemberID ' +
                    'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
                    'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
-                   '"N/a" ) AND ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) +  + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
@@ -428,7 +428,7 @@ app.get('/stats/filter/teams', function(request,response) {
                    'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                    'WHERE ' + request.query.Teams +
-                   request.query.Semester + ';', function (error, results, fields) {
+                   'Teams.Semester = ' + mysql.escape(request.query.Semester) + ';', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
