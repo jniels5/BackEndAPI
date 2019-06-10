@@ -27,11 +27,11 @@ app.set('port', (process.env.PORT || 5000))
 
 //creating connection object
 var connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME,
-  user     : process.env.RDS_USERNAME,
-  password : process.env.RDS_PASSWORD,
-  port     : process.env.RDS_PORT,
-  database : process.env.RDS_DB_NAME,
+  host     : process.env.RDS_HOSTNAME || "team11-database.cpfq5d1i5xkj.us-east-2.rds.amazonaws.com",
+  user     : process.env.RDS_USERNAME || "Team11",
+  password : process.env.RDS_PASSWORD || "CCCJMS11",
+  port     : process.env.RDS_PORT     || "3306",
+  database : process.env.RDS_DB_NAME  || "ebdb",
   multipleStatements: true //used for running an sql file
 });
 var conn_succ = false; //checks connection status, will probably get rid of this soon
