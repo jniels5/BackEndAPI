@@ -1157,6 +1157,24 @@ app.post('/update/reserve', function(request,response) {
   });
 });
 
+app.post('/edit/reserve', function(request,response) {
+  var query = 'UPDATE Reservations SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              edit_status: "failed",
+              edit_error: error
+            });
+        }
+        else {
+            response.json({
+              edit_status: "success",
+            });
+        }
+  });
+});
+
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
   var entry = {
