@@ -355,7 +355,7 @@ app.get('/stats/search/last', function(request,response) {
 app.get('/stats/search/grad', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({grad_select: "failed"});
         }
@@ -368,7 +368,7 @@ app.get('/stats/search/grad', function(request,response) {
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({all_select: "failed"});
         }
@@ -793,7 +793,7 @@ app.get('/email/Intern/PO', function(request,response) {
                    'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                    'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID '+
                    'JOIN Role ON Role.MemberID = Members.MemberID ' +
-                   'WHERE ' + request.query.Teams + request.query.Semester + ' AND ' +
+                   'WHERE ' + request.query.Teams + 'Teams.Semester = ' + mysql.escape(request.query.Semester) ' AND ' +
                    request.query.Role, function (error, results, fields) {
     if(error) {
       response.json({email_get: "failed"});
@@ -1139,6 +1139,24 @@ app.get('/delete/reservations', function(request,response) {
   });
 });
 
+app.post('/update/reserve', function(request,response) {
+  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              update_status: "failed",
+              update_error: error
+            });
+        }
+        else {
+            response.json({
+              update_status: "success",
+            });
+        }
+  });
+});
+
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
   var entry = {
@@ -1201,23 +1219,7 @@ app.get('/runfile/:file', function(request,response) {
   response.json({runfile_status: "Success"});
 });
 
-app.post('/update/reserve', function(request,response) {
-  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.query.Start) + ', End = ' + mysql.escape(request.query.End) + ', Date = ' + mysql.escape(request.query.Date) + ', RoomID = ' + mysql.escape(request.query.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.query.ReserveID);
-  console.log(query);
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({
-              update_status: "failed",
-              update_error: error
-            });
-        }
-        else {
-            response.json({
-              update_status: "success",
-            });
-        }
-  });
-});
+
 
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'));
