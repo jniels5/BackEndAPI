@@ -793,7 +793,7 @@ app.get('/email/Intern/PO', function(request,response) {
                    'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                    'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID '+
                    'JOIN Role ON Role.MemberID = Members.MemberID ' +
-                   'WHERE ' + request.query.Teams + 'Teams.Semester = ' + mysql.escape(request.query.Semester) ' AND ' +
+                   'WHERE ' + request.query.Teams + 'Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND ' +
                    request.query.Role, function (error, results, fields) {
     if(error) {
       response.json({email_get: "failed"});
