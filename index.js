@@ -1154,12 +1154,14 @@ app.post('/edit/reserve', function(request,response) {
         if(error) {
             response.json({
               edit_status: "failed",
+              sql_query: query,
               edit_error: error
             });
         }
         else {
             response.json({
               edit_status: "success",
+              sql_query: query
             });
         }
   });
