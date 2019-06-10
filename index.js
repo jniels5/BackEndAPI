@@ -355,7 +355,7 @@ app.get('/stats/search/last', function(request,response) {
 app.get('/stats/search/grad', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({grad_select: "failed"});
         }
@@ -368,7 +368,7 @@ app.get('/stats/search/grad', function(request,response) {
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({all_select: "failed"});
         }
@@ -380,19 +380,9 @@ app.get('/stats/search/all', function(request,response) {
 
 // Stats Filter Calls . . .
 app.get('/stats/filter/status', function(request,response) {
-  var OpenHouse = '';
-  var Applicant = '';
   var Intern = '';
   var FullTime = '';
 
-  if (request.query.OpenHouse == "true")
-  {
-    OpenHouse = '"Open House", '
-  }
-  if (request.query.Applicants == "true")
-  {
-    Applicant = '"Applicant", '
-  }
   if (request.query.Interns == "true")
   {
     Intern = '"Intern", '
@@ -408,8 +398,8 @@ app.get('/stats/filter/status', function(request,response) {
                    'LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
                    'LEFT JOIN TeamMembers tm ON tm.MemberID = m.MemberID ' +
                    'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
-                   'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
-                   '"N/a" ) AND ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.Type IN (' + Intern + FullTime +
+                   '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) +  + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
@@ -428,7 +418,7 @@ app.get('/stats/filter/teams', function(request,response) {
                    'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                    'WHERE ' + request.query.Teams +
-                   request.query.Semester + ';', function (error, results, fields) {
+                   'Teams.Semester = ' + mysql.escape(request.query.Semester) + ';', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
@@ -793,7 +783,7 @@ app.get('/email/Intern/PO', function(request,response) {
                    'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                    'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID '+
                    'JOIN Role ON Role.MemberID = Members.MemberID ' +
-                   'WHERE ' + request.query.Teams + request.query.Semester + ' AND ' +
+                   'WHERE ' + request.query.Teams + 'Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND ' +
                    request.query.Role, function (error, results, fields) {
     if(error) {
       response.json({email_get: "failed"});
@@ -1240,6 +1230,6 @@ app.get('/runfile/:file', function(request,response) {
 
 
 app.listen(app.get('port'), function() {
-    console.log("Node app is running at localhost:" + app.get('port'))
+    console.log("Node app is running at localhost:" + app.get('port'));
   });
 
