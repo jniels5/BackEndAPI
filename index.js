@@ -1139,6 +1139,24 @@ app.get('/delete/reservations', function(request,response) {
   });
 });
 
+app.post('/update/reserve', function(request,response) {
+  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              update_status: "failed",
+              update_error: error
+            });
+        }
+        else {
+            response.json({
+              update_status: "success",
+            });
+        }
+  });
+});
+
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
   var entry = {
@@ -1201,23 +1219,7 @@ app.get('/runfile/:file', function(request,response) {
   response.json({runfile_status: "Success"});
 });
 
-app.post('/update/reserve', function(request,response) {
-  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
-  console.log(query);
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({
-              update_status: "failed",
-              update_error: error
-            });
-        }
-        else {
-            response.json({
-              update_status: "success",
-            });
-        }
-  });
-});
+
 
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'))
