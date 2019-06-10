@@ -309,11 +309,18 @@ app.get('/notifications/options/NotRead', function(request,response) {
 
 // Stats Search Calls . . .
 app.get('/stats/search/first', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
+  var sem = "";
+  if (request.query.Semester)
+  {
+    sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
+  }
+  var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
                    'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, ' +
                    'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
-                   'Teams.Semester = \'' + request.query.Semester + '\' AND m.FirstName = \'' + request.query.Search + '\' ORDER BY m.MemberID;', function (error, results, fields) {
+                   sem + 'm.FirstName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({first_select: "failed"});
         }
@@ -324,11 +331,18 @@ app.get('/stats/search/first', function(request,response) {
 });
 
 app.get('/stats/search/last', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
+  var sem = "";
+  if (request.query.Semester)
+  {
+    sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
+  }
+  var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
                    'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, ' +
                    'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
-                   'Teams.Semester = \'' + request.query.Semester + '\' AND m.LastName = \'' + request.query.Search + '\' ORDER BY m.MemberID', function (error, results, fields) {
+                   sem + 'm.LastName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({last_select: "failed"});
         }
