@@ -4,9 +4,7 @@ var express = require('express')
 var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
-var nodemailer = require('nodemailer')
 var fs = require('fs');
-const json2csv = require('json2csv').parse;
 
 var whitelist = [
   'localhost:3000/',
@@ -686,27 +684,11 @@ app.post('/map/insert/delegations/', function(request,response) {
         response.json({
           insert_delegation: "failed",
           delegation_error: error,
-          Delegator: request.body.Delegator,
-          State: request.body.State,
-          Email: request.body.Email,
-          Delegatee:  request.body.Delegatee,
-          StartDate: request.body.StartDate,
-          EndDate: request.body.EndDate,
-          Description: request.body.Description,
-          Status: request.body.Status
         });
     }
     else {
         response.json({
           delegation_status: "success",
-          Delegator: request.body.Delegator,
-          State: request.body.State,
-          Email: request.body.Email,
-          Delegatee:  request.body.Delegatee,
-          StartDate: request.body.StartDate,
-          EndDate: request.body.EndDate,
-          Description: request.body.Description,
-          Status: request.body.Status
         });
       }
     });
@@ -781,27 +763,11 @@ app.post('/map/insert/approvals/', function(request,response) {
           response.json({
             approval_status: "failed",
             approval_error: error,
-            FullName: request.body.FullName,
-            CloseDate: request.body.CloseDate,
-            Email: request.body.Email,
-            Service:  request.body.Service,
-            RequestedBy: request.body.RequestedBy,
-            RequestedDate: request.body.RequestedDate,
-            Description: request.body.Description,
-            Status: request.body.Status
           });
       }
       else {
           response.json({
             approval_status: "success",
-            FullName: request.body.FullName,
-            CloseDate: request.body.CloseDate,
-            Email: request.body.Email,
-            Service:  request.body.Service,
-            RequestedBy: request.body.RequestedBy,
-            RequestedDate: request.body.RequestedDate,
-            Description: request.body.Description,
-            Status: request.body.Status
           });
         }
       });
@@ -1043,25 +1009,11 @@ app.post('/insert/reserve/', function(request,response) {
         response.json({
           checkin_status: "failed",
           checkin_error: error,
-          RoomID: request.body.RoomID,
-          TeamID: request.body.TeamID,
-          Email: request.body.Email,
-          Start:  request.body.Start,
-          End: request.body.End,
-          Date: request.body.Date,
-          Description: request.body.Description
         });
     }
     else {
         response.json({
           checkin_status: "success",
-          RoomID: request.body.RoomID,
-          TeamID: request.body.TeamID,
-          Email: request.body.Email,
-          Start:  request.body.Start,
-          End: request.body.End,
-          Date: request.body.Date,
-          Description: request.body.Description
         });
       }
     });
