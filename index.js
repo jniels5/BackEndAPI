@@ -27,11 +27,11 @@ app.set('port', (process.env.PORT || 5000))
 
 //creating connection object
 var connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME,
-  user     : process.env.RDS_USERNAME,
-  password : process.env.RDS_PASSWORD,
-  port     : process.env.RDS_PORT,
-  database : process.env.RDS_DB_NAME,
+  host     : process.env.RDS_HOSTNAME || "team11-database.cpfq5d1i5xkj.us-east-2.rds.amazonaws.com",
+  user     : process.env.RDS_USERNAME || "Team11",
+  password : process.env.RDS_PASSWORD || "CCCJMS11",
+  port     : process.env.RDS_PORT     || "3306",
+  database : process.env.RDS_DB_NAME  || "ebdb",
   multipleStatements: true //used for running an sql file
 });
 var conn_succ = false; //checks connection status, will probably get rid of this soon
@@ -309,9 +309,18 @@ app.get('/notifications/options/NotRead', function(request,response) {
 
 // Stats Search Calls . . .
 app.get('/stats/search/first', function(request,response) {
-connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                 'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.FirstName = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+  var sem = "";
+  if (request.query.Semester)
+  {
+    sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
+  }
+  var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
+                   'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, ' +
+                   'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
+                   sem + 'm.FirstName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({first_select: "failed"});
         }
@@ -322,9 +331,18 @@ connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, 
 });
 
 app.get('/stats/search/last', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.LastName = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+  var sem = "";
+  if (request.query.Semester)
+  {
+    sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
+  }
+  var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
+                   'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, ' +
+                   'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
+                   sem + 'm.LastName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({last_select: "failed"});
         }
@@ -337,7 +355,7 @@ app.get('/stats/search/last', function(request,response) {
 app.get('/stats/search/grad', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({grad_select: "failed"});
         }
@@ -350,7 +368,7 @@ app.get('/stats/search/grad', function(request,response) {
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({all_select: "failed"});
         }
@@ -362,19 +380,9 @@ app.get('/stats/search/all', function(request,response) {
 
 // Stats Filter Calls . . .
 app.get('/stats/filter/status', function(request,response) {
-  var OpenHouse = '';
-  var Applicant = '';
   var Intern = '';
   var FullTime = '';
 
-  if (request.query.OpenHouse == "true")
-  {
-    OpenHouse = '"Open House", '
-  }
-  if (request.query.Applicants == "true")
-  {
-    Applicant = '"Applicant", '
-  }
   if (request.query.Interns == "true")
   {
     Intern = '"Intern", '
@@ -390,8 +398,8 @@ app.get('/stats/filter/status', function(request,response) {
                    'LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
                    'LEFT JOIN TeamMembers tm ON tm.MemberID = m.MemberID ' +
                    'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
-                   'WHERE r.Type IN (' + OpenHouse + Applicant + Intern + FullTime +
-                   '"N/a" ) AND ' + request.query.Semester + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.Type IN (' + Intern + FullTime +
+                   '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) +  + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
@@ -410,7 +418,7 @@ app.get('/stats/filter/teams', function(request,response) {
                    'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                    'WHERE ' + request.query.Teams +
-                   request.query.Semester + ';', function (error, results, fields) {
+                   'Teams.Semester = ' + mysql.escape(request.query.Semester) + ';', function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
@@ -478,7 +486,8 @@ app.get('/stats/teams/semester', function(request,response) {
 });
 
 app.get('/stats/teams/names', function(request,response) {
-  connection.query('SELECT TeamName, TeamNumber FROM Teams WHERE '  + request.query.Semester, function (error, results, fields) {
+  var sem = "Teams.Semester = " + mysql.escape(request.query.Semester);
+  connection.query('SELECT TeamName, TeamNumber FROM Teams WHERE '  + sem, function (error, results, fields) {
         if(error) {
             response.json({teams_select: "failed"});
         }
@@ -752,58 +761,6 @@ app.get('/student/portal/info', function(request,response) {
   });
 });
 
-////////////////////////////////////////////////////
-//                                                //
-//    Email API Calls                             //
-//                                                //
-////////////////////////////////////////////////////
-
-app.get('/email/get', function(request,response) {
-  connection.query('SELECT Members.Email FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Members.Email is not NULL', function (error, results, fields) {
-    if(error) {
-      response.json({email_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-app.get('/email/Intern/PO', function(request,response) {
-  connection.query('SELECT ' + request.query.ContactType + ' FROM Members ' +
-                   'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
-                   'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID '+
-                   'JOIN Role ON Role.MemberID = Members.MemberID ' +
-                   'WHERE ' + request.query.Teams + request.query.Semester + ' AND ' +
-                   request.query.Role, function (error, results, fields) {
-    if(error) {
-      response.json({email_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-app.get('/email/Applicants/OH', function(request,response) {
-  connection.query('SELECT ' + request.query.ContactType + ' FROM Members ' +
-                   'JOIN Role ON Role.MemberID = Members.MemberID ' +
-                   'WHERE ' + request.query.Role, function (error, results, fields) {
-    if(error) {
-      response.json({email_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-////////////////////////////////////////////////////
-//                                                //
-//    Student Portal API Calls                    //
-//                                                //
-////////////////////////////////////////////////////
-
 app.post('/student/portal/update', function(request,response) {
   // used in connection.query
   var entry = {
@@ -827,7 +784,40 @@ app.post('/student/portal/update', function(request,response) {
     }
   });
 });
+////////////////////////////////////////////////////
+//                                                //
+//    Email API Calls                             //
+//                                                //
+////////////////////////////////////////////////////
 
+app.get('/email/Intern/PO', function(request,response) {
+  connection.query('SELECT ' + request.query.ContactType + ' FROM Members ' +
+                   'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
+                   'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID '+
+                   'JOIN Role ON Role.MemberID = Members.MemberID ' +
+                   'WHERE ' + request.query.Teams + 'Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND ' +
+                   request.query.Role, function (error, results, fields) {
+    if(error) {
+      response.json({email_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
+
+app.get('/email/Applicants/OH', function(request,response) {
+  connection.query('SELECT ' + request.query.ContactType + ' FROM Members ' +
+                   'JOIN Role ON Role.MemberID = Members.MemberID ' +
+                   'WHERE ' + request.query.Role, function (error, results, fields) {
+    if(error) {
+      response.json({email_get: "failed"});
+    }
+    else {
+      response.json(results);
+    }
+  });
+});
 ///////////////////////////////////////////////////////////
 //                                                       //
 //  Atlas - Backend API Calls                            //
@@ -1120,6 +1110,84 @@ app.get('/delete/reservations', function(request,response) {
   });
 });
 
+app.post('/update/reserve', function(request,response) {
+  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              update_status: "failed",
+              update_error: error
+            });
+        }
+        else {
+            response.json({
+              update_status: "success",
+            });
+        }
+  });
+});
+
+
+app.post('/update/reserve/start', function(request,response) {
+  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              update_status: "failed",
+              update_error: error
+            });
+        }
+        else {
+            response.json({
+              update_status: "success",
+            });
+        }
+  });
+});
+
+
+app.post('/update/reserve/end', function(request,response) {
+  var query = 'UPDATE Reservations SET End = ' + mysql.escape(request.body.End) + '  WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              update_status: "failed",
+              update_error: error
+            });
+        }
+        else {
+            response.json({
+              update_status: "success",
+            });
+        }
+  });
+});
+
+
+
+app.post('/edit/reserve', function(request,response) {
+  var query = 'UPDATE Reservations SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              edit_status: "failed",
+              sql_query: query,
+              edit_error: error
+            });
+        }
+        else {
+            response.json({
+              edit_status: "success",
+              sql_query: query
+            });
+        }
+  });
+});
+
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
   var entry = {
@@ -1182,6 +1250,9 @@ app.get('/runfile/:file', function(request,response) {
   response.json({runfile_status: "Success"});
 });
 
+
+
 app.listen(app.get('port'), function() {
-    console.log("Node app is running at localhost:" + app.get('port'))
+    console.log("Node app is running at localhost:" + app.get('port'));
   });
+
