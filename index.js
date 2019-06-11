@@ -1130,7 +1130,7 @@ app.post('/update/reserve', function(request,response) {
 
 
 app.post('/update/reserve/start', function(request,response) {
-  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ' " WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
