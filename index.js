@@ -595,8 +595,8 @@ app.get('/stats/lab/projects', function(request,response) {
   }
   else
   {
-    connection.query('SELECT p.Name FROM Projects AS p, Teams, TeamProjects as tp WHERE ' + request.query.Semester +
-                     ' AND p.ProjectID = tp.ProjectID AND tp.TeamID = Teams.TeamID ' +
+    connection.query('SELECT p.Name FROM Projects AS p, Teams, TeamProjects as tp WHERE Teams.Semester = "'+ request.query.Semester +
+                     '" AND p.ProjectID = tp.ProjectID AND tp.TeamID = Teams.TeamID ' +
                      'ORDER BY `Name`', function (error, results, fields) {
           if(error) {
               response.json({Project_select: "failed"});
