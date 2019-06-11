@@ -761,22 +761,34 @@ app.get('/student/portal/info', function(request,response) {
   });
 });
 
+app.post('/student/portal/update', function(request,response) {
+  // used in connection.query
+  var entry = {
+    FirstName: request.body.FirstName,
+    LastName: request.body.LastName,
+    Gender: request.body.Gender,
+    GradSemester: request.body.GradSemester,
+    GradYear: request.body.GradYear,
+    Email: request.body.Email,
+    PhoneNum: request.body.PhoneNum,
+    MemberID: request.body.MemberID
+  };
+
+  connection.query('SET foreign_key_checks = 0; ' +
+	'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
+	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+    if(error) {
+      response.json({student_update: "failed: " + error, entry: entry});
+    } else {
+      respose.json({student_update: "success"})
+    }
+  });
+});
 ////////////////////////////////////////////////////
 //                                                //
 //    Email API Calls                             //
 //                                                //
 ////////////////////////////////////////////////////
-
-app.get('/email/get', function(request,response) {
-  connection.query('SELECT Members.Email FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Members.Email is not NULL', function (error, results, fields) {
-    if(error) {
-      response.json({email_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
 
 app.get('/email/Intern/PO', function(request,response) {
   connection.query('SELECT ' + request.query.ContactType + ' FROM Members ' +
@@ -806,37 +818,6 @@ app.get('/email/Applicants/OH', function(request,response) {
     }
   });
 });
-
-////////////////////////////////////////////////////
-//                                                //
-//    Student Portal API Calls                    //
-//                                                //
-////////////////////////////////////////////////////
-
-app.post('/student/portal/update', function(request,response) {
-  // used in connection.query
-  var entry = {
-    FirstName: request.body.FirstName,
-    LastName: request.body.LastName,
-    Gender: request.body.Gender,
-    GradSemester: request.body.GradSemester,
-    GradYear: request.body.GradYear,
-    Email: request.body.Email,
-    PhoneNum: request.body.PhoneNum,
-    MemberID: request.body.MemberID
-  };
-
-  connection.query('SET foreign_key_checks = 0; ' +
-	'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
-	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
-    if(error) {
-      response.json({student_update: "failed: " + error, entry: entry});
-    } else {
-      respose.json({student_update: "success"})
-    }
-  });
-});
-
 ///////////////////////////////////////////////////////////
 //                                                       //
 //  Atlas - Backend API Calls                            //
