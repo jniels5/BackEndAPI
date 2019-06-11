@@ -49,39 +49,6 @@ connection.connect(function(err) {
   console.log('Connected to database.');
 });
 
-//nodemailer stuff
-// create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport({
-  host: "smtp.ethereal.email",
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: 'trycia96@ethereal.email', // generated ethereal user
-    pass: 'H2qNsXxpkeUew42BFS' // generated ethereal password
-  }
-});
-
-// setup email data with unicode symbols
-var mailOptions = {
-  from: '"Trycia Nikolaus" <trycia96@ethereal.email>', // sender address
-  to: "colebraswell@discover.com, trycia96@ethereal.email", // list of receivers
-  subject: "Hello this is a test", // Subject line
-  text: "Hello world this is the text test", // plain text body
-  html: "<b>Hello world this is the text test</b>" // html body, I beleive this is optional. Can choose between either text and html, or have both!
-};
-
-// hopefully sends the eMail?
-app.get('/email', function(request,response) {
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        response.json({email: "failed"});
-    }
-    else {
-      respose.json({email: "sent"});
-    }
-  })
-});
-
 //pretty much useless, used it to test db connection
 app.get('/', function(request,response) {
   if(!conn_succ) {
@@ -104,86 +71,11 @@ app.get('/select/table/:table', function(request,response) {
   });
 });
 
-// Describe table structure
-app.get('/describe/:table', function(request,response) {
-  connection.query('DESCRIBE '  + request.params.table, function (error, results, fields) {
-        if(error) {
-            response.json({describe_status: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-// Describe table structure
-app.get('/show/tables', function(request,response) {
-  connection.query('SHOW Tables', function (error, results, fields) {
-        if(error) {
-            response.json({describe_status: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-// Login Page Stuff
-app.get('/login/check/', function(request,response) {
-  connection.query('SELECT AcctID FROM Accounts', function (error, results, fields) {
-    if(error) {
-      response.json({login_check: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-////////////////////////////////////////////////////
-//                                                //
-//    Navbar API Calls                            //
-//                                                //
-////////////////////////////////////////////////////
-
-app.get('/navbar/color/get', function(request,response) {
-  connection.query('SELECT NavColor FROM Preferences', function (error, results, fields) {
-    if(error) {
-      response.json({navColor_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-app.post('/navbar/color/post', function(request,response) {
-  connection.query('UPDATE Preferences SET NavColor = "' + request.body.Color + '" WHERE AcctID = 1', function (error, results, fields) {
-    if(error) {
-      response.json({navColor_post: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
 ////////////////////////////////////////////////////
 //                                                //
 //    Metrics API Calls                           //
 //                                                //
 ////////////////////////////////////////////////////
-
-app.get('/metrics/options/get', function(request,response) {
-  connection.query('SELECT * FROM Metrics', function (error, results, fields) {
-    if(error) {
-      response.json({Metrics_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
 
 app.get('/metrics/total/interns', function(request,response) {
   connection.query('SELECT COUNT(*) "Count" FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Intern" AND Role.Status != "Not Active"', function (error, results, fields) {
@@ -242,56 +134,6 @@ app.get('/metrics/totalCurr1/Grad', function(request,response) {
 
 app.get('/metrics/total/OH', function(request,response) {
   connection.query('SELECT COUNT(*) "OpenHouse" FROM Members, Role WHERE Members.MemberID = Role.MemberID AND Role.Type = "Open House"', function (error, results, fields) {
-    if(error) {
-      response.json({Metrics_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-app.post('/metrics/options/post', function(request,response) {
-  connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
-    if(error) {
-      response.json({Metrics_post: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-////////////////////////////////////////////////////
-//                                                //
-//    Notifications API Calls                     //
-//                                                //
-////////////////////////////////////////////////////
-
-app.get('/notifications/options/get', function(request,response) {
-  connection.query('SELECT * FROM Notifications', function (error, results, fields) {
-    if(error) {
-      response.json({Metrics_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-app.post('/notifications/options/post', function(request,response) {
-  connection.query('UPDATE Metrics m, Preferences p SET IsActive = "' + request.params.WeatherMet + '" WHERE m.PrefID = p.PrefID AND p.AcctID = 1', function (error, results, fields) {
-    if(error) {
-      response.json({Metrics_post: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-app.get('/notifications/options/NotRead', function(request,response) {
-  connection.query('SELECT COUNT(*) FROM Notifications WHERE Notifications.IsRead = 0', function (error, results, fields) {
     if(error) {
       response.json({Metrics_get: "failed"});
     }
@@ -474,17 +316,7 @@ app.get('/stats/filter/newbs', function(request,response) {
 });
 
 // Stats Page Info Calls . . .
-app.get('/stats/teams/semester', function(request,response) {
-  connection.query('SELECT TeamdID, TeamName, TeamNumber, Semester, LabID FROM Teams WHERE Semester = '  + request.query.Search, function (error, results, fields) {
-        if(error) {
-            response.json({teams_select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
+// Team Names by Semester
 app.get('/stats/teams/names', function(request,response) {
   var sem = "Teams.Semester = " + mysql.escape(request.query.Semester);
   connection.query('SELECT TeamName, TeamNumber FROM Teams WHERE '  + sem, function (error, results, fields) {
@@ -497,6 +329,7 @@ app.get('/stats/teams/names', function(request,response) {
   });
 });
 
+// Lists all teams, groups by semester
 app.get('/stats/lab/semesters', function(request,response) {
   connection.query('SELECT Semester FROM Teams GROUP BY Semester', function (error, results, fields) {
         if(error) {
@@ -591,6 +424,7 @@ app.post('/stats/modal/post/teams', function(request,response) {
 app.get('/stats/lab/projects', function(request,response) {
   if (request.query.Semester == "unassigned")
   {
+    // Fetching all project names in database
     connection.query('SELECT p.Name, p.ProjectID FROM Projects AS p, TeamProjects as tp WHERE ' +
                      'p.ProjectID NOT IN (SELECT ProjectID FROM TeamProjects) ' +
                      'GROUP BY `Name` ORDER BY `Name`', function (error, results, fields) {
@@ -604,6 +438,7 @@ app.get('/stats/lab/projects', function(request,response) {
   }
   else
   {
+    // Fetching project names according to semester
     connection.query('SELECT p.Name FROM Projects AS p, Teams, TeamProjects as tp WHERE Teams.Semester = "'+ request.query.Semester +
                      '" AND p.ProjectID = tp.ProjectID AND tp.TeamID = Teams.TeamID ' +
                      'ORDER BY `Name`', function (error, results, fields) {
@@ -617,6 +452,7 @@ app.get('/stats/lab/projects', function(request,response) {
   }
 });
 
+// Add new members with a role to database
 app.post('/stats/add/member', function(request,response) {
   //used in connection.query
   var entry = {
@@ -679,6 +515,7 @@ app.post('/stats/add/member', function(request,response) {
   });
 
 // Stats Add Projects . . .
+// New project
 app.post('/stats/create/project', function(request,response) {
   var entry = {
     Name: request.body.Name,
@@ -705,6 +542,7 @@ app.post('/stats/create/project', function(request,response) {
       });
 
 // Stats Add Assets . . .
+// FIX
 app.post('/stats/add/asset', function(request,response) {
   var entry = {
     AssetID: request.body.AssetID,
@@ -899,6 +737,7 @@ app.post('/map/update/delegations', function(request,response) {
     });
   });
 
+// Removes all entries (Deprecated)
 app.get('/map/delete/delegations', function(request,response) {
     connection.query('DELETE FROM Delegations;', function (error, results, fields) {
       if(error) {
@@ -910,6 +749,7 @@ app.get('/map/delete/delegations', function(request,response) {
     });
   });
 
+// Removes specific entry
 app.get('/map/remove/delegation/:dID', function(request,response) {
     connection.query('DELETE FROM Delegations WHERE DelegationID = ' + request.params.dID + ';', function (error, results, fields) {
       if(error) {
@@ -971,7 +811,7 @@ app.post('/map/insert/approvals/', function(request,response) {
 //  code_orange Website API                  *
 //********************************************
 
-// Checkin page for guests
+// Checkin page for guests (OH and events)
 app.post('/checkin', function(request,response) {
   //used in connection.query
   var entry = {
@@ -1092,6 +932,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
   });
 });
 
+// Delete all reservations (Deprecated)
 app.get('/delete/reservations', function(request,response) {
   //used in connection.query
 
@@ -1110,6 +951,7 @@ app.get('/delete/reservations', function(request,response) {
   });
 });
 
+// make into a put
 app.post('/update/reserve', function(request,response) {
   var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
@@ -1127,7 +969,6 @@ app.post('/update/reserve', function(request,response) {
         }
   });
 });
-
 
 app.post('/update/reserve/start', function(request,response) {
   var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
@@ -1147,7 +988,6 @@ app.post('/update/reserve/start', function(request,response) {
   });
 });
 
-
 app.post('/update/reserve/end', function(request,response) {
   var query = 'UPDATE Reservations SET End = ' + mysql.escape(request.body.End) + '  WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
@@ -1165,8 +1005,6 @@ app.post('/update/reserve/end', function(request,response) {
         }
   });
 });
-
-
 
 app.post('/edit/reserve', function(request,response) {
   var query = 'UPDATE Reservations SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
