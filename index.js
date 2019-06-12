@@ -220,6 +220,7 @@ app.get('/stats/search/all', function(request,response) {
 
 // Stats Filter Calls . . .
 app.get('/stats/filter/status', function(request,response) {
+  //Returns members for the specified semester and filter by type "Intern" or "Former Intern"
   var Intern = '';
   var FullTime = '';
 
@@ -232,7 +233,7 @@ app.get('/stats/filter/status', function(request,response) {
     FullTime = '"Former Intern", '
   }
   
-  var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
+  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, ' +
                    'Teams.TeamName, Teams.Semester, m.Gender FROM Members m ' +
                    'LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
@@ -255,14 +256,16 @@ app.get('/stats/filter/status', function(request,response) {
 
 app.get('/stats/filter/teams', function(request,response) {
 
-  connection.query('SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, ' +
+  let query = 'SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, ' +
                    'Projects.Description, Projects.Paragraph, Projects.FrontEnd, ' +
                    'Projects.Backend, Projects.RDS, Teams.Semester, Teams.PhotoPath, ' +
                    'Teams.LabID, Teams.TeamID, Projects.ProjectID FROM Teams ' +
                    'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
-                   'WHERE ' + request.query.Teams +
-                   'Teams.Semester = ' + mysql.escape(request.query.Semester) + ';', function (error, results, fields) {
+                   'WHERE Teams.TeamNumber = ' + mysql.escape(request.query.TeamNumber)  +
+                   ' AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ';';
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
