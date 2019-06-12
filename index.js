@@ -919,7 +919,7 @@ app.get('/delete/reservations', function(request,response) {
 
 // make into a put
 app.post('/update/reserve', function(request,response) {
-  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + isNull(Date, mysql.escape(request.body.Date)) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
