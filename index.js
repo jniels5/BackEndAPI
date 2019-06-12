@@ -973,7 +973,7 @@ app.post('/update/reserve/end', function(request,response) {
 });
 
 app.post('/edit/reserve', function(request,response) {
-  var query = 'UPDATE Reservations SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + isNull(mysql.escape(request.body.Email)) + ', TeamID = ' + isNull(mysql.escape(request.body.TeamID)) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  var query = 'UPDATE Reservations SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
