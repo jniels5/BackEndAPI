@@ -231,15 +231,19 @@ app.get('/stats/filter/status', function(request,response) {
   {
     FullTime = '"Former Intern", '
   }
-
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
+  
+  var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, ' +
                    'Teams.TeamName, Teams.Semester, m.Gender FROM Members m ' +
                    'LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
                    'LEFT JOIN TeamMembers tm ON tm.MemberID = m.MemberID ' +
                    'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
                    'WHERE r.Type IN (' + Intern + FullTime +
-                   '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) +  + ' ORDER BY m.MemberID', function (error, results, fields) {
+                   '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID';
+                   
+  console.log(query);
+
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
