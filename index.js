@@ -255,7 +255,7 @@ app.get('/stats/filter/status', function(request,response) {
 });
 
 app.get('/stats/filter/teams', function(request,response) {
-
+//get team details from semester and team number
   let query = 'SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, ' +
                    'Projects.Description, Projects.Paragraph, Projects.FrontEnd, ' +
                    'Projects.Backend, Projects.RDS, Teams.Semester, Teams.PhotoPath, ' +
@@ -292,11 +292,15 @@ app.get('/stats/filter/equipment', function(request,response) {
   {
     MobileDevices = '"Mobile Device", '
   }
-
-  connection.query('SELECT a.AssetID, a.Description, a.Type, m.FirstName, m.LastName ' +
+  
+  let query = 'SELECT a.AssetID, a.Description, a.Type, m.FirstName, m.LastName ' +
                    'FROM Assets a LEFT JOIN Members m ON m.AssetID = a.AssetID ' +
                    'WHERE a.Type IN (' + Laptops + Televisons + MobileDevices +
-                   '"N/a" ) AND a.AssetID != 10000000 AND a.IsImaged >= 0 GROUP BY a.AssetID', function (error, results, fields) {
+                   '"N/a" ) AND a.AssetID != 10000000 AND a.IsImaged >= 0 GROUP BY a.AssetID';
+                   
+  console.log(query);
+
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
         }
