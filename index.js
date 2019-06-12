@@ -223,11 +223,11 @@ app.get('/stats/filter/status', function(request,response) {
   var Intern = '';
   var FullTime = '';
 
-  if (request.query.Interns == "true")
+  if (String(request.query.Interns).toLowerCase() == "true")
   {
     Intern = '"Intern", '
   }
-  if (request.query.FullTimeHire == "true")
+  if (String(request.query.FullTimeHire).toLowerCase() == "true")
   {
     FullTime = '"Former Intern", '
   }
