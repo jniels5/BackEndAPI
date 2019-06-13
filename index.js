@@ -232,7 +232,7 @@ app.get('/stats/filter/status', function(request,response) {
   {
     FullTime = '"Former Intern", '
   }
-  
+
   let query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, ' +
                    'Teams.TeamName, Teams.Semester, m.Gender FROM Members m ' +
@@ -241,7 +241,7 @@ app.get('/stats/filter/status', function(request,response) {
                    'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
                    'WHERE r.Type IN (' + Intern + FullTime +
                    '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID';
-                   
+
   console.log(query);
 
   connection.query(query, function (error, results, fields) {
@@ -292,12 +292,12 @@ app.get('/stats/filter/equipment', function(request,response) {
   {
     MobileDevices = '"Mobile Device", '
   }
-  
+
   let query = 'SELECT a.AssetID, a.Description, a.Type, m.FirstName, m.LastName ' +
                    'FROM Assets a LEFT JOIN Members m ON m.AssetID = a.AssetID ' +
                    'WHERE a.Type IN (' + Laptops + Televisons + MobileDevices +
                    '"N/a" ) AND a.AssetID != 10000000 AND a.IsImaged >= 0 GROUP BY a.AssetID';
-                   
+
   console.log(query);
 
   connection.query(query, function (error, results, fields) {
@@ -448,7 +448,7 @@ app.get('/stats/lab/projects', function(request,response) {
   else
   {
     // Fetching project names according to semester
-    connection.query('SELECT p.Name FROM Projects AS p, Teams, TeamProjects as tp WHERE Teams.Semester = "'+ request.query.Semester +
+    connection.query('SELECT p.Name, p.ProjectID FROM Projects AS p, Teams, TeamProjects as tp WHERE Teams.Semester = "'+ request.query.Semester +
                      '" AND p.ProjectID = tp.ProjectID AND tp.TeamID = Teams.TeamID ' +
                      'ORDER BY `Name`', function (error, results, fields) {
           if(error) {
@@ -1020,4 +1020,3 @@ app.get('/runfile/:file', function(request,response) {
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'));
   });
-
