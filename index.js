@@ -564,11 +564,11 @@ app.post('/stats/create/project', function(request,response) {
       ProjectID: request.body.ProjectID
     }
 
-    connection.query('SELECT COUNT(*) "Count" FROM Teams Where Semester = ' +
+    connection.query('SELECT COALESCE(COUNT(*),0) "Count" FROM Teams Where Semester = ' +
                       mysql.escape(entry.Semester), function (error, results, fields) {
       if(error) {
         response.json({
-          count_teams: "Failed to create team!",
+          count_teams: "Failed to count!",
           team_error: error
         });
       }
