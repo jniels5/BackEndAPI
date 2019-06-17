@@ -280,15 +280,15 @@ app.get('/stats/filter/equipment', function(request,response) {
   var Televisons = '';
   var MobileDevices = '';
 
-  if (request.query.Laptops == "true")
+  if (String(request.query.Laptops).toLowerCase() == "true")
   {
     Laptops = '"Laptop", '
   }
-  if (request.query.Televisions == "true")
+  if (String(request.query.Televisions).toLowerCase() == "true")
   {
     Televisons = '"Television", '
   }
-  if (request.query.MobileDevices == "true")
+  if (String(request.query.MobileDevices).toLowerCase() == "true")
   {
     MobileDevices = '"Mobile Device", '
   }
@@ -311,10 +311,13 @@ app.get('/stats/filter/equipment', function(request,response) {
 });
 
 app.get('/stats/filter/newbs', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, r.Type, ' +
+  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
                    'm.Gender FROM Members m LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
-                   'WHERE r.Type IN ( "Open House", "Applicant" ) ORDER BY m.MemberID', function (error, results, fields) {
+                   'WHERE r.Type IN ( "Open House", "Applicant" ) ORDER BY m.MemberID';
+                   
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({newb_Select: "failed"});
         }
@@ -859,7 +862,7 @@ app.get('/select/teamPageData/:semester', function(request,response) {
 
 // Team Member Query
 app.get('/select/table/Members/team/:team/:semester', function(request,response) {
-  connection.query('SELECT Members.FirstName, Members.LastName, Members.WorkEmail FROM Members ' +
+  connection.query('SELECT Members.FirstName, Members.LastName, Members.WorkEmail, Members.PhotoPath FROM Members ' +
                     'JOIN TeamMembers ON TeamMembers.MemberID = Members.MemberID ' +
                     'JOIN Teams ON Teams.TeamID = TeamMembers.TeamID ' +
                     'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
