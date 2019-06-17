@@ -564,8 +564,7 @@ app.post('/stats/create/project', function(request,response) {
       ProjectID: request.body.ProjectID
     }
 
-    connection.query('SELECT COALESCE(COUNT(*),0) AS "Count" FROM Teams Where Semester = ' +
-                      mysql.escape(entry.Semester), function (error, results, fields) {
+    connection.query('SELECT COALESCE(COUNT(*),0) AS "Count" FROM Teams Where Semester = "SU19"', function (error, results, fields) {
       if(error) {
         response.json({
           count_teams: "Failed to count!",
@@ -573,43 +572,11 @@ app.post('/stats/create/project', function(request,response) {
         });
       }
       else {
-        entry.TeamNumber = response[0].Count + 1;
-        connection.query('INSERT INTO Teams set ?', entry, function (error, results, fields) {
-          if(error) {
-            response.json({
-              create_team: "Failed to create team!",
-              team_error: error
-            });
-          }
-          else {
-            connection.query('SELECT TeamID FROM Teams WHERE Semester = ' + mysql.escape(entry.Semester) +
-                             ' AND TeamName = ' + mysql.escape(entry.TeamName), function (error, results, fields) {
-              if(error) {
-                response.json({
-                  get_TeamID: "Failed to create team!",
-                  error: error
-                });
-              }
-              else {
-                link.TeamID = response[0].TeamID;
-                connection.query('INSERT INTO TeamProjects set ?', link, function (error, results, fields) {
-                  if(error) {
-                    response.json({
-                      link_team_projects: "Failed to link!",
-                      error: error
-                    });
-                  }
-                  else {
-                    response.json({
-                      link_team_projects: "Linked!",
-                    });
-                  }
-              });
-            }
-            });
-          }
-        });
+        response.json({
+          count: "cool"
+        })
       }
+
     });
   });
 
