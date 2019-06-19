@@ -6,6 +6,8 @@ var cors = require('cors')
 var app = express()
 var fs = require('fs');
 
+var mes, res;
+
 var whitelist = [
   'localhost:3000/',
   'team11-frontend.mjhmkfjvi5.us-east-2.elasticbeanstalk.com/'
@@ -343,7 +345,7 @@ app.get('/stats/teams/names', function(request,response) {
 
 // Lists all teams, groups by semester
 app.get('/stats/lab/semesters', function(request,response) {
-  connection.query('SELECT Semester FROM Teams GROUP BY Semester', function (error, results, fields) {
+  connection.query('SELECT Semester FROM Teams GROUP BY Semester ORDER BY TeamID', function (error, results, fields) {
         if(error) {
             response.json({semester_select: "failed"});
         }
