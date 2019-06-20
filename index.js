@@ -345,7 +345,7 @@ app.get('/stats/teams/names', function(request,response) {
 
 // Lists all teams, groups by semester
 app.get('/stats/lab/semesters', function(request,response) {
-  connection.query('SELECT Semester FROM Teams GROUP BY Semester ORDER BY TeamID', function (error, results, fields) {
+  connection.query('SELECT Semester FROM Teams GROUP BY Semester ORDER BY TeamID DESC;', function (error, results, fields) {
         if(error) {
             response.json({semester_select: "failed"});
         }
