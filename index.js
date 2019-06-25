@@ -7,6 +7,7 @@ var app = express()
 var fs = require('fs');
 
 var mes, res;
+var conflicts;
 
 var whitelist = [
   'localhost:3000/',
@@ -1003,7 +1004,6 @@ app.post('/edit/reserve', function(request,response) {
         }
   });
 });
-var conflicts;
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
   conflicts = 0;
@@ -1037,9 +1037,26 @@ app.post('/insert/reserve/', function(request,response) {
             conflict_count: conflicts,
           });
         }
+        else
+        {
+          connection.query('INSERT INTO Reservations set ?', entry, function (error, results, fields) {
+            if(error) {
+              response.json({
+                checkin_status: "failed",
+                checkin_error: error,
+              });
+            }
+          else {
+            response.json({
+              checkin_status: "success",
+              conflict_count: conflicts,
+              });
+            }
+          });
+        }
       }
   });
-if(conflicts == 0)
+/*if(conflicts == 0)
 {
   connection.query('INSERT INTO Reservations set ?', entry, function (error, results, fields) {
     if(error) {
@@ -1055,7 +1072,7 @@ if(conflicts == 0)
         });
       }
     });
-  }
+  }*/
 });
 
 ////////////////////////////////////////////////////
