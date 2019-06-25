@@ -1035,6 +1035,7 @@ app.post('/insert/reserve/', function(request,response) {
           response.json({
             checkin_status: "failed",
             checkin_error: "Reservation already occupies timeslot",
+            conflict_count: conflicts,
           });
         }
       }
