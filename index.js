@@ -1018,7 +1018,7 @@ app.post('/insert/reserve/', function(request,response) {
   };
   console.log(JSON.stringify(entry));
   //let query = "SELECT COUNT(*) FROM Reservations WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND (Start > " + mysql.escape(entry.Start) + " OR End < " + mysql.escape(entry.End) + ");";
-  let query = "SELECT COUNT(*) FROM Reservations WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
+  let query = "SELECT COUNT(*) as c FROM Reservations WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
   connection.query(query, function(error, results, fields) {
       if(error)
       {
