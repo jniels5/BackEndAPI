@@ -1051,6 +1051,7 @@ if(conflicts == 0)
     else {
         response.json({
           checkin_status: "success",
+          conflict_count: conflicts,
         });
       }
     });
