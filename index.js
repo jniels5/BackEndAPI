@@ -1006,7 +1006,7 @@ app.post('/edit/reserve', function(request,response) {
 
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
-  var conflicts = 0;
+  let conflicts = 0;
     var entry = {
       Description: request.body.Description,
       Email: request.body.Email,
