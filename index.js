@@ -1030,7 +1030,7 @@ app.post('/insert/reserve/', function(request,response) {
       else
       {
         conflicts = results[0].c;
-        if (conflicts <= 0)
+        if (conflicts > 0)
         {
           response.json({
             checkin_status: "failed",
