@@ -626,13 +626,15 @@ app.post('/stats/add/asset', function(request,response) {
 ////////////////////////////////////////////////////
 
 app.get('/student/portal/info', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, ' +
+  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, ' +
                    't.TeamNumber, t.TeamName, t.Semester, t.PhotoPath, t.LabID, ' +
                    'r.Type, r.Status, r.Description, r.Date, ' +
                    'p.ProjectID, p.Name, p.Description, p.Paragraph, p.FrontEnd, p.BackEnd, p.RDS ' +
                    'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t, TeamProjects AS tp, Projects AS p ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID ' +
-                   'AND t.TeamID = tp.TeamID AND tp.ProjectID = p.ProjectID AND m.WorkEmail = "' + request.query.WorkEmail + '"', function (error, results, fields) {
+                   'AND t.TeamID = tp.TeamID AND tp.ProjectID = p.ProjectID AND m.WorkEmail = "' + request.query.WorkEmail + '"';
+  console.log(query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({student_select: "failed",
                            error: error});
@@ -1004,16 +1006,41 @@ app.post('/edit/reserve', function(request,response) {
 
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
-  var entry = {
-    Description: request.body.Description,
-    Email: request.body.Email,
-    Start: request.body.Start,
-    End: request.body.End,
-    Date: request.body.Date,
-    RoomID: request.body.RoomID,
-    TeamID: request.body.TeamID
+  var conflicts = 0;
+    var entry = {
+      Description: request.body.Description,
+      Email: request.body.Email,
+      Start: request.body.Start,
+      End: request.body.End,
+      Date: request.body.Date,
+      RoomID: request.body.RoomID,
+      TeamID: request.body.TeamID
   };
-
+  console.log(JSON.stringify(entry));
+  //let query = "SELECT COUNT(*) FROM Reservations WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND (Start > " + mysql.escape(entry.Start) + " OR End < " + mysql.escape(entry.End) + ");";
+  let query = "SELECT COUNT(*) FROM Reservations WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
+  connection.query(query, function(error, results, fields) {
+      if(error)
+      {
+        response.json({
+          checkin_status: "failed",
+          checkin_error: error,
+        });
+      }
+      else
+      {
+        conflicts = results[0].c;
+        if (conflicts <= 0)
+        {
+          response.json({
+            checkin_status: "failed",
+            checkin_error: "Reservation already occupies timeslot",
+          });
+        }
+      }
+  });
+if(conflicts == 0)
+{
   connection.query('INSERT INTO Reservations set ?', entry, function (error, results, fields) {
     if(error) {
         response.json({
@@ -1027,7 +1054,8 @@ app.post('/insert/reserve/', function(request,response) {
         });
       }
     });
-  });
+  }
+});
 
 ////////////////////////////////////////////////////
 //                                                //
