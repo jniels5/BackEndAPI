@@ -1003,10 +1003,10 @@ app.post('/edit/reserve', function(request,response) {
         }
   });
 });
-
+var conflicts;
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
-  let conflicts = 0;
+  conflicts = 0;
     var entry = {
       Description: request.body.Description,
       Email: request.body.Email,
@@ -1017,7 +1017,6 @@ app.post('/insert/reserve/', function(request,response) {
       TeamID: request.body.TeamID
   };
   console.log(JSON.stringify(entry));
-  //let query = "SELECT COUNT(*) FROM Reservations WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND (Start > " + mysql.escape(entry.Start) + " OR End < " + mysql.escape(entry.End) + ");";
   let query = "SELECT COUNT(*) as c FROM Reservations WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
   connection.query(query, function(error, results, fields) {
       if(error)
