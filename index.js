@@ -8,6 +8,33 @@ var fs = require('fs');
 
 var mes, res;
 var conflicts;
+//--------------- Email Begin----------------
+var nodemailer = require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'ChangeLogWarden@gmail.com',
+    pass: '777cH0!d'
+  }
+});
+
+var mailOptions = {
+  from: 'ChangeLogWarden@gmail.com',
+  to: 'danielomalley@discover.com',
+  subject: 'Reservations Page Email',
+  text: 'BIG NYA BOOM BOOM BING'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if(error){
+    res.json(null)
+  }
+  else{
+    res.json({email: 'sent'})
+  }
+})
+//-------------- Email End ---------------------
 
 var whitelist = [
   'localhost:3000/',
@@ -946,6 +973,23 @@ app.get('/remove/reservation/:rID', function(request,response) {
             });
         }
         else {
+          // EMAIL TOKEN
+           var mailOptions = {
+            from: 'ChangeLogWarden@gmail.com',
+            to: 'danielomalley@discover.com',
+            subject: 'code_orange Reservations',
+            text: 'Your Reservation has been DELETED.  Check the reservations page for more deets.'
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+              response.json(null)
+            }
+            else {
+              response.json({email: "sent"})
+            }
+          });
+          //END EMAIL TOKEN
             response.json({
               remove_status: "success",
             });
@@ -983,6 +1027,23 @@ app.post('/update/reserve', function(request,response) {
             });
         }
         else {
+          //EMAIL TOKEN
+          var mailOptions = {
+            from: 'ChangeLogWarden@gmail.com',
+            to: 'danielomalley@discover.com',
+            subject: 'code_orange Reservations',
+            text: 'Your Reservation has been updated.  Check the reservations page for more deets.'
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+              response.json(null)
+            }
+            else {
+              response.json({email: "sent"})
+            }
+          });
+          //END EMAIL TOKEN
             response.json({
               update_status: "success",
             });
@@ -1055,6 +1116,23 @@ app.post('/insert/reserve/', function(request,response) {
               });
             }
           else {
+            //EMAIL TOKEN
+          var mailOptions = {
+            from: 'ChangeLogWarden@gmail.com',
+            to: 'danielomalley@discover.com',
+            subject: 'code_orange Reservations',
+            text: 'Your Reservation has been MADE.  Check the reservations page for more deets.'
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+              response.json(null)
+            }
+            else {
+              response.json({email: "sent"})
+            }
+          });
+          // END EMAIL TOKEN
             response.json({
               checkin_status: "success",
               conflict_count: conflicts,
@@ -1087,7 +1165,19 @@ app.get('/runfile/:file', function(request,response) {
   response.json({runfile_status: "Success"});
 });
 
-
+//funciton is used to send an email to the userpool
+app.get('/getmail', function(request,response){
+  //EMAIL TOKEN
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      response.json(null)
+    }
+    else{
+      response.json({email: "sent"})
+    }
+  })
+});
+  //END EMAIL TOKEN
 
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'));
