@@ -62,8 +62,12 @@ app.get('/', function(request,response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function(request,response) {
-  let tag = (String(request.params.test).toLowerCase() == "true") ? "_TEST" : "";
-  connection.query('SELECT * FROM '  +  mysql.escapeId(request.params.table + tag), function (error, results, fields) {
+  let tag = (String(request.query.test).toLowerCase() == "true") ? "_TEST" : "";
+  let query = 'SELECT * FROM '  +  mysql.escapeId(request.params.table + tag);
+  console.log("request.params.test", request.params.test);
+  console.log("tag", tag);
+  console.log("query", query);
+  connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
@@ -916,7 +920,7 @@ app.get('/select/table/Members/team/:team/:semester', function(request,response)
 
 // Used to get database information on Room Reservations
 app.get('/select/Reservation/:day', function(request,response) {
-  let test = String(request.params.test).toLowerCase() == "true";
+  let test = String(request.query.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   connection.query('SELECT ReserveID, Start, End, RoomID, TeamID, Description, Email, Date FROM ' + tableName + ' WHERE Date = "' + request.params.day + 'T00:00:00.000Z"', function (error, results, fields) {
         if(error) {
@@ -932,7 +936,7 @@ app.get('/select/Reservation/:day', function(request,response) {
 });
 app.get('/remove/reservation/:rID', function(request,response) {
   //used in connection.query
-  let test = String(request.params.test).toLowerCase() == "true";
+  let test = String(request.query.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
         if(error) {
