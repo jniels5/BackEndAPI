@@ -89,7 +89,8 @@ app.get('/', function(request,response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function(request,response) {
-  connection.query('SELECT * FROM '  + request.params.table, function (error, results, fields) {
+  let tag = (String(request.params.test).toLowerCase() == "true") ? "_TEST" : "";
+  connection.query('SELECT * FROM '  +  mysql.escapeId(request.params.table + tag), function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
         }
@@ -942,8 +943,9 @@ app.get('/select/table/Members/team/:team/:semester', function(request,response)
 
 // Used to get database information on Room Reservations
 app.get('/select/Reservation/:day', function(request,response) {
-
-  connection.query('SELECT ReserveID, Start, End, RoomID, TeamID, Description, Email, Date FROM Reservations WHERE Date = "' + request.params.day + 'T00:00:00.000Z"', function (error, results, fields) {
+  let test = String(request.params.test).toLowerCase() == "true";
+  let tableName = (!test) ? "Reservations" : "Reservations_TEST";
+  connection.query('SELECT ReserveID, Start, End, RoomID, TeamID, Description, Email, Date FROM ' + tableName + ' WHERE Date = "' + request.params.day + 'T00:00:00.000Z"', function (error, results, fields) {
         if(error) {
             response.json( {
               select_reserve_status: "failed",
@@ -955,11 +957,11 @@ app.get('/select/Reservation/:day', function(request,response) {
         }
   });
 });
-
 app.get('/remove/reservation/:rID', function(request,response) {
   //used in connection.query
-
-  connection.query('DELETE FROM Reservations WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
+  let test = String(request.params.test).toLowerCase() == "true";
+  let tableName = (!test) ? "Reservations" : "Reservations_TEST";
+  connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
         if(error) {
             response.json({
               remove_status: "failed",
@@ -990,7 +992,6 @@ app.get('/remove/reservation/:rID', function(request,response) {
         }
   });
 });
-
 // Delete all reservations (Deprecated)
 app.get('/delete/reservations', function(request,response) {
   //used in connection.query
@@ -1008,10 +1009,11 @@ app.get('/delete/reservations', function(request,response) {
         }
   });
 });
-
 // make into a put
 app.post('/update/reserve', function(request,response) {
-  var query = 'UPDATE Reservations SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  let test = String(request.body.test).toLowerCase() == "true";
+  let tableName = (!test) ? "Reservations" : "Reservations_TEST";
+  var query = 'UPDATE ' + tableName + ' SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
@@ -1044,9 +1046,10 @@ app.post('/update/reserve', function(request,response) {
         }
   });
 });
-
 app.post('/edit/reserve', function(request,response) {
-  var query = 'UPDATE Reservations SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  let test = String(request.body.test).toLowerCase() == "true";
+  let tableName = (!test) ? "Reservations" : "Reservations_TEST";
+  var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
@@ -1066,6 +1069,8 @@ app.post('/edit/reserve', function(request,response) {
 });
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
+  let test = String(request.body.test).toLowerCase() == "true";
+  let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   conflicts = 0;
     var entry = {
       Description: request.body.Description,
@@ -1077,7 +1082,7 @@ app.post('/insert/reserve/', function(request,response) {
       TeamID: request.body.TeamID
   };
   console.log(JSON.stringify(entry));
-  let query = "SELECT COUNT(*) as c FROM Reservations WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
+  let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
   connection.query(query, function(error, results, fields) {
       if(error)
       {
@@ -1099,7 +1104,7 @@ app.post('/insert/reserve/', function(request,response) {
         }
         else
         {
-          connection.query('INSERT INTO Reservations set ?', entry, function (error, results, fields) {
+          connection.query('INSERT INTO ' + tableName + ' set ?', entry, function (error, results, fields) {
             if(error) {
               response.json({
                 checkin_status: "failed",
@@ -1133,23 +1138,6 @@ app.post('/insert/reserve/', function(request,response) {
         }
       }
   });
-/*if(conflicts == 0)
-{
-  connection.query('INSERT INTO Reservations set ?', entry, function (error, results, fields) {
-    if(error) {
-        response.json({
-          checkin_status: "failed",
-          checkin_error: error,
-        });
-    }
-    else {
-        response.json({
-          checkin_status: "success",
-          conflict_count: conflicts,
-        });
-      }
-    });
-  }*/
 });
 
 ////////////////////////////////////////////////////
