@@ -62,7 +62,7 @@ app.get('/', function(request,response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function(request,response) {
-  let tag = (request.params.test.toLowerCase() == "true") ? "_TEST" : "";
+  let tag = (String(request.params.test).toLowerCase() == "true") ? "_TEST" : "";
   connection.query('SELECT * FROM '  +  mysql.escapeId(request.params.table + tag), function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
@@ -916,7 +916,7 @@ app.get('/select/table/Members/team/:team/:semester', function(request,response)
 
 // Used to get database information on Room Reservations
 app.get('/select/Reservation/:day', function(request,response) {
-  let test = request.params.test.toLowerCase() == "true";
+  let test = String(request.params.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   connection.query('SELECT ReserveID, Start, End, RoomID, TeamID, Description, Email, Date FROM ' + tableName + ' WHERE Date = "' + request.params.day + 'T00:00:00.000Z"', function (error, results, fields) {
         if(error) {
@@ -932,7 +932,7 @@ app.get('/select/Reservation/:day', function(request,response) {
 });
 app.get('/remove/reservation/:rID', function(request,response) {
   //used in connection.query
-  let test = request.params.test.toLowerCase() == "true";
+  let test = String(request.params.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
         if(error) {
@@ -967,7 +967,7 @@ app.get('/delete/reservations', function(request,response) {
 });
 // make into a put
 app.post('/update/reserve', function(request,response) {
-  let test = request.body.test.toLowerCase() == "true";
+  let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   var query = 'UPDATE ' + tableName + ' SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
@@ -986,7 +986,7 @@ app.post('/update/reserve', function(request,response) {
   });
 });
 app.post('/edit/reserve', function(request,response) {
-  let test = request.body.test.toLowerCase() == "true";
+  let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
@@ -1008,7 +1008,7 @@ app.post('/edit/reserve', function(request,response) {
 });
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
-  let test = request.body.test.toLowerCase() == "true";
+  let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   conflicts = 0;
     var entry = {
