@@ -14,16 +14,16 @@ var nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'ChangeLogWarden@gmail.com',
-    pass: '777cH0!d'
+    user: 'CodeOrangeReservations@gmail.com',
+    pass: 'Scrumptious7!'
   }
 });
 
 var mailOptions = {
-  from: 'ChangeLogWarden@gmail.com',
+  from: 'CodeOrangeReservations@gmail.com',
   to: 'danielomalley@discover.com',
   subject: 'Reservations Page Email',
-  text: 'BIG NYA BOOM BOOM BING'
+  text: 'api email start'
 };
 
 transporter.sendMail(mailOptions, function(error, info){
@@ -975,8 +975,8 @@ app.get('/remove/reservation/:rID', function(request,response) {
         else {
           // EMAIL TOKEN
            var mailOptions = {
-            from: 'ChangeLogWarden@gmail.com',
-            to: 'danielomalley@discover.com',
+            from: 'CodeOrangeReservations@gmail.com',
+            to: 'jacobdrzewiecki@discover.com',
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been DELETED.  Check the reservations page for more deets.'
           };
@@ -1029,7 +1029,7 @@ app.post('/update/reserve', function(request,response) {
         else {
           //EMAIL TOKEN
           var mailOptions = {
-            from: 'ChangeLogWarden@gmail.com',
+            from: 'CodeOrangeReservations@gmail.com',
             to: 'danielomalley@discover.com',
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been updated.  Check the reservations page for more deets.'
@@ -1131,7 +1131,7 @@ app.post('/insert/reserve/', function(request,response) {
           else {
             //EMAIL TOKEN
           var mailOptions = {
-            from: 'ChangeLogWarden@gmail.com',
+            from: 'CodeOrangeReservations@gmail.com',
             to: 'danielomalley@discover.com',
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been MADE.  Check the reservations page for more deets.'
