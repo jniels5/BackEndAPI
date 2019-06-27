@@ -1051,9 +1051,22 @@ app.post('/update/reserve', function(request,response) {
   });
 });
 app.post('/edit/reserve', function(request,response) {
+  let startClause = '';
+  let endClause = '';
+  
+  if(request.body.Start !== undefined)
+  {
+    startClause = ', Start = ' + mysql.escape(request.body.Start);
+  }
+  if(request.body.End !== undefined)
+  {
+    endClause = ', End = ' + mysql.escape(request.body.End);
+  }
+  
+  
   let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
-  var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + startClause + endClause + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' ' + 'WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
