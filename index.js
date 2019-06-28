@@ -1106,13 +1106,9 @@ app.post('/insert/reserve/', function(request,response) {
       response.json(null)
     }
     else{
-      var teamEmails;
-      for(var i in results){
-        teamEmails[i] = results[i].WorkEmail
-      }
        var mailOptions = {
         from: 'CodeOrangeReservations@gmail.com',
-        to: teamEmails,
+        to: request.WorkEmail[0],
         subject: 'code_orange Reservations',
         text: 'Your Reservation for team ' + request.body.TeamID + 
         ' has been made.  \nIt it scheduled for room ' + request.body.RoomID + ' at ' 
