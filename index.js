@@ -1228,7 +1228,7 @@ app.get('/login/attempts/get', function(request, response){
 
 app.post('login/attempts/post', function(request, response){
     
-    var query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.body.Number) + ' WHERE MemberID = (Select MemberID From Members Where WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
+    var query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.params.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
     
     connection.query(query, function (error, results, fields) {
         if(error) {
@@ -1242,5 +1242,5 @@ app.post('login/attempts/post', function(request, response){
               update_status: "success",
             });
         }
-  });
+  })
 });
