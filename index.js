@@ -1210,3 +1210,43 @@ app.get('/getmail', function(request,response){
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'));
   });
+  
+app.get('/login/attempts/get', function(request, response){
+  
+  var query = 'SELECT LoginAttempts.Attempts, Members.MemberID, Members.WorkEmail FROM LoginAttempts INNER JOIN Members ON LoginAttempts.MemberID = Members.MemberID WHERE WorkEmail = ' + mysql.escape(request.query.WorkEmail) + ';';
+  
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              edit_status: "failed",
+              sql_query: query,
+              edit_error: error
+            });
+        }
+        else {
+            response.json({
+              edit_status: "success",
+              sql_query: query
+            });
+        }
+  });
+  
+}); 
+
+app.post('login/attempts/post', function(request, response){
+    
+    var query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.body.Number) + ' WHERE MemberID = (Select MemberID From Members Where WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
+    
+    connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              edit_status: "failed",
+              sql_query: query,
+              edit_error: error
+            });
+        }
+        else {
+            response.json(results);
+        }
+  });
+});

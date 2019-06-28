@@ -35,3 +35,5 @@ INSERT INTO TeamMembers(TeamID, MemberID) VALUES
 
 INSERT INTO Projects(Name, Type, Description, TeamID) VALUES
 ('Applicant Tracking & Dashboard', 'Website', 'Keep track of all applicants, interns, and hires from the code_orange project', 1);
+
+

@@ -20,6 +20,11 @@ FirstName VARCHAR(25),
 LastName VARCHAR(25),
 Role VARCHAR(5));
 
+CREATE TABLE LoginAttempts
+(MemberID int NOT NULL PRIMARY KEY,
+Attempts int NOT NULL,
+FOREIGN KEY (MemberID) REFERENCES Members(MemberID));
+
 CREATE TABLE Labs
 (LabID int auto_increment PRIMARY KEY,
 Abbrev VARCHAR(5),
