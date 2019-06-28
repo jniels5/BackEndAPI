@@ -1107,7 +1107,8 @@ app.post('/insert/reserve/', function(request,response) {
     }
     else{
       var teamEmails;
-      for(var i in results){
+      var i = 0;
+      for(i in results){
         teamEmails.push(results[i].WorkEmail)
       }
        var mailOptions = {
