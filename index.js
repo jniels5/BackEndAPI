@@ -1107,9 +1107,8 @@ app.post('/insert/reserve/', function(request,response) {
     }
     else{
       var teamEmails;
-      var i = 0;
-      for(i in results){
-        teamEmails.push(results[i].WorkEmail)
+      for(var i in results){
+        teamEmails[i] = results[i].WorkEmail
       }
        var mailOptions = {
         from: 'CodeOrangeReservations@gmail.com',
