@@ -1106,13 +1106,17 @@ app.post('/insert/reserve/', function(request,response) {
       response.json(null)
     }
     else{
+      var teamEmails = [];
+      for(var i in results){
+        teamEmails.push(results[i].WorkEmail) + ','
+      }
        var mailOptions = {
         from: 'CodeOrangeReservations@gmail.com',
-        to: results[1].WorkEmail,
+        to: teamEmails,
         subject: 'code_orange Reservations',
         text: 'Your Reservation for team ' + request.body.TeamID + 
         ' has been made.  \nIt it scheduled for room ' + request.body.RoomID + ' at ' 
-        + request.body.Start + ' sheduled until ' + request.body.End + '.'
+        + request.body.Start + ' scheduled until ' + request.body.End + '.'
       };
       
           transporter.sendMail(mailOptions, function(error, info){
