@@ -1233,13 +1233,14 @@ app.post('login/attempts/post', function(request, response){
     connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
-              edit_status: "failed",
-              sql_query: query,
-              edit_error: error
+              update_status: "failed",
+              update_error: error
             });
         }
         else {
-            response.json(results);
+            response.json({
+              update_status: "success",
+            });
         }
   });
 });
