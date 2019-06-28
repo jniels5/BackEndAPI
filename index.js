@@ -1098,6 +1098,34 @@ app.post('/insert/reserve/', function(request,response) {
       RoomID: request.body.RoomID,
       TeamID: request.body.TeamID
   };
+  //EMAIL TOKEN
+  //Query for emails based on team
+  let emailQuery = "SELECT WorkEmail FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber=" + mysql.escape(request.body.TeamID) + " AND Teams.TeamID = (SELECT MAX(Teams.TeamID) FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber="+ mysql.escape(request.body.TeamID) +" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+  connection.query(emailQuery , function(error, results, fields){
+    if(error){
+      response.json(null)
+    }
+    else{
+       var mailOptions = {
+        from: 'CodeOrangeReservations@gmail.com',
+        to: results[0].WorkEmail,
+        subject: 'code_orange Reservations',
+        text: 'Your Reservation for team ' + request.body.TeamID + 
+        ' has been made.  \nIt it scheduled for room ' + request.body.RoomID + ' at ' 
+        + request.body.Start + ' sheduled until ' + request.body.End + '.'
+      };
+      
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+              response.json(null)
+            }
+            else {
+              response.json({email: "sent"})
+            }
+          });
+          // END EMAIL TOKEN
+    }
+  })
   console.log(JSON.stringify(entry));
   let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
   connection.query(query, function(error, results, fields) {
@@ -1129,23 +1157,6 @@ app.post('/insert/reserve/', function(request,response) {
               });
             }
           else {
-            //EMAIL TOKEN
-          var mailOptions = {
-            from: 'CodeOrangeReservations@gmail.com',
-            to: 'danielomalley@discover.com',
-            subject: 'code_orange Reservations',
-            text: 'Your Reservation has been MADE.  Check the reservations page for more deets.'
-          };
-          
-          transporter.sendMail(mailOptions, function(error, info){
-            if(error){
-              response.json(null)
-            }
-            else {
-              response.json({email: "sent"})
-            }
-          });
-          // END EMAIL TOKEN
             response.json({
               checkin_status: "success",
               conflict_count: conflicts,
