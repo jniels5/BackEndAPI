@@ -1108,7 +1108,7 @@ app.post('/insert/reserve/', function(request,response) {
     else{
        var mailOptions = {
         from: 'CodeOrangeReservations@gmail.com',
-        to: request.WorkEmail[0],
+        to: 'danielomalley@discover.com',
         subject: 'code_orange Reservations',
         text: 'Your Reservation for team ' + request.body.TeamID + 
         ' has been made.  \nIt it scheduled for room ' + request.body.RoomID + ' at ' 
