@@ -976,7 +976,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
           // EMAIL TOKEN
            var mailOptions = {
             from: 'CodeOrangeReservations@gmail.com',
-            to: 'jacobdrzewiecki@discover.com',
+            to: request.body.WorkEmail,
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been DELETED.  Check the reservations page for more deets.'
           };
@@ -1100,7 +1100,10 @@ app.post('/insert/reserve/', function(request,response) {
   };
   //EMAIL TOKEN
   //Query for emails based on team
-  let emailQuery = "SELECT WorkEmail FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber=" + mysql.escape(request.body.TeamID) + " AND Teams.TeamID = (SELECT MAX(Teams.TeamID) FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber="+ mysql.escape(request.body.TeamID) +" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+  let emailQuery = "SELECT WorkEmail FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber=" + 
+  mysql.escape(request.body.TeamID) + " AND Teams.TeamID = (SELECT MAX(Teams.TeamID) FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber="+
+  mysql.escape(request.body.TeamID) +" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+  
   connection.query(emailQuery , function(error, results, fields){
     if(error){
       response.json(null)
