@@ -1108,14 +1108,12 @@ app.post('/insert/reserve/', function(request,response) {
     else{
        var mailOptions = {
         from: 'CodeOrangeReservations@gmail.com',
-        to: results,
+        to: results[0].WorkEmail,
         subject: 'code_orange Reservations',
         text: 'Your Reservation for team ' + request.body.TeamID + 
         ' has been made.  \nIt it scheduled for room ' + request.body.RoomID + ' at ' 
         + request.body.Start + ' sheduled until ' + request.body.End + '.'
       };
-      
-      console.log(results)
       
           transporter.sendMail(mailOptions, function(error, info){
             if(error){
