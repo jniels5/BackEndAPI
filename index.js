@@ -1242,10 +1242,7 @@ app.post('login/attempts/post', function(request, response){
             });
         }
         else {
-            response.json({
-              edit_status: "success",
-              sql_query: query
-            });
+            response.json(results);
         }
   });
 });
