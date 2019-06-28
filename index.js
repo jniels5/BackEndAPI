@@ -1132,9 +1132,9 @@ app.post('/insert/reserve/', function(request,response) {
             //EMAIL TOKEN
           var mailOptions = {
             from: 'CodeOrangeReservations@gmail.com',
-            to: 'danielomalley@discover.com',
+            to: request.body.Email,
             subject: 'code_orange Reservations',
-            text: 'Your Reservation has been MADE.  Check the reservations page for more deets.'
+            text: 'Your Reservation for team ' + request.body.TeamID + 'has been made.  \nIt it scheduled for room' + request.body.roomID + ' at ' + request.body.Start + ' sheduled until ' + request.body.End + '.'
           };
           
           transporter.sendMail(mailOptions, function(error, info){
