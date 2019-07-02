@@ -1235,7 +1235,7 @@ app.get('/login/attempts/get', function(request, response){
 
 app.post('login/attempts/post', function(request, response){
 
-    var query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.params.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
+    let query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.params.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
 
     connection.query(query, function (error, results, fields) {
         if(error) {
@@ -1254,8 +1254,8 @@ app.post('login/attempts/post', function(request, response){
 
 app.post('login/attempts/insert', function(request, response){
 
-    var query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
-    
+    let query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
+
     connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
