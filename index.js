@@ -979,7 +979,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
         }
   });
   
-    var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID, Teams.TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+mysql.escape(request.params.rID)+" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+mysql.escape(request.params.rID)+" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+    var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+mysql.escape(request.params.rID)+" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+mysql.escape(request.params.rID)+" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery, function(error, results, fields) {
       if(error){
            response.json({
@@ -997,8 +997,8 @@ app.get('/remove/reservation/:rID', function(request,response) {
             from: 'CodeOrangeReservations@gmail.com',
             to: teamEmails,
             subject: 'code_orange Reservations',
-            text: 'Your Reservation has been canceled.\n\nYour reservation for Team ' + results[0].TeamNumber + ' beginning at ' + results[0].Start +
-            ' and ending at ' + results[0].End + ' in room ' + results[0].RoomID + ' has been canceled.  Please reschedule your reservation if you wish to reserve a room.'
+            text: 'Your reservation has been canceled.  Your reservation for Team ' + results[0].TeamNumber + ' beginning at ' + results[0].Start +
+            ' and ending at ' + results[0].End + ' in room ' + results[0].RoomID + ' has been canceled.  Please reschedule your reservation if you wish to reserve a room.',
           };
 
           transporter.sendMail(mailOptions, function(error, info){
