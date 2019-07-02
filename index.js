@@ -995,7 +995,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
                  // EMAIL TOKEN
            var mailOptions = {
             from: 'CodeOrangeReservations@gmail.com',
-            to: teamEmails,
+            to: 'danielomalley@discover.com',
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been deleted.'
           };
