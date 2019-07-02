@@ -350,7 +350,7 @@ app.get('/stats/filter/newbs', function(request,response) {
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
                    'm.Gender FROM Members m LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
                    'WHERE r.Type IN ( "Open House", "Applicant" ) ORDER BY m.MemberID';
-                   
+
   console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
@@ -980,7 +980,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been DELETED.  Check the reservations page for more deets.'
           };
-          
+
           transporter.sendMail(mailOptions, function(error, info){
             if(error){
               response.json(null)
@@ -1042,7 +1042,7 @@ app.post('/update/reserve', function(request,response) {
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been updated.  Check the reservations page for more deets.'
           };
-          
+
           transporter.sendMail(mailOptions, function(error, info){
             if(error){
               response.json(null)
@@ -1061,7 +1061,7 @@ app.post('/update/reserve', function(request,response) {
 app.post('/edit/reserve', function(request,response) {
   let startClause = '';
   let endClause = '';
-  
+
   if(request.body.Start !== undefined)
   {
     startClause = ', Start = ' + mysql.escape(request.body.Start);
@@ -1070,8 +1070,8 @@ app.post('/edit/reserve', function(request,response) {
   {
     endClause = ', End = ' + mysql.escape(request.body.End);
   }
-  
-  
+
+
   let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + startClause + endClause + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' ' + 'WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
@@ -1108,10 +1108,10 @@ app.post('/insert/reserve/', function(request,response) {
   };
   //EMAIL TOKEN
   //Query for emails based on team
-  let emailQuery = "SELECT WorkEmail FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber=" + 
+  let emailQuery = "SELECT WorkEmail FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber=" +
   mysql.escape(request.body.TeamID) + " AND Teams.TeamID = (SELECT MAX(Teams.TeamID) FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber="+
   mysql.escape(request.body.TeamID) +" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
-  
+
   connection.query(emailQuery , function(error, results, fields){
     if(error){
       response.json(null)
@@ -1125,11 +1125,11 @@ app.post('/insert/reserve/', function(request,response) {
         from: 'CodeOrangeReservations@gmail.com',
         to: teamEmails,
         subject: 'code_orange Reservations',
-        text: 'Your Reservation for team ' + request.body.TeamID + 
-        ' has been made.  \nIt it scheduled for room ' + request.body.RoomID + ' at ' 
+        text: 'Your Reservation for team ' + request.body.TeamID +
+        ' has been made.  \nIt it scheduled for room ' + request.body.RoomID + ' at '
         + request.body.Start + ' scheduled until ' + request.body.End + '.'
       };
-      
+
           transporter.sendMail(mailOptions, function(error, info){
             if(error){
               response.json(null)
@@ -1221,11 +1221,11 @@ app.get('/getmail', function(request,response){
 app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'));
   });
-  
+
 app.get('/login/attempts/get', function(request, response){
-  
+
   var query = 'SELECT LoginAttempts.Attempts, Members.MemberID, Members.WorkEmail FROM LoginAttempts INNER JOIN Members ON LoginAttempts.MemberID = Members.MemberID WHERE WorkEmail = ' + mysql.escape(request.query.WorkEmail) + ';';
-  
+
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
@@ -1238,13 +1238,32 @@ app.get('/login/attempts/get', function(request, response){
             response.json(results);
         }
   });
-  
-}); 
 
-app.post('login/attempts/post', function(request, response){
-    
-    var query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.params.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
-    
+});
+
+app.post('/login/attempts/post', function(request, response){
+
+    let query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.params.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
+
+    connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({
+              update_status: "failed",
+              update_error: error
+            });
+        }
+        else {
+            response.json({
+              update_status: "success",
+            });
+        }
+  })
+});
+
+app.post('/login/attempts/insert', function(request, response){
+
+    let query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
+
     connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
