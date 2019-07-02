@@ -997,8 +997,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
             from: 'CodeOrangeReservations@gmail.com',
             to: teamEmails,
             subject: 'code_orange Reservations',
-            text: 'Your reservation has been canceled.  Your reservation for Team ' + results[0].TeamNumber + ' beginning at ' + results[0].Start +
-            ' and ending at ' + results[0].End + ' in room ' + results[0].RoomID + ' has been canceled.  Please reschedule your reservation if you wish to reserve a room.',
+            text: 'Your reservation has been canceled.'
           };
 
           transporter.sendMail(mailOptions, function(error, info){
