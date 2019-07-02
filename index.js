@@ -1233,7 +1233,7 @@ app.get('/login/attempts/get', function(request, response){
 
 });
 
-app.post('login/attempts/post', function(request, response){
+app.post('/login/attempts/post', function(request, response){
 
     let query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.params.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
 
@@ -1252,7 +1252,7 @@ app.post('login/attempts/post', function(request, response){
   })
 });
 
-app.post('login/attempts/insert', function(request, response){
+app.post('/login/attempts/insert', function(request, response){
 
     let query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
 
