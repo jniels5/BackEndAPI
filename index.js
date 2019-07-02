@@ -979,7 +979,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
         }
   });
   
-    var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID, Teams.TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+mysql.escape(request.params.rID)+" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+mysql.escape(request.params.rID)+" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+    var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID, Teams.TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+request.params.rID+" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+request.params.rID+" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery, function(error, results, fields) {
       if(error){
            response.json({
@@ -995,7 +995,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
                  // EMAIL TOKEN
            var mailOptions = {
             from: 'CodeOrangeReservations@gmail.com',
-            to: 'danielomalley@discover.com',
+            to: teamEmails,
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been deleted.'
           };
