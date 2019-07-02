@@ -1019,6 +1019,11 @@ app.post('/update/reserve', function(request,response) {
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   var query = 'UPDATE ' + tableName + ' SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
+  //EMAIL TOKEN
+   var emailQuery = "select WorkEmail from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
+   + "INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID"
+   + " WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) +" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)FROM Teams INNER JOIN Reservations ON "
+   + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + "GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
@@ -1027,10 +1032,13 @@ app.post('/update/reserve', function(request,response) {
             });
         }
         else {
-          //EMAIL TOKEN
+          var teamEmails = [];
+            for(var i in results){
+              teamEmails.push(results[i].WorkEmail) + ','
+            }
           var mailOptions = {
             from: 'CodeOrangeReservations@gmail.com',
-            to: 'danielomalley@discover.com',
+            to: teamEmails,
             subject: 'code_orange Reservations',
             text: 'Your Reservation has been updated.  Check the reservations page for more deets.'
           };
