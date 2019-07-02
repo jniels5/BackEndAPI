@@ -982,7 +982,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
     var emailQuery = "SELECT WorkEmail from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
      + "INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID"
      + " WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) +" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)FROM Teams INNER JOIN Reservations ON "
-     + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + "GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+     + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + " GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery, function(error, results, fields) {
       if(error){
            response.json({
@@ -991,14 +991,16 @@ app.get('/remove/reservation/:rID', function(request,response) {
             });
       }
       else{
+        var teamEmails = [];
+        for(var i in results){
+            teamEmails.push(results[i].WorkEmail) + ','
+         }
                  // EMAIL TOKEN
            var mailOptions = {
             from: 'CodeOrangeReservations@gmail.com',
-            to: request.body.WorkEmail,
+            to: teamEmails,
             subject: 'code_orange Reservations',
-            text: 'Your Reservation has been deleted.\n\n Your Reservation for team ' + results[0].TeamNumber +
-        ' scheduled for room ' + results[0].RoomID + ' at '
-        + results[0].Start + ' scheduled until ' + results[0].End + ' has been deleted.'
+            text: 'Your Reservation has been deleted.'
           };
 
           transporter.sendMail(mailOptions, function(error, info){
@@ -1048,45 +1050,43 @@ app.post('/update/reserve', function(request,response) {
             response.json({
               update_status: "success",
             });
-        }
-  });
-  //EMAIL TOKEN
-   var emailQuery = "SELECT WorkEmail, Reservations.Date, Start, End, Reservations.RoomID, Teams.TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
-   + "INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID"
-   + " WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) +" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)FROM Teams INNER JOIN Reservations ON "
-   + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + "GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);";
-  connection.query(emailQuery,function (error, results, fields){
-    if(error){
-        response.json({
-              update_status: "failed",
-              update_error: error
-            });
-    }
-    else{
-       var teamEmails = [];
-            for(var i in results){
-              teamEmails.push(results[i].WorkEmail) + ','
-            }
-          var mailOptions = {
-            from: 'CodeOrangeReservations@gmail.com',
-            to: teamEmails,
-            subject: 'code_orange Reservations',
-            text: 'Your Reservation has been updated.\n\n Your Reservation for team ' + results[0].TeamNumber +
-        ' has been updated.  \nIt is now scheduled for room ' + results[0].RoomID + ' at '
-        + results[0].Start + ' scheduled until ' + results[0].End + '.'
-          };
-
-          transporter.sendMail(mailOptions, function(error, info){
+            //EMAIL TOKEN
+           var emailQuery = "SELECT WorkEmail, Reservations.Date, Start, End, Reservations.RoomID, Teams.TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
+           + "INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID"
+           + " WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) +" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)FROM Teams INNER JOIN Reservations ON "
+           + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + " GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);";
+          connection.query(emailQuery,function (error, results, fields){
             if(error){
-              response.json(null)
+                response.json({
+                      update_status: "failed",
+                      update_error: error
+                    });
             }
-            else {
-              response.json({email: "sent"})
-            }
-          });
-          //END EMAIL TOKEN
+            else{
+               var teamEmails = [];
+                    for(var i in results){
+                      teamEmails.push(results[i].WorkEmail) + ','
+                    }
+                  var mailOptions = {
+                    from: 'CodeOrangeReservations@gmail.com',
+                    to: teamEmails,
+                    subject: 'code_orange Reservations',
+                    text: 'Your Reservation has been updated.',
+                  };
+        
+                  transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                      response.json(null)
+                    }
+                    else {
+                      response.json({email: "sent"})
+                    }
+                  });
+                  //END EMAIL TOKEN
     }
   })
+        }
+  });
 });
 app.post('/edit/reserve', function(request,response) {
   let startClause = '';
