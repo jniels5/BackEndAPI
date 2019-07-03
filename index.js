@@ -965,20 +965,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
   //used in connection.query
   let test = String(request.query.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
-  connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
-        if(error) {
-            response.json({
-              remove_status: "failed",
-              remove_error: error
-            });
-        }
-        else {
-            response.json({
-              remove_status: "success",
-            });
-        }
-  });
-
+  
     var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery,[request.params.rID, request.params.rID], function(error, results, fields) {
       if(error){
@@ -1012,6 +999,19 @@ app.get('/remove/reservation/:rID', function(request,response) {
           //END EMAIL TOKEN
       }
   })
+  connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
+        if(error) {
+            response.json({
+              remove_status: "failed",
+              remove_error: error
+            });
+        }
+        else {
+            response.json({
+              remove_status: "success",
+            });
+        }
+  });
 });
 // Delete all reservations (Deprecated)
 app.get('/delete/reservations', function(request,response) {
