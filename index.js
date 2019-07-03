@@ -1055,7 +1055,7 @@ app.post('/update/reserve', function(request,response) {
                     from: 'CodeOrangeReservations@gmail.com',
                     to: teamEmails,
                     subject: 'code_orange Reservations',
-                    text: 'Your Reservation has been updated.\n\nYour reservation for team ' + request.body.TeamNumber + 'has been updated to '+ request.body.RoomID + ' beginning at ' + request.body.Start +
+                    text: 'Your Reservation has been updated.\n\nYour reservation for team ' + results[0].TeamNumber + ' has been updated to room '+ results[0].RoomID + ' beginning at ' + request.body.Start +
                     ' and scheduled to end at ' + request.body.End + '.',
                   };
 
