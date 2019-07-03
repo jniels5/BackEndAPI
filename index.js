@@ -978,7 +978,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
             });
         }
   });
-  
+ 
     var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery,[request.params.rID, request.params.rID], function(error, results, fields) {
       if(error){
@@ -1035,7 +1035,7 @@ app.post('/update/reserve', function(request,response) {
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   var query = 'UPDATE ' + tableName + ' SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
-   
+
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
@@ -1070,7 +1070,7 @@ app.post('/update/reserve', function(request,response) {
                     subject: 'code_orange Reservations',
                     text: 'Your Reservation has been updated.',
                   };
-        
+
                   transporter.sendMail(mailOptions, function(error, info){
                     if(error){
                       response.json(null)
@@ -1179,7 +1179,7 @@ app.post('/insert/reserve/', function(request,response) {
         }
       }
   });
-  
+
   connection.query(emailQuery , function(error, results, fields){
     if(error){
       response.json(null)
@@ -1271,7 +1271,13 @@ app.get('/login/attempts/get', function(request, response){
 
 app.post('/login/attempts/post', function(request, response){
 
-    let query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.body.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
+  var entry = {
+    Number: request.body.Number,
+    WorkEmail: request.body.WorkEmail,
+  };
+
+
+    var query = 'UPDATE LoginAttempts SET Attempts = ' + sql.escape(entry.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(entry.WorkEmail) + ');';
 
     connection.query(query, function (error, results, fields) {
         if(error) {
@@ -1290,7 +1296,7 @@ app.post('/login/attempts/post', function(request, response){
 
 app.post('/login/attempts/insert', function(request, response){
 
-    let query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
+    var query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
 
     connection.query(query, function (error, results, fields) {
         if(error) {
