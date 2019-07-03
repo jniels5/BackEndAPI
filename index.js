@@ -1272,7 +1272,7 @@ app.get('/login/attempts/get', function(request, response){
 app.post('/login/attempts/post', function(request, response){
 
   var entry = {
-    Numbrt: request.body.Number,
+    Number: request.body.Number,
     WorkEmail: request.body.WorkEmail,
   };
 
