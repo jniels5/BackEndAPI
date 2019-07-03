@@ -1250,7 +1250,7 @@ app.listen(app.get('port'), function() {
     console.log("Node app is running at localhost:" + app.get('port'));
   });
 
-app.get('/login/attempts/:WorkEmail', function(request, response){
+app.get('/login/attempts/get', function(request, response){
 
   var query = 'SELECT LoginAttempts.Attempts, Members.MemberID, Members.WorkEmail FROM LoginAttempts INNER JOIN Members ON LoginAttempts.MemberID = Members.MemberID WHERE WorkEmail = ' + mysql.escape(request.query.WorkEmail) + ';';
 
