@@ -1321,7 +1321,7 @@ decodeSemester = function(val)
         let semester;
         if(val.length === 4)
         {
-            switch (val.substr(0,2))
+            switch (val.toUpperCase().substr(0,2))
             {
                 case "FA":
                     semester = "FALL ";
