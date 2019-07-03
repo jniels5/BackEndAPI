@@ -962,9 +962,25 @@ app.get('/select/Reservation/:day', function(request,response) {
   });
 });
 app.get('/remove/reservation/:rID', function(request,response) {
-      var emailQuery = 'select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID='+ mysql.escape(request.params.rID) +' AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=' + mysql.escape(request.params.rID) + ' GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);'
-    connection.query(emailQuery, function(error, results, fields) {
-    console.log(results)
+  //used in connection.query
+  let test = String(request.query.test).toLowerCase() == "true";
+  let tableName = (!test) ? "Reservations" : "Reservations_TEST";
+  connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
+        if(error) {
+            response.json({
+              remove_status: "failed",
+              remove_error: error
+            });
+        }
+        else {
+            response.json({
+              remove_status: "success",
+            });
+        }
+  });
+
+    var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+  connection.query(emailQuery,[request.params.rID, request.params.rID], function(error, results, fields) {
       if(error){
            response.json({
               remove_status: "failed",
@@ -986,26 +1002,16 @@ app.get('/remove/reservation/:rID', function(request,response) {
           };
 
           transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+              response.json(null)
+            }
+            else {
+              response.json({email: "sent"})
+            }
           });
           //END EMAIL TOKEN
       }
   })
-  //used in connection.query
-  let test = String(request.query.test).toLowerCase() == "true";
-  let tableName = (!test) ? "Reservations" : "Reservations_TEST";
-  connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
-        if(error) {
-            response.json({
-              remove_status: "failed",
-              remove_error: error
-            });
-        }
-        else {
-            response.json({
-              remove_status: "success",
-            });
-        }
-  });
 });
 // Delete all reservations (Deprecated)
 app.get('/delete/reservations', function(request,response) {
@@ -1258,7 +1264,7 @@ app.get('/login/attempts/get', function(request, response){
 
 app.post('/login/attempts/post', function(request, response){
 
-    let query = 'UPDATE LoginAttempts SET Attempts = ' + sql.escape(request.body.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ""' + mysql.escape(request.body.WorkEmail) + '"");';
+    let query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.body.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
 
     connection.query(query, function (error, results, fields) {
         if(error) {
@@ -1277,7 +1283,8 @@ app.post('/login/attempts/post', function(request, response){
 
 app.post('/login/attempts/insert', function(request, response){
 
-    var query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
+    let query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
+
     connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
