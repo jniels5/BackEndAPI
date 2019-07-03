@@ -240,6 +240,22 @@ app.get('/stats/search/grad', function(request,response) {
   });
 });
 
+app.get('/stats/search/graduatedIn/:sem', function(request,response)
+{
+  let semCode = decodeSemester(request.params.sem);
+  let semester = semCode.split(" ")[0];
+  let year = semCode.split(" ")[1];
+  let query = "SELECT * FROM Members WHERE GradSemester=" + mysql.escape(semester) + " AND GradYear=" + mysql.escape(year) + ";";
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({graduadtedIn: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
@@ -1299,3 +1315,33 @@ app.post('/login/attempts/insert', function(request, response){
         }
   })
 });
+
+decodeSemester = function(val)
+    {
+        let semester;
+        if(val.length === 4)
+        {
+            switch (val.substr(0,2))
+            {
+                case "FA":
+                    semester = "FALL ";
+                    break;
+                case "SU":
+                    semester = "SUMMER ";
+                    break;
+                case "SP":
+                    semester = "SPRING ";
+                    break;
+                default:
+                    semester = val;
+                    break;
+            }
+            let year = Number(val.substr(2,2));
+            if(!isNaN(year))
+            {
+                semester += "20" + String(year);
+            }
+            return semester;
+        }
+        return val;
+    }
