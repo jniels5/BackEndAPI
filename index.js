@@ -1271,7 +1271,7 @@ app.get('/login/attempts/get', function(request, response){
 
 app.post('/login/attempts/post', function(request, response){
 
-    let query = 'UPDATE LoginAttempts SET Attempts = ' + sql.escape(request.body.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
+    let query = 'UPDATE LoginAttempts SET Attempts = ' + sql.escape(request.body.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ""' + mysql.escape(request.body.WorkEmail) + '"");';
 
     connection.query(query, function (error, results, fields) {
         if(error) {
