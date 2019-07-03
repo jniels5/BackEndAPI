@@ -982,7 +982,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
             to: teamEmails,
             subject: 'code_orange Reservations',
             text: 'Your reservation has been canceled. \n\n Your reservation for team ' + results[0].TeamNumber + ' scheduled in room ' + results[0].RoomID + 
-                  ' at ' + results[0].Start + ' scheduled until ' + results[0].End + 'has been canceled.  Please reschedule if you would like another room.'
+                  ' at ' + results[0].Start + ' scheduled until ' + results[0].End + ' has been canceled.  Please reschedule if you would like another room.'
           };
 
           transporter.sendMail(mailOptions, function(error, info){
@@ -1031,6 +1031,33 @@ app.post('/update/reserve', function(request,response) {
   var query = 'UPDATE ' + tableName + ' SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
   console.log(query);
 
+            //EMAIL TOKEN
+           var emailQuery = "SELECT WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
+           + "INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID"
+           + " WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) +" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)FROM Teams INNER JOIN Reservations ON "
+           + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + " GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);";
+          connection.query(emailQuery,function (error, results, fields){
+            if(error){
+              console.log(error)
+            }
+            else{
+               var teamEmails = [];
+                    for(var i in results){
+                      teamEmails.push(results[i].WorkEmail) + ','
+                    }
+                  var mailOptions = {
+                    from: 'CodeOrangeReservations@gmail.com',
+                    to: teamEmails,
+                    subject: 'code_orange Reservations',
+                    text: 'Your Reservation has been updated.\n\nYour reservation for team ' + request.body.TeamNumber + 'has been updated to '+ request.body.RoomID + ' beginning at ' + request.body.Start +
+                    ' and scheduled to end at ' + request.body.End + '.',
+                  };
+
+                  transporter.sendMail(mailOptions, function(error, info){
+                  });
+                  //END EMAIL TOKEN
+    }
+  })
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({
@@ -1042,41 +1069,6 @@ app.post('/update/reserve', function(request,response) {
             response.json({
               update_status: "success",
             });
-            //EMAIL TOKEN
-           var emailQuery = "SELECT WorkEmail, Reservations.Date, Start, End, Reservations.RoomID, Teams.TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
-           + "INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID"
-           + " WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) +" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)FROM Teams INNER JOIN Reservations ON "
-           + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + " GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);";
-          connection.query(emailQuery,function (error, results, fields){
-            if(error){
-                response.json({
-                      update_status: "failed",
-                      update_error: error
-                    });
-            }
-            else{
-               var teamEmails = [];
-                    for(var i in results){
-                      teamEmails.push(results[i].WorkEmail) + ','
-                    }
-                  var mailOptions = {
-                    from: 'CodeOrangeReservations@gmail.com',
-                    to: teamEmails,
-                    subject: 'code_orange Reservations',
-                    text: 'Your Reservation has been updated.',
-                  };
-
-                  transporter.sendMail(mailOptions, function(error, info){
-                    if(error){
-                      response.json(null)
-                    }
-                    else {
-                      response.json({email: "sent"})
-                    }
-                  });
-                  //END EMAIL TOKEN
-    }
-  })
         }
   });
 });
