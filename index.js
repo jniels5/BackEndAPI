@@ -978,7 +978,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
             });
         }
   });
- 
+
     var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery,[request.params.rID, request.params.rID], function(error, results, fields) {
       if(error){
@@ -1271,13 +1271,7 @@ app.get('/login/attempts/get', function(request, response){
 
 app.post('/login/attempts/post', function(request, response){
 
-  var entry = {
-    Number: request.body.Number,
-    WorkEmail: request.body.WorkEmail,
-  };
-
-
-    let query = 'UPDATE LoginAttempts SET Attempts = ' + sql.escape(entry.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(entry.WorkEmail) + ');';
+    let query = 'UPDATE LoginAttempts SET Attempts = ' + sql.escape(request.body.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
 
     connection.query(query, function (error, results, fields) {
         if(error) {
