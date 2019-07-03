@@ -1272,12 +1272,12 @@ app.get('/login/attempts/get', function(request, response){
 app.post('/login/attempts/post', function(request, response){
 
   var entry = {
-    Attempts: request.body.Number,
+    Numbrt: request.body.Number,
     WorkEmail: request.body.WorkEmail,
   };
 
 
-    var query = 'UPDATE LoginAttempts SET Attempts = ' + sql.escape(entry.Attempts) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(entry.WorkEmail) + ');';
+    var query = 'UPDATE LoginAttempts SET Attempts = ' + sql.escape(entry.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(entry.WorkEmail) + ');';
 
     connection.query(query, function (error, results, fields) {
         if(error) {
