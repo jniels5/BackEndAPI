@@ -1273,7 +1273,7 @@ app.get('/login/attempts/get', function(request, response){
         }
         else {
             response.json(results);
-                if(results[0].Atteempts >= 5){
+                if(results[0].Attempts >= 5){
                  var mailOptions = {
                   from: 'CodeOrangeReservations@gmail.com',
                   to: request.body.WorkEmail,
@@ -1295,6 +1295,7 @@ app.get('/login/attempts/get', function(request, response){
 }
         }
   });
+
 
 });
 
