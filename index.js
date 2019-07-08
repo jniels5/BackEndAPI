@@ -1128,7 +1128,8 @@ app.post('/edit/reserve', function(request,response) {
     console.log(JSON.stringify(entry));
     let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
     connection.query(query, function(error, results, fields) {
-      if(error) {
+      if(error) 
+      {
         response.json({
           checkin_status: "failed",
           checkin_error: error,
@@ -1136,7 +1137,8 @@ app.post('/edit/reserve', function(request,response) {
       }
       
       //check if a reservation already occupies timeslot
-      else {
+      else 
+      {
         conflicts = results[0].c;
         if (conflicts > 0)
         {
@@ -1147,13 +1149,13 @@ app.post('/edit/reserve', function(request,response) {
           });
         }
 
-        //then proceed with updating reservation
+        // proceed with updating reservation
         else 
         {
-          var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + startClause + endClause + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' ' + 'WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+          //var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + startClause + endClause + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' ' + 'WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
           console.log(query);
           
-          connection.query(query, function (error, results, fields) {
+          connection.query('UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + startClause + endClause + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' ' + 'WHERE ReserveID = ' + mysql.escape(request.body.ReserveID), function (error, results, fields) {
             if(error) {
               response.json({
                 edit_status: "failed",
@@ -1164,7 +1166,8 @@ app.post('/edit/reserve', function(request,response) {
             else {
               response.json({
                 edit_status: "success",
-                sql_query: query
+                sql_query: query,
+                conflict_count: conflicts,
               });
             }
           });
@@ -1204,6 +1207,8 @@ app.post('/insert/reserve/', function(request,response) {
           checkin_error: error,
         });
       }
+
+      //check if a reservation already occupies timeslot
       else
       {
         conflicts = results[0].c;
