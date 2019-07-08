@@ -981,7 +981,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
   //used in connection.query
   let test = String(request.query.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
-  
+
     var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery,[request.params.rID, request.params.rID], function(error, results, fields) {
       if(error){
@@ -1000,7 +1000,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
             from: 'CodeOrangeReservations@gmail.com',
             to: teamEmails,
             subject: 'code_orange Reservations',
-            text: 'Your reservation has been canceled. \n\n Your reservation for team ' + results[0].TeamNumber + ' scheduled in room ' + results[0].RoomID + 
+            text: 'Your reservation has been canceled. \n\n Your reservation for team ' + results[0].TeamNumber + ' scheduled in room ' + results[0].RoomID +
                   ' at ' + results[0].Start + ' scheduled until ' + results[0].End + ' has been canceled.  Please reschedule if you would like another room.'
           };
 
@@ -1273,6 +1273,26 @@ app.get('/login/attempts/get', function(request, response){
         }
         else {
             response.json(results);
+                if(results[0].Atteempts >= 5){
+                 var mailOptions = {
+                  from: 'CodeOrangeReservations@gmail.com',
+                  to: request.body.WorkEmail,
+                  subject: 'code_orange Reservations',
+                  text: 'The account of ' + request.body.WorkEmail +
+                  ' has been locked out. Please contact an administrator for more infomation'
+                };
+
+                    transporter.sendMail(mailOptions, function(error, info){
+                      if(error){
+                        response.json(null)
+                      }
+                      else {
+                        response.json({email: "sent"})
+                      }
+                    });
+                    // END EMAIL TOKEN
+
+}
         }
   });
 
