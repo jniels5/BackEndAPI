@@ -425,15 +425,15 @@ app.post('/stats/modal/post', function(request,response) {
   }
 
   connection.query('SET foreign_key_checks = 0; ' +
-	'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
-	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+  'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
+  'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
     if(error) {
       response.json({modal_post: "failed: " + error, entry: entry});
     }
     else {
       connection.query('SET foreign_key_checks = 0; ' +
       'UPDATE Role SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
-    	'SET foreign_key_checks = 1;', roleEntry, function (error, results, fields) {
+      'SET foreign_key_checks = 1;', roleEntry, function (error, results, fields) {
         if(error) {
           response.json({modal_post: "failed: " + error, entry: entry});
         }
@@ -464,15 +464,15 @@ app.post('/stats/modal/post/teams', function(request,response) {
   }
 
   connection.query('SET foreign_key_checks = 0; ' +
-	'UPDATE Teams SET ? WHERE TeamID = ' + request.body.TeamID + ";" +
-	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+  'UPDATE Teams SET ? WHERE TeamID = ' + request.body.TeamID + ";" +
+  'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
     if(error) {
       response.json({modal_post: "failed: " + error, entry: entry});
     }
     else {
       connection.query('SET foreign_key_checks = 0; ' +
       'UPDATE Projects SET ? WHERE ProjectID = ' + request.body.ProjectID + ";" +
-    	'SET foreign_key_checks = 1;', ProjectEntry, function (error, results, fields) {
+      'SET foreign_key_checks = 1;', ProjectEntry, function (error, results, fields) {
         if(error) {
           response.json({modal_post: "failed: " + error, entry: entry});
         }
@@ -675,7 +675,7 @@ app.post('/stats/add/asset', function(request,response) {
 ////////////////////////////////////////////////////
 
 app.get('/student/portal/info', function(request,response) {
-  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, m.SuperUser, ' +
+  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, ' +
                    't.TeamNumber, t.TeamName, t.Semester, t.PhotoPath, t.LabID, ' +
                    'r.Type, r.Status, r.Description, r.Date, ' +
                    'p.ProjectID, p.Name, p.Description, p.Paragraph, p.FrontEnd, p.BackEnd, p.RDS ' +
@@ -708,8 +708,8 @@ app.post('/student/portal/update', function(request,response) {
   };
 
   connection.query('SET foreign_key_checks = 0; ' +
-	'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
-	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+  'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
+  'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
     if(error) {
       response.json({student_update: "failed: " + error, entry: entry});
     } else {
@@ -805,8 +805,8 @@ app.post('/map/update/delegations', function(request,response) {
     };
 
     connection.query('SET foreign_key_checks = 0; ' +
-  	'UPDATE Delegations SET ? WHERE DelegationID = ' + request.body.DelegationID + ";" +
-  	'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+    'UPDATE Delegations SET ? WHERE DelegationID = ' + request.body.DelegationID + ";" +
+    'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
       if(error) {
         response.json({update_delegations: "failed"});
       }
@@ -981,7 +981,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
   //used in connection.query
   let test = String(request.query.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
-
+  
     var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery,[request.params.rID, request.params.rID], function(error, results, fields) {
       if(error){
@@ -1000,7 +1000,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
             from: 'CodeOrangeReservations@gmail.com',
             to: teamEmails,
             subject: 'code_orange Reservations',
-            text: 'Your reservation has been canceled. \n\n Your reservation for team ' + results[0].TeamNumber + ' scheduled in room ' + results[0].RoomID +
+            text: 'Your reservation has been canceled. \n\n Your reservation for team ' + results[0].TeamNumber + ' scheduled in room ' + results[0].RoomID + 
                   ' at ' + results[0].Start + ' scheduled until ' + results[0].End + ' has been canceled.  Please reschedule if you would like another room.'
           };
 
@@ -1094,6 +1094,8 @@ app.post('/update/reserve', function(request,response) {
         }
   });
 });
+
+
 app.post('/edit/reserve', function(request,response) {
   let startClause = '';
   let endClause = '';
@@ -1107,27 +1109,71 @@ app.post('/edit/reserve', function(request,response) {
     endClause = ', End = ' + mysql.escape(request.body.End);
   }
 
-
   let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
-  var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + startClause + endClause + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' ' + 'WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
-  console.log(query);
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({
-              edit_status: "failed",
-              sql_query: query,
-              edit_error: error
-            });
+
+  //reservation time conflict check
+  //taken from /insert/reserve
+  conflicts = 0;
+    var entry = {
+      Description: request.body.Description,
+      Email: request.body.Email,
+      Start: request.body.Start,
+      End: request.body.End,
+      Date: request.body.Date,
+      RoomID: request.body.RoomID,
+      TeamID: request.body.TeamID
+    };
+
+    console.log(JSON.stringify(entry));
+    let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End));";
+    connection.query(query, function(error, results, fields) {
+      if(error) {
+        response.json({
+          checkin_status: "failed",
+          checkin_error: error,
+        });
+      }
+      
+      //check if a reservation already occupies timeslot
+      else {
+        conflicts = results[0].c;
+        if (conflicts > 0)
+        {
+          response.json({
+            checkin_status: "failed",
+            checkin_error: "Reservation already occupies timeslot",
+            conflict_count: conflicts,
+          });
         }
-        else {
-            response.json({
-              edit_status: "success",
-              sql_query: query
-            });
-        }
-  });
-});
+
+        //then proceed with updating reservation
+        else 
+        {
+          var query = 'UPDATE ' + tableName + ' SET Description = ' + mysql.escape(request.body.Description) + startClause + endClause + ', Email = ' + mysql.escape(request.body.Email) + ', TeamID = ' + mysql.escape(request.body.TeamID) + ' ' + 'WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+          console.log(query);
+          
+          connection.query(query, function (error, results, fields) {
+            if(error) {
+              response.json({
+                edit_status: "failed",
+                sql_query: query,
+                edit_error: error
+              });
+            }
+            else {
+              response.json({
+                edit_status: "success",
+                sql_query: query
+              });
+            }
+          });
+        } 
+      }   //end of initial else
+    });
+  }); // end of '/edit/reserve'
+
+
 app.post('/insert/reserve/', function(request,response) {
   //used in connection.query
   let test = String(request.body.test).toLowerCase() == "true";
@@ -1141,7 +1187,7 @@ app.post('/insert/reserve/', function(request,response) {
       Date: request.body.Date,
       RoomID: request.body.RoomID,
       TeamID: request.body.TeamID
-  };
+    };
   //EMAIL TOKEN
   //Query for emails based on team
   let emailQuery = "SELECT WorkEmail FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber=" +
@@ -1169,6 +1215,8 @@ app.post('/insert/reserve/', function(request,response) {
             conflict_count: conflicts,
           });
         }
+
+        // proceed with inserting a reservation
         else
         {
           connection.query('INSERT INTO ' + tableName + ' set ?', entry, function (error, results, fields) {
@@ -1273,29 +1321,8 @@ app.get('/login/attempts/get', function(request, response){
         }
         else {
             response.json(results);
-                if(results[0].Attempts >= 5){
-                 var mailOptions = {
-                  from: 'CodeOrangeReservations@gmail.com',
-                  to: request.body.WorkEmail,
-                  subject: 'code_orange Reservations',
-                  text: 'The account of ' + request.body.WorkEmail +
-                  ' has been locked out. Please contact an administrator for more infomation'
-                };
-
-                    transporter.sendMail(mailOptions, function(error, info){
-                      if(error){
-                        response.json(null)
-                      }
-                      else {
-                        response.json({email: "sent"})
-                      }
-                    });
-                    // END EMAIL TOKEN
-
-}
         }
   });
-
 
 });
 
