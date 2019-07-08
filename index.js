@@ -966,7 +966,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
   let test = String(request.query.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   
-    var emailQuery = "select WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+    var emailQuery = "select WorkEmail, Description, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
   connection.query(emailQuery,[request.params.rID, request.params.rID], function(error, results, fields) {
       if(error){
            response.json({
@@ -985,7 +985,7 @@ app.get('/remove/reservation/:rID', function(request,response) {
             to: teamEmails,
             subject: 'code_orange Reservations',
             text: 'Your reservation has been canceled. \n\n Your reservation for team ' + results[0].TeamNumber + ' scheduled in room ' + results[0].RoomID + 
-                  ' at ' + results[0].Start + ' scheduled until ' + results[0].End + ' has been canceled.  Please reschedule if you would like another room.'
+                  ' at ' + results[0].Start + ' scheduled until ' + results[0].End + ' has been canceled.  Please reschedule if you would like another room. \n\nReservation Description: ' + results[0].Description,
           };
 
           transporter.sendMail(mailOptions, function(error, info){
@@ -1038,7 +1038,7 @@ app.post('/update/reserve', function(request,response) {
   console.log(query);
 
             //EMAIL TOKEN
-           var emailQuery = "SELECT WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
+           var emailQuery = "SELECT WorkEmail, Description, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
            + "INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID"
            + " WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) +" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)FROM Teams INNER JOIN Reservations ON "
            + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + " GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);";
@@ -1056,7 +1056,7 @@ app.post('/update/reserve', function(request,response) {
                     to: teamEmails,
                     subject: 'code_orange Reservations',
                     text: 'Your Reservation has been updated.\n\nYour reservation for team ' + results[0].TeamNumber + ' has been updated to room '+ results[0].RoomID + ' beginning at ' + request.body.Start +
-                    ' and scheduled to end at ' + request.body.End + '.',
+                    ' and scheduled to end at ' + request.body.End + '.\n\nReservation Description: ' + results[0].Description,
                   };
 
                   transporter.sendMail(mailOptions, function(error, info){
@@ -1128,7 +1128,7 @@ app.post('/insert/reserve/', function(request,response) {
   };
   //EMAIL TOKEN
   //Query for emails based on team
-  let emailQuery = "SELECT WorkEmail FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber=" +
+  let emailQuery = "SELECT WorkEmail, Description FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber=" +
   mysql.escape(request.body.TeamID) + " AND Teams.TeamID = (SELECT MAX(Teams.TeamID) FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber="+
   mysql.escape(request.body.TeamID) +" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
 
@@ -1188,7 +1188,7 @@ app.post('/insert/reserve/', function(request,response) {
         subject: 'code_orange Reservations',
         text: 'Your Reservation for team ' + request.body.TeamID +
         ' has been made.  \nIt is scheduled for room ' + request.body.RoomID + ' at '
-        + request.body.Start + ' scheduled until ' + request.body.End + '.'
+        + request.body.Start + ' scheduled until ' + request.body.End + '.\n\nReservation Description: ' + results[0].Description,
       };
 
           transporter.sendMail(mailOptions, function(error, info){
