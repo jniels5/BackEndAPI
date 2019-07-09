@@ -240,6 +240,22 @@ app.get('/stats/search/grad', function(request,response) {
   });
 });
 
+app.get('/stats/search/graduatedIn/:sem', function(request,response)
+{
+  let semCode = decodeSemester(request.params.sem);
+  let semester = semCode.split(" ")[0];
+  let year = semCode.split(" ")[1];
+  let query = "SELECT * FROM Members WHERE GradSemester=" + mysql.escape(semester) + " AND GradYear=" + mysql.escape(year) + ";";
+  connection.query(query, function (error, results, fields) {
+        if(error) {
+            response.json({graduadtedIn: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
@@ -659,7 +675,7 @@ app.post('/stats/add/asset', function(request,response) {
 ////////////////////////////////////////////////////
 
 app.get('/student/portal/info', function(request,response) {
-  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, ' +
+  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, m.SuperUser, ' +
                    't.TeamNumber, t.TeamName, t.Semester, t.PhotoPath, t.LabID, ' +
                    'r.Type, r.Status, r.Description, r.Date, ' +
                    'p.ProjectID, p.Name, p.Description, p.Paragraph, p.FrontEnd, p.BackEnd, p.RDS ' +
@@ -1257,8 +1273,29 @@ app.get('/login/attempts/get', function(request, response){
         }
         else {
             response.json(results);
+                if(results[0].Attempts >= 5){
+                 var mailOptions = {
+                  from: 'CodeOrangeReservations@gmail.com',
+                  to: request.body.WorkEmail,
+                  subject: 'code_orange Reservations',
+                  text: 'The account of ' + request.body.WorkEmail +
+                  ' has been locked out. Please contact an administrator for more infomation'
+                };
+
+                    transporter.sendMail(mailOptions, function(error, info){
+                      if(error){
+                        response.json(null)
+                      }
+                      else {
+                        response.json({email: "sent"})
+                      }
+                    });
+                    // END EMAIL TOKEN
+
+}
         }
   });
+
 
 });
 
@@ -1299,3 +1336,33 @@ app.post('/login/attempts/insert', function(request, response){
         }
   })
 });
+
+decodeSemester = function(val)
+    {
+        let semester;
+        if(val.length === 4)
+        {
+            switch (val.toUpperCase().substr(0,2))
+            {
+                case "FA":
+                    semester = "FALL ";
+                    break;
+                case "SU":
+                    semester = "SUMMER ";
+                    break;
+                case "SP":
+                    semester = "SPRING ";
+                    break;
+                default:
+                    semester = val;
+                    break;
+            }
+            let year = Number(val.substr(2,2));
+            if(!isNaN(year))
+            {
+                semester += "20" + String(year);
+            }
+            return semester;
+        }
+        return val;
+    }
