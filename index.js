@@ -1054,7 +1054,7 @@ app.post('/update/reserve', function(request,response) {
   console.log(query);
 
             //EMAIL TOKEN
-           var emailQuery = "SELECT WorkEmail, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
+           var emailQuery = "SELECT WorkEmail, Reservations.Description AS Description, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
            + "INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID"
            + " WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) +" AND Teams.TeamID=(SELECT MAX(Teams.TeamID)FROM Teams INNER JOIN Reservations ON "
            + "Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID="+ mysql.escape(request.body.ReserveID) + " GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);";
@@ -1072,7 +1072,7 @@ app.post('/update/reserve', function(request,response) {
                     to: teamEmails,
                     subject: 'code_orange Reservations',
                     text: 'Your Reservation has been updated.\n\nYour reservation for team ' + results[0].TeamNumber + ' has been updated to room '+ results[0].RoomID + ' beginning at ' + request.body.Start +
-                    ' and scheduled to end at ' + request.body.End + '.\n\nReservation Description: ' + request.body.Description,
+                    ' and scheduled to end at ' + request.body.End + '.\n\nReservation Description: ' + results[0].Description + '.'
                   };
 
                   transporter.sendMail(mailOptions, function(error, info){
