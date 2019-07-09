@@ -1275,10 +1275,10 @@ app.get('/login/attempts/get', function(request, response){
             response.json(results);
                 if(results[0].Attempts >= 5){
                  var mailOptions = {
-                  from: 'CodeOrangeReservations@gmail.com',
-                  to: request.body.WorkEmail,
+                  from: 'CodeOrange@gmail.com',
+                  to: results[0].WorkEmail,
                   subject: 'code_orange Reservations',
-                  text: 'The account of ' + request.body.WorkEmail +
+                  text: 'The account of ' + results[0].WorkEmail +
                   ' has been locked out. Please contact an administrator for more infomation'
                 };
 
