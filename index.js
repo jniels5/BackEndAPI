@@ -1072,7 +1072,7 @@ app.post('/update/reserve', function(request,response) {
                     to: teamEmails,
                     subject: 'code_orange Reservations',
                     text: 'Your Reservation has been updated.\n\nYour reservation for team ' + results[0].TeamNumber + ' has been updated to room '+ results[0].RoomID + ' beginning at ' + request.body.Start +
-                    ' and scheduled to end at ' + request.body.End + '.\n\nReservation Description: ' + results[0].Description,
+                    ' and scheduled to end at ' + request.body.End + '.\n\nReservation Description: ' + request.body.Description,
                   };
 
                   transporter.sendMail(mailOptions, function(error, info){
@@ -1257,7 +1257,7 @@ app.post('/insert/reserve/', function(request,response) {
         subject: 'code_orange Reservations',
         text: 'Your Reservation for team ' + request.body.TeamID +
         ' has been made.  \nIt is scheduled for room ' + request.body.RoomID + ' at '
-        + request.body.Start + ' scheduled until ' + request.body.End + '.\n\nReservation Description: ' + results[0].Description,
+        + request.body.Start + ' scheduled until ' + request.body.End + '.\n\nReservation Description: ' + request.body.Description,
       };
 
           transporter.sendMail(mailOptions, function(error, info){
