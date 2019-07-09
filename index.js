@@ -1328,7 +1328,7 @@ app.get('/login/attempts/get', function(request, response){
             response.json(results);
                 if(results[0].Attempts >= 5){
                  var mailOptions = {
-                  from: 'CodeOrange@gmail.com',
+                  from: 'codeorange@discover.com',
                   to: results[0].WorkEmail,
                   subject: 'code_orange Reservations',
                   text: 'The account of ' + results[0].WorkEmail +
