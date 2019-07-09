@@ -675,7 +675,7 @@ app.post('/stats/add/asset', function(request,response) {
 ////////////////////////////////////////////////////
 
 app.get('/student/portal/info', function(request,response) {
-  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, ' +
+  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.WorkEmail, m.SuperUsergit, ' +
                    't.TeamNumber, t.TeamName, t.Semester, t.PhotoPath, t.LabID, ' +
                    'r.Type, r.Status, r.Description, r.Date, ' +
                    'p.ProjectID, p.Name, p.Description, p.Paragraph, p.FrontEnd, p.BackEnd, p.RDS ' +
