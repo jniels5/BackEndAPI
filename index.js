@@ -194,7 +194,6 @@ app.get('/stats/search/first', function(request,response) {
                    'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
                    sem + 'm.FirstName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
-  console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({first_select: "failed"});
@@ -216,7 +215,6 @@ app.get('/stats/search/last', function(request,response) {
                    'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
                    sem + 'm.LastName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
-  console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({last_select: "failed"});
@@ -293,8 +291,6 @@ app.get('/stats/filter/status', function(request,response) {
                    'WHERE r.Type IN (' + Intern + FullTime +
                    '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID';
 
-  console.log(query);
-
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
@@ -315,7 +311,6 @@ app.get('/stats/filter/teams', function(request,response) {
                    'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
                    'WHERE Teams.TeamNumber = ' + mysql.escape(request.query.TeamNumber)  +
                    ' AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ';';
-  console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({Status_Select: "failed"});
@@ -349,7 +344,6 @@ app.get('/stats/filter/equipment', function(request,response) {
                    'WHERE a.Type IN (' + Laptops + Televisons + MobileDevices +
                    '"N/a" ) AND a.AssetID != 10000000 AND a.IsImaged >= 0 GROUP BY a.AssetID';
 
-  console.log(query);
 
   connection.query(query, function (error, results, fields) {
         if(error) {
@@ -367,7 +361,6 @@ app.get('/stats/filter/newbs', function(request,response) {
                    'm.Gender FROM Members m LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
                    'WHERE r.Type IN ( "Open House", "Applicant" ) ORDER BY m.MemberID';
 
-  console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({newb_Select: "failed"});
@@ -682,7 +675,6 @@ app.get('/student/portal/info', function(request,response) {
                    'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t, TeamProjects AS tp, Projects AS p ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID ' +
                    'AND t.TeamID = tp.TeamID AND tp.ProjectID = p.ProjectID AND m.WorkEmail = "' + request.query.WorkEmail + '"';
-  console.log(query);
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({student_select: "failed",
@@ -1051,7 +1043,6 @@ app.post('/update/reserve', function(request,response) {
   let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   var query = 'UPDATE ' + tableName + ' SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
-  console.log(query);
 
             //EMAIL TOKEN
            var emailQuery = "SELECT WorkEmail, Reservations.Description AS Description, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
@@ -1197,8 +1188,9 @@ app.post('/insert/reserve/', function(request,response) {
   mysql.escape(request.body.TeamID) + " AND Teams.TeamID = (SELECT MAX(Teams.TeamID) FROM (Teams INNER JOIN TeamMembers ON Teams.TeamID=TeamMembers.TeamID) INNER JOIN Members ON TeamMembers.MemberID=Members.MemberID WHERE Teams.TeamNumber="+
   mysql.escape(request.body.TeamID) +" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
 
-  console.log(JSON.stringify(entry));
+  //console.log(JSON.stringify(entry));
   let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End) OR (Start BETWEEN " +  + " AND " + + ") OR (End BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + "));";
+  console.log(query);
   connection.query(query, function(error, results, fields) {
       if(error)
       {
