@@ -1043,6 +1043,7 @@ app.post('/update/reserve', function(request,response) {
   let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   var query = 'UPDATE ' + tableName + ' SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
+  console.log(query);
 
             //EMAIL TOKEN
            var emailQuery = "SELECT WorkEmail, Reservations.Description AS Description, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
@@ -1190,7 +1191,11 @@ app.post('/insert/reserve/', function(request,response) {
   mysql.escape(request.body.TeamID) +" GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
 
   //console.log(JSON.stringify(entry));
-  let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End) OR (Start BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + ") OR (End BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + "));";
+  let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + 
+  " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End) OR (Start BETWEEN " 
+  + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + ") OR (End BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + 
+  " AND " + mysql.escape(entry.End) + "));";
+
   console.log(query);
   connection.query(query, function(error, results, fields) {
       if(error)
