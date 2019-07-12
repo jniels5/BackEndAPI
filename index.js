@@ -1117,9 +1117,9 @@ app.post('/edit/reserve', function(request,response) {
       TeamID: request.body.TeamID
     };
 
-    console.log(JSON.stringify(entry));
+    //console.log(JSON.stringify(entry));
     let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ReserveID<>" + mysql.escape(request.body.ReserveID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End) OR (Start BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + ") OR (End BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + "));";
-    console.log(query);
+    console.log("edit/reserve query", query);
     connection.query(query, function(error, results, fields) {
       if(error)
       {
