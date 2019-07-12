@@ -1196,7 +1196,7 @@ app.post('/insert/reserve/', function(request,response) {
   + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + ") OR (End BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + 
   " AND " + mysql.escape(entry.End) + "));";
 
-  console.log(query);
+  console.log("insert/reserve query", query);
   connection.query(query, function(error, results, fields) {
       if(error)
       {
