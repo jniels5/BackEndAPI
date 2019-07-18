@@ -26,14 +26,14 @@ var mailOptions = {
   text: 'api email start'
 };
 
-transporter.sendMail(mailOptions, function(error, info){
+/*transporter.sendMail(mailOptions, function(error, info){
   if(error){
     res.json(null)
   }
   else{
     res.json({email: 'sent'})
   }
-})
+})*/
 //-------------- Email End ---------------------
 
 var whitelist = [
@@ -52,6 +52,14 @@ app.options('*', cors(corsOptions)); //enables preflight options
 app.use(bodyParser.json()); //Parses POST Data
 
 app.set('port', (process.env.PORT || 5000))
+
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
+io.on('connection', function(conn)
+{
+  console.log("a user connected");
+});
 
 //creating connection object
 var connection = mysql.createConnection({
