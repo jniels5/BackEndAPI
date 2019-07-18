@@ -60,7 +60,7 @@ app.listen(app.get('port'), function() {
 var http = require('http').Server(app);
 var io = require('socket.io')();
 
-io.listen(8080);
+io.listen(8000);
 
 io.on('connection', (client) =>
 {
