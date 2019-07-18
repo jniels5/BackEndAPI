@@ -4,9 +4,15 @@ var express = require('express')
 var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
-var socketio = require('socket.io');
 var fs = require('fs');
-var http = require('http');
+server = require('http').createServer(app);
+
+io = require('socket.io')(server);
+
+io.on('connection', function(socket)
+{
+  console.log("a user connected");
+});
 
 
 
@@ -60,15 +66,6 @@ app.set('port', (process.env.PORT || 5000))
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
-
-const server = http.createServer(app);
-const io = socketio(server);
-
-server.listen(5000, () => console.log("Listening"));
-
-io.on("connection", socket => {
-  console.log("New client connected");
-})
 
 //creating connection object
 var connection = mysql.createConnection({
