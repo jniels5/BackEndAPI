@@ -59,7 +59,7 @@ var corsOptions = {
 }
 //app.use(cors()); uncomment to enable cors for everything
 app.use(cors(corsOptions)); //use cors with options enables
-app.options('*', cors(corsOptions)); //enables preflight options
+//app.options('*', cors(corsOptions)); //enables preflight options
 app.use(bodyParser.json()); //Parses POST Data
 
 app.set('port', (process.env.PORT || 5000))
