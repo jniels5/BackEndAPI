@@ -56,7 +56,7 @@ app.set('port', (process.env.PORT || 5000))
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-io.on('connection', function(conn)
+io.on('connection', (client) =>
 {
   console.log("a user connected");
 });
