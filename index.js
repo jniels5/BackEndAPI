@@ -4,7 +4,11 @@ var express = require('express')
 var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
+var socketio = require('socket.io');
 var fs = require('fs');
+var http = require('http');
+
+
 
 var mes, res;
 var conflicts;
@@ -57,15 +61,14 @@ app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
 
-var http = require('http').Server(app);
-var io = require('socket.io')();
+const server = http.createServer(app);
+const io = socketio(server);
 
-io.listen(8000);
+server.listen(5000, () => console.log("Listening"));
 
-io.on('connection', (client) =>
-{
-  console.log("a user connected");
-});
+io.on("connection", socket => {
+  console.log("New client connected");
+})
 
 //creating connection object
 var connection = mysql.createConnection({
