@@ -52,8 +52,8 @@ var whitelist = [
 ]
 //keep out the baddies
 var corsOptions = {
-  //origin: '*', //use whitelist when localhost testing isn't needed
-  origin: whitelist,
+  origin: '*', //use whitelist when localhost testing isn't needed
+  //origin: whitelist,
   methods: 'GET,POST,OPTIONS,DELETE',
   "preflightContinue": true
 }
