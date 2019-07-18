@@ -47,14 +47,13 @@ transporter.sendMail(mailOptions, function(error, info){
 //-------------- Email End ---------------------
 
 var whitelist = [
-  '199.38.155.23',
-  'localhost:3000/',
-  'team11-frontend.mjhmkfjvi5.us-east-2.elasticbeanstalk.com/'
+  'http://localhost:3000/',
+  'http://team11-frontend.mjhmkfjvi5.us-east-2.elasticbeanstalk.com/'
 ]
 //keep out the baddies
 var corsOptions = {
-  origin: '*', //use whitelist when localhost testing isn't needed
-  //origin: whitelist,
+  //origin: '*', //use whitelist when localhost testing isn't needed
+  origin: whitelist,
   methods: 'GET,POST,OPTIONS,DELETE',
   "preflightContinue": true
 }
