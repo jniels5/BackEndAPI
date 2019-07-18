@@ -54,7 +54,7 @@ var whitelist = [
 var corsOptions = {
   origin: '*', //use whitelist when localhost testing isn't needed
   //origin: whitelist,
-  methods: 'GET,POST,OPTIONS,DELETE',
+  methods: 'GET,HEAD,POST,OPTIONS,DELETE',
   "preflightContinue": true
 }
 //app.use(cors()); uncomment to enable cors for everything
