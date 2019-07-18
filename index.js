@@ -26,14 +26,14 @@ var mailOptions = {
   text: 'api email start'
 };
 
-/*transporter.sendMail(mailOptions, function(error, info){
+transporter.sendMail(mailOptions, function(error, info){
   if(error){
     res.json(null)
   }
   else{
     res.json({email: 'sent'})
   }
-})*/
+})
 //-------------- Email End ---------------------
 
 var whitelist = [
@@ -53,7 +53,7 @@ app.use(bodyParser.json()); //Parses POST Data
 
 app.set('port', (process.env.PORT || 5000))
 
-var http = require('http').createServer(app);
+var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 io.on('connection', function(conn)
