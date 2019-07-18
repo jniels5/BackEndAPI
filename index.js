@@ -58,9 +58,9 @@ app.listen(app.get('port'), function() {
 });
 
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')();
 
-io.listen(8081);
+io.listen(8080);
 
 io.on('connection', (client) =>
 {
