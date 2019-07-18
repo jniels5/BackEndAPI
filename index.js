@@ -47,7 +47,7 @@ transporter.sendMail(mailOptions, function(error, info){
 //-------------- Email End ---------------------
 
 var whitelist = [
-  '199.38.155.23'
+  '199.38.155.23',
   'localhost:3000/',
   'team11-frontend.mjhmkfjvi5.us-east-2.elasticbeanstalk.com/'
 ]
