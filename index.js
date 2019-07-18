@@ -60,6 +60,8 @@ app.listen(app.get('port'), function() {
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+io.listen(8081);
+
 io.on('connection', (client) =>
 {
   console.log("a user connected");
