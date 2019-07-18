@@ -53,6 +53,10 @@ app.use(bodyParser.json()); //Parses POST Data
 
 app.set('port', (process.env.PORT || 5000))
 
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'));
+});
+
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
@@ -99,9 +103,6 @@ app.get('/', function(request,response) {
 app.get('/select/table/:table', function(request,response) {
   let tag = (String(request.query.test).toLowerCase() == "true") ? "_TEST" : "";
   let query = 'SELECT * FROM '  +  mysql.escapeId(request.params.table + tag);
-  console.log("request.params.test", request.params.test);
-  console.log("tag", tag);
-  console.log("query", query);
   connection.query(query, function (error, results, fields) {
         if(error) {
             response.json({select_status: "failed"});
@@ -1051,7 +1052,7 @@ app.post('/update/reserve', function(request,response) {
   let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
   var query = 'UPDATE ' + tableName + ' SET Start = ' + mysql.escape(request.body.Start) + ', End = ' + mysql.escape(request.body.End) + ', Date = ' + mysql.escape(request.body.Date) + ', RoomID = ' + mysql.escape(request.body.RoomID) + ' WHERE ReserveID = ' + mysql.escape(request.body.ReserveID);
-  console.log("update/reserve", query);
+  //console.log("update/reserve", query);
 
             //EMAIL TOKEN
            var emailQuery = "SELECT WorkEmail, Reservations.Description AS Description, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID "
@@ -1127,7 +1128,7 @@ app.post('/edit/reserve', function(request,response) {
 
     //console.log(JSON.stringify(entry));
     let query = "SELECT COUNT(*) as c FROM " + tableName + " WHERE Date=" + mysql.escape(entry.Date) + " AND RoomID=" + mysql.escape(entry.RoomID) + " AND ReserveID<>" + mysql.escape(request.body.ReserveID) + " AND ((" + mysql.escape(String(entry.Start).substring(0,7) + "1") + " BETWEEN Start AND End) OR (" + mysql.escape(entry.End) + " BETWEEN Start AND End) OR (Start BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + ") OR (End BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + "));";
-    console.log("edit/reserve query", query);
+    //console.log("edit/reserve query", query);
     connection.query(query, function(error, results, fields) {
       if(error)
       {
@@ -1203,7 +1204,7 @@ app.post('/insert/reserve/', function(request,response) {
   + mysql.escape(String(entry.Start).substring(0,7) + "1") + " AND " + mysql.escape(entry.End) + ") OR (End BETWEEN " + mysql.escape(String(entry.Start).substring(0,7) + "1") + 
   " AND " + mysql.escape(entry.End) + "));";
 
-  console.log("insert/reserve query", query);
+  //console.log("insert/reserve query", query);
   connection.query(query, function(error, results, fields) {
       if(error)
       {
@@ -1312,10 +1313,6 @@ app.get('/getmail', function(request,response){
   })
 });
   //END EMAIL TOKEN
-
-app.listen(app.get('port'), function() {
-    console.log("Node app is running at localhost:" + app.get('port'));
-  });
 
 app.get('/login/attempts/get', function(request, response){
 
