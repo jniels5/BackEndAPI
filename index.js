@@ -121,13 +121,33 @@ app.get('/metrics/total/interns', function(request,response) {
   });
 });
 
-app.get('/metrics/totalCurr', function(request,response) {
-  connection.query('SELECT COUNT(*) "Total" FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID AND Teams.Semester = "SP19"', function (error, results, fields) {
+app.get('/metrics/recent/semesters', function(request,response) {
+  var totals = {
+    Total1: 0, Total2: 0, Total3: 0, Grad1: 0, Grad2: 0, Grad3: 0
+  }
+
+  connection.query('SELECT SUM(CASE WHEN T.Semester = "FA18" THEN 1 ELSE 0 END) Total3, ' +
+                   'SUM(CASE WHEN T.Semester = "SP19" THEN 1 ELSE 0 END) Total2, ' +
+                   'SUM(CASE WHEN T.Semester = "SU19" THEN 1 ELSE 0 END) Total1, ' +
+                   'SUM(CASE WHEN T.Semester = "FA18" AND M.GradSemester = "Fall" AND M.GradYear = "2018" THEN 1 ELSE 0 END) Grad3, ' +
+                   'SUM(CASE WHEN T.Semester = "SP19" AND M.GradSemester = "Spring" AND M.GradYear = "2019" THEN 1 ELSE 0 END) Grad2, ' +
+                   'SUM(CASE WHEN T.Semester = "SU19" AND M.GradSemester = "Summer" AND M.GradYear = "2019" THEN 1 ELSE 0 END) Grad1 ' + 
+                   'FROM Members M, Teams T, TeamMembers TM ' +
+                   'WHERE TM.TeamID = T.TeamID AND M.MemberID = TM.MemberID', function (error, results, fields) {
     if(error) {
-      response.json({Metrics_get: "failed"});
+      response.json({sem_totals: "failed"});
     }
     else {
-      response.json(results);
+      console.log({results})
+      this.setState({totals: {
+        Total1: results.Total1,
+        Total2: results.Total2,
+        Total3: results.Total3,
+        Grad1: results.Grad1,
+        Grad2: results.Grad2,
+        Grad3: results.Grad3
+      }});
+      response.json({totals})
     }
   });
 });
