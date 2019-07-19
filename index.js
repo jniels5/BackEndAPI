@@ -671,14 +671,7 @@ app.post('/stats/add/asset', function(request,response) {
     LabID: 1
   };
 
-  if (request.body.IsImaged == "true")
-  {
-    entry.IsImaged = true;
-  }
-  else if (request.body.IsImaged == "false")
-  {
-    entry.IsImaged = false;
-  }
+  entry.IsImaged = (request.body.IsImaged == "true") ? true : false;
 
   connection.query('INSERT INTO Assets set ?', entry, function (error, results, fields) {
         if(error) {
