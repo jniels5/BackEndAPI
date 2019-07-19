@@ -133,7 +133,7 @@ app.get('/metrics/total/interns', function(request,response) {
   });
 });
 
-// Check on this
+// Manager Dashboard graph data
 app.get('/metrics/recent/semesters', function(request,response) {
   var totals = {
     Total1: 0, Total2: 0, Total3: 0, Grad1: 0, Grad2: 0, Grad3: 0
@@ -161,39 +161,6 @@ app.get('/metrics/recent/semesters', function(request,response) {
       totals.Grad3 = results[0].Grad3;
 
       response.json({totals})
-    }
-  });
-});
-
-app.get('/metrics/totalCurr/Grad', function(request,response) {
-  connection.query('SELECT COUNT(*) "GradCurr" FROM TeamMembers, Teams, Members WHERE TeamMembers.TeamID = Teams.TeamID AND Members.MemberID = TeamMembers.MemberID AND Teams.Semester = "SP19" AND Members.GradSemester = "Spring" AND Members.GradYear = "2019"', function (error, results, fields) {
-    if(error) {
-      response.json({Metrics_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-app.get('/metrics/totalCurr1', function(request,response) {
-  connection.query('SELECT COUNT(*) "Total1" FROM TeamMembers, Teams WHERE TeamMembers.TeamID = Teams.TeamID AND Teams.Semester = "FA18"', function (error, results, fields) {
-    if(error) {
-      response.json({Metrics_get: "failed"});
-    }
-    else {
-      response.json(results);
-    }
-  });
-});
-
-app.get('/metrics/totalCurr1/Grad', function(request,response) {
-  connection.query('SELECT COUNT(*) "GradCurr1" FROM TeamMembers, Teams, Members WHERE TeamMembers.TeamID = Teams.TeamID AND Members.MemberID = TeamMembers.MemberID AND Teams.Semester = "FA18" AND Members.GradSemester = "Fall" AND Members.GradYear = "2018"', function (error, results, fields) {
-    if(error) {
-      response.json({Metrics_get: "failed"});
-    }
-    else {
-      response.json(results);
     }
   });
 });
