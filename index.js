@@ -152,14 +152,14 @@ app.get('/metrics/recent/semesters', function(request,response) {
     }
     else {
       console.log({results})
-      this.setState({totals: {
-        Total1: results.Total1,
-        Total2: results.Total2,
-        Total3: results.Total3,
-        Grad1: results.Grad1,
-        Grad2: results.Grad2,
-        Grad3: results.Grad3
-      }});
+      
+      totals.Total1 = results.Total1;
+      totals.Total2 = results.Total2;
+      totals.Total3 = results.Total3;
+      totals.Grad1 = results.Grad1;
+      totals.Grad2 = results.Grad2;
+      totals.Grad3 = results.Grad3;
+
       response.json({totals})
     }
   });
