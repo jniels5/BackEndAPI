@@ -153,12 +153,12 @@ app.get('/metrics/recent/semesters', function(request,response) {
     else {
       console.log({results})
       
-      totals.Total1 = results.Total1;
-      totals.Total2 = results.Total2;
-      totals.Total3 = results.Total3;
-      totals.Grad1 = results.Grad1;
-      totals.Grad2 = results.Grad2;
-      totals.Grad3 = results.Grad3;
+      totals.Total1 = results[0].Total1;
+      totals.Total2 = results[0].Total2;
+      totals.Total3 = results[0].Total3;
+      totals.Grad1 = results[0].Grad1;
+      totals.Grad2 = results[0].Grad2;
+      totals.Grad3 = results[0].Grad3;
 
       response.json({totals})
     }
