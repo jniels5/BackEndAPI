@@ -133,6 +133,7 @@ app.get('/metrics/total/interns', function(request,response) {
   });
 });
 
+// Check on this
 app.get('/metrics/recent/semesters', function(request,response) {
   var totals = {
     Total1: 0, Total2: 0, Total3: 0, Grad1: 0, Grad2: 0, Grad3: 0
