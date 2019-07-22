@@ -190,7 +190,7 @@ app.get('/stats/search/first', function(request,response) {
     sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
   }
   var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
-                   'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, ' +
+                   'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, m.WorkEmail, ' +
                    'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
                    sem + 'm.FirstName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
@@ -211,7 +211,7 @@ app.get('/stats/search/last', function(request,response) {
     sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
   }
   var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
-                   'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, ' +
+                   'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, m.WorkEmail, ' +
                    'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
                    sem + 'm.LastName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
@@ -227,7 +227,9 @@ app.get('/stats/search/last', function(request,response) {
 
 app.get('/stats/search/grad', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
+                   'tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail ' +
+                   'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({grad_select: "failed"});
@@ -256,7 +258,7 @@ app.get('/stats/search/graduatedIn/:sem', function(request,response)
 
 app.get('/stats/search/all', function(request,response) {
   connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
                    'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
         if(error) {
             response.json({all_select: "failed"});
@@ -284,7 +286,7 @@ app.get('/stats/filter/status', function(request,response) {
 
   let query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
                    'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, ' +
-                   'Teams.TeamName, Teams.Semester, m.Gender FROM Members m ' +
+                   'Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail FROM Members m ' +
                    'LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
                    'LEFT JOIN TeamMembers tm ON tm.MemberID = m.MemberID ' +
                    'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
@@ -407,6 +409,7 @@ app.post('/stats/modal/post', function(request,response) {
     GradSemester: request.body.GradSemester,
     GradYear: request.body.GradYear,
     Email: request.body.Email,
+    WorkEmail: request.body.WorkEmail,
     MemberID: request.body.MemberID
   };
 
