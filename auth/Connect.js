@@ -31,3 +31,5 @@ connection.connect(function(err) {
   conn_succ = true;
   console.log('Connected to database.');
 });
+
+module.exports = connection;
