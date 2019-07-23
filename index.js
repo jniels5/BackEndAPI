@@ -29,6 +29,7 @@ var transporter = nodemailer.createTransport({
   }
 });
 
+/*
 var mailOptions = {
   from: 'CodeOrangeReservations@gmail.com',
   to: 'danielomalley@discover.com',
@@ -44,6 +45,8 @@ transporter.sendMail(mailOptions, function(error, info){
     res.json({email: 'sent'})
   }
 })
+*/
+
 //-------------- Email End ---------------------
 
 var whitelist = [
