@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var connection = require("../modules/Connect.js").connection;
+var connection = require("../auth/Connect.js").connection;
 
 ////////////////////////////////////////////////////
 //                                                //
