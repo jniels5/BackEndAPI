@@ -5,16 +5,20 @@ var mysql = require('mysql');
 var connection = require("../auth/Connect");
 
 // Pull in route files
+var Email = require("./Stats/Email.js");
 var Filter = require("./Stats/Filter.js");
 var Lab = require("./Stats/Lab.js");
 var Modal = require("./Stats/Modal.js");
 var Search = require("./Stats/Search.js");
+var Student = require("./Stats/Student.js");
 
 // Specify Paths
+router.use('/email/', Email);
 router.use('/filter/', Filter);
 router.use('/lab/', Lab);
 router.use('/modal/', Modal);
 router.use('/search/', Search);
+router.use('/student/', Student);
 
 // Team Names by Semester
 router.get('/teams/names', function(request,response) {
