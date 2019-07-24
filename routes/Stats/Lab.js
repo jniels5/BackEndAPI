@@ -1,4 +1,10 @@
-app.get('/stats/lab/projects', function(request,response) {
+var express = require('express');
+var router = express.Router();
+var mysql = require('mysql');
+
+var connection = require("../../auth/Connect");
+
+router.get('/projects', function(request,response) {
     if (request.query.Semester == "unassigned")
     {
       // Fetching all project names in database
@@ -28,3 +34,17 @@ app.get('/stats/lab/projects', function(request,response) {
       });
     }
   });
+
+  // Lists all teams, groups by semester
+router.get('/semesters', function(request,response) {
+  connection.query('SELECT Semester FROM Teams GROUP BY Semester ORDER BY TeamID DESC;', function (error, results, fields) {
+        if(error) {
+            response.json({semester_select: "failed"});
+        }
+        else {
+            response.json(results);
+        }
+  });
+});
+
+module.exports = router
