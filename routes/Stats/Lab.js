@@ -3,6 +3,9 @@ var router = express.Router();
 var mysql = require('mysql');
 
 var connection = require("../../auth/Connect");
+var useCors = require("../../auth/Cors");
+
+useCors();
 
 router.get('/projects', function(request,response) {
     if (request.query.Semester == "unassigned")

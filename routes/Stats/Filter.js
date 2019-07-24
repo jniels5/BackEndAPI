@@ -3,6 +3,9 @@ var router = express.Router();
 var mysql = require('mysql');
 
 var connection = require("../../auth/Connect");
+var useCors = require("../../auth/Cors");
+
+useCors();
 
 // Stats Filter Calls . . .
 router.get('/status', function(request,response) {
