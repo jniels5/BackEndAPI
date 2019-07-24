@@ -5,6 +5,7 @@ var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
 var fs = require('fs');
+
 server = require('http').createServer(app);
 
 io = require('socket.io')(server);
@@ -99,11 +100,13 @@ connection.connect(function(err) {
 var MAP = require("./routes/MAP.js");
 var Metrics = require("./routes/Metrics.js");
 var PCFRoutes = require('./routes/PCF.js');
+var Stats = require('./routes/Stats.js');
 
 // Specify Paths
 app.use('/map/', MAP);
 app.use('/metrics/', Metrics);
-app.use('/pcf', PCFRoutes);
+app.use('/pcf/', PCFRoutes);
+app.use('/stats/', Stats);
 
 //pretty much useless, used it to test db connection
 app.get('/', function(request,response) {
@@ -135,197 +138,6 @@ app.get('/select/table/:table', function(request,response) {
 //                                                //
 ////////////////////////////////////////////////////
 
-// Stats Search Calls . . .
-app.get('/stats/search/first', function(request,response) {
-  var sem = "";
-  if (request.query.Semester)
-  {
-    sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
-  }
-  var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
-                   'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, m.WorkEmail, ' +
-                   'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
-                   sem + 'm.FirstName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({first_select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-app.get('/stats/search/last', function(request,response) {
-  var sem = "";
-  if (request.query.Semester)
-  {
-    sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
-  }
-  var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
-                   'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, m.WorkEmail, ' +
-                   'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
-                   sem + 'm.LastName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({last_select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-app.get('/stats/search/grad', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
-                   'tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail ' +
-                   'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
-        if(error) {
-            response.json({grad_select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-app.get('/stats/search/graduatedIn/:sem', function(request,response)
-{
-  let semCode = decodeSemester(request.params.sem);
-  let semester = semCode.split(" ")[0];
-  let year = semCode.split(" ")[1];
-  let query = "SELECT * FROM Members WHERE GradSemester=" + mysql.escape(semester) + " AND GradYear=" + mysql.escape(year) + ";";
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({graduadtedIn: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-app.get('/stats/search/all', function(request,response) {
-  connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                   'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
-        if(error) {
-            response.json({all_select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-// Stats Filter Calls . . .
-app.get('/stats/filter/status', function(request,response) {
-  //Returns members for the specified semester and filter by type "Intern" or "Former Intern"
-  var Intern = '';
-  var FullTime = '';
-
-  if (String(request.query.Interns).toLowerCase() == "true")
-  {
-    Intern = '"Intern", '
-  }
-  if (String(request.query.FullTimeHire).toLowerCase() == "true")
-  {
-    FullTime = '"Former Intern", '
-  }
-
-  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, ' +
-                   'Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail FROM Members m ' +
-                   'LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
-                   'LEFT JOIN TeamMembers tm ON tm.MemberID = m.MemberID ' +
-                   'LEFT JOIN Teams ON Teams.TeamID = tm.TeamID ' +
-                   'WHERE r.Type IN (' + Intern + FullTime +
-                   '"N/a" ) AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID';
-
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({Status_Select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-app.get('/stats/filter/teams', function(request,response) {
-//get team details from semester and team number
-  let query = 'SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, ' +
-                   'Projects.Description, Projects.Paragraph, Projects.FrontEnd, ' +
-                   'Projects.Backend, Projects.RDS, Teams.Semester, Teams.PhotoPath, ' +
-                   'Teams.LabID, Teams.TeamID, Projects.ProjectID FROM Teams ' +
-                   'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
-                   'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
-                   'WHERE Teams.TeamNumber = ' + mysql.escape(request.query.TeamNumber)  +
-                   ' AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ';';
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({Status_Select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-app.get('/stats/filter/equipment', function(request,response) {
-  var Laptops = '';
-  var Televisons = '';
-  var MobileDevices = '';
-
-  if (String(request.query.Laptops).toLowerCase() == "true")
-  {
-    Laptops = '"Laptop", '
-  }
-  if (String(request.query.Televisions).toLowerCase() == "true")
-  {
-    Televisons = '"Television", '
-  }
-  if (String(request.query.MobileDevices).toLowerCase() == "true")
-  {
-    MobileDevices = '"Mobile Device", '
-  }
-
-  let query = 'SELECT a.AssetID, a.Description, a.Type, m.FirstName, m.LastName ' +
-                   'FROM Assets a LEFT JOIN Members m ON m.AssetID = a.AssetID ' +
-                   'WHERE a.Type IN (' + Laptops + Televisons + MobileDevices +
-                   '"N/a" ) AND a.AssetID != 10000000 AND a.IsImaged >= 0 GROUP BY a.AssetID';
-
-
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({Status_Select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
-app.get('/stats/filter/newbs', function(request,response) {
-  let query = 'SELECT m.MemberID, m.FirstName, m.LastName, r.Type, ' +
-                   'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
-                   'm.Gender FROM Members m LEFT JOIN Role r ON r.MemberID = m.MemberID ' +
-                   'WHERE r.Type IN ( "Open House", "Applicant" ) ORDER BY m.MemberID';
-
-  connection.query(query, function (error, results, fields) {
-        if(error) {
-            response.json({newb_Select: "failed"});
-        }
-        else {
-            response.json(results);
-        }
-  });
-});
-
 // Stats Page Info Calls . . .
 // Team Names by Semester
 app.get('/stats/teams/names', function(request,response) {
@@ -350,118 +162,6 @@ app.get('/stats/lab/semesters', function(request,response) {
             response.json(results);
         }
   });
-});
-
-// Stats Update Record Calls . . .
-app.post('/stats/modal/post', function(request,response) {
-  // used in connection.query
-  var entry = {
-    FirstName: request.body.FirstName,
-    LastName: request.body.LastName,
-    Gender: request.body.Gender,
-    GradSemester: request.body.GradSemester,
-    GradYear: request.body.GradYear,
-    Email: request.body.Email,
-    WorkEmail: request.body.WorkEmail,
-    MemberID: request.body.MemberID
-  };
-
-  var roleEntry = {
-    Type: request.body.Type,
-    Status: request.body.Status,
-    Description: request.body.Description,
-    Date: request.body.Date
-  }
-
-  connection.query('SET foreign_key_checks = 0; ' +
-  'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
-  'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
-    if(error) {
-      response.json({modal_post: "failed: " + error, entry: entry});
-    }
-    else {
-      connection.query('SET foreign_key_checks = 0; ' +
-      'UPDATE Role SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
-      'SET foreign_key_checks = 1;', roleEntry, function (error, results, fields) {
-        if(error) {
-          response.json({modal_post: "failed: " + error, entry: entry});
-        }
-        else {
-        }
-      });
-    }
-  });
-});
-
-app.post('/stats/modal/post/teams', function(request,response) {
-  // used in connection.query
-  var entry = {
-    TeamName: request.body.TeamName,
-    TeamNumber: request.body.TeamNumber,
-    Semester: request.body.TeamSemester,
-    PhotoPath: request.body.PhotoPath,
-    LabID: request.body.LabID
-  };
-
-  var ProjectEntry = {
-    Name: request.body.ProjectName,
-    Description: request.body.ProjectDesc,
-    Paragraph: request.body.ProjectPara,
-    FrontEnd: request.body.ProjectFend,
-    BackEnd: request.body.ProjectBend,
-    RDS: request.body.ProjectRDS
-  }
-
-  connection.query('SET foreign_key_checks = 0; ' +
-  'UPDATE Teams SET ? WHERE TeamID = ' + request.body.TeamID + ";" +
-  'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
-    if(error) {
-      response.json({modal_post: "failed: " + error, entry: entry});
-    }
-    else {
-      connection.query('SET foreign_key_checks = 0; ' +
-      'UPDATE Projects SET ? WHERE ProjectID = ' + request.body.ProjectID + ";" +
-      'SET foreign_key_checks = 1;', ProjectEntry, function (error, results, fields) {
-        if(error) {
-          response.json({modal_post: "failed: " + error, entry: entry});
-        }
-        else {
-        }
-      });
-    }
-  });
-});
-
-// Stats Add Teams . . .
-app.get('/stats/lab/projects', function(request,response) {
-  if (request.query.Semester == "unassigned")
-  {
-    // Fetching all project names in database
-    connection.query('SELECT p.Name, p.ProjectID FROM Projects AS p, TeamProjects as tp WHERE ' +
-                     'p.ProjectID NOT IN (SELECT ProjectID FROM TeamProjects) ' +
-                     'GROUP BY `Name` ORDER BY `Name`', function (error, results, fields) {
-          if(error) {
-              response.json({Unassigned_select: "failed"});
-          }
-          else {
-              response.json(results);
-          }
-    });
-  }
-  else
-  {
-    // Fetching project names according to semester
-    connection.query('SELECT p.Name, p.ProjectID FROM Projects AS p, Teams, TeamProjects as tp WHERE Teams.Semester = "'+ request.query.Semester +
-                     '" AND p.ProjectID = tp.ProjectID AND tp.TeamID = Teams.TeamID ' +
-                     'ORDER BY `Name`', function (error, results, fields) {
-          if(error) {
-              response.json({Project_select: "failed"});
-          }
-          else {
-              response.json(results);
-          }
-    });
-  }
 });
 
 // Add new members with a role to database
