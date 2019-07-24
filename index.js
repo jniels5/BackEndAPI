@@ -5,6 +5,9 @@ var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
 
+// Connection 
+var connection = require("./auth/Connect");
+
 // Pull in route files
 var Login = require('./routes/Login.js');
 var MAP = require("./routes/MAP.js");
