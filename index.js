@@ -523,6 +523,64 @@ app.post('/insert/reserve/', function(request,response) {
   })
 });
 
+app.post('/login/attempts/post', function(request, response){
+  
+  let query = 'UPDATE LoginAttempts SET Attempts = ' + mysql.escape(request.body.Number) + ' WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
+
+  connection.query(query, function (error, results, fields) {
+      if(error) {
+          response.json({
+            update_status: "failed",
+            update_error: error
+          });
+      }
+      else {
+          response.json({
+            update_status: "success",
+          });
+      }
+})
+});
+
+app.post('/login/attempts/insert', function(request, response){
+
+  let query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
+
+  connection.query(query, function (error, results, fields) {
+      if(error) {
+          response.json({
+            update_status: "failed",
+            update_error: error
+          });
+      }
+      else {
+          response.json({
+            update_status: "success",
+          });
+      }
+})
+});
+
+
+app.post('/login/attempts/update', function(request, response){
+
+  let query = 'UPDATE LoginAttempts SET Attempts = 0 WHERE MemberID = (SELECT MemberID FROM Members WHERE WorkEmail = ' + mysql.escape(request.body.WorkEmail) + ');';
+
+  connection.query(query, function (error, results, fields) {
+      if(error) {
+          response.json({
+            update_status: "failed",
+            update_error: error
+          });
+      }
+      else {
+          response.json({
+            update_status: "success",
+          });
+      }
+})
+});
+
 ////////////////////////////////////////////////////
 //                                                //
 //    Misc API Calls                              //
