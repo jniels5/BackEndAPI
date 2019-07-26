@@ -422,7 +422,7 @@ app.post('/edit/reserve', function(request,response) {
   }); // end of '/edit/reserve'
 
 
-app.post('/insert/reserve/', function(request,response) {
+app.post('/insert/reserve', function(request,response) {
   //used in connection.query
   let test = String(request.body.test).toLowerCase() == "true";
   let tableName = (!test) ? "Reservations" : "Reservations_TEST";
