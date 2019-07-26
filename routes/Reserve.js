@@ -89,7 +89,7 @@ router.get('/select/:day', function(request,response) {
     });
   });
   // Delete all reservations (Deprecated)
-  router.get('/delete/', function(request,response) {
+  router.get('/delete', function(request,response) {
     //used in connection.query
     connection.query('DELETE FROM Reservations', function (error, results, fields) {
           if(error) {
@@ -233,7 +233,7 @@ router.get('/select/:day', function(request,response) {
     }); // end of '/edit'
   
   
-  router.post('/insert/', function(request,response) {
+  router.post('/insert', function(request,response) {
     //used in connection.query
     let test = String(request.body.test).toLowerCase() == "true";
     let tableName = (!test) ? "Reservations" : "Reservations_TEST";
