@@ -33,36 +33,7 @@ io.on('connection', function(socket)
   console.log("a user connected");
 });
 
-//--------------- Email Begin----------------
-var nodemailer = require("nodemailer");
 
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.NODEMAILER_EMAIL,
-    pass: process.env.NODEMAILER_PASSWORD
-  }
-});
-
-/*
-var mailOptions = {
-  from: 'CodeOrangeReservations@gmail.com',
-  to: 'danielomalley@discover.com',
-  subject: 'Reservations Page Email',
-  text: 'api email start'
-};
-
-transporter.sendMail(mailOptions, function(error, info){
-  if(error){
-    res.json(null)
-  }
-  else{
-    res.json({email: 'sent'})
-  }
-})
-*/
-
-//-------------- Email End ---------------------
 
 var whitelist = [
   'http://localhost:3000/',
