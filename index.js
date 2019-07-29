@@ -4,7 +4,7 @@ var express = require('express')
 var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
-const appAccess = require('./auth/AppAccess');
+const AppAccess = require('./auth/AppAccess');
 
 // Connection 
 var connection = require("./auth/Connect");
