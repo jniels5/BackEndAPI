@@ -88,15 +88,15 @@ router.get('/select/:day', function(request,response) {
     })
     connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
           if(error) {
+            res = "failed",
               response.json({
-                res = "failed",
                 remove_status: res,
                 remove_error: error
               });
           }
           else {
+            res = "success",
               response.json({
-                res = "success",
                 remove_status: res,
               });
           }
