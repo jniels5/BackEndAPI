@@ -4,7 +4,7 @@ var express = require('express')
 var mysql = require('mysql')
 var cors = require('cors')
 var app = express()
-var appAccess = require('./auth/AppAccess');
+const appAccess = require('./auth/AppAccess');
 
 // Connection 
 var connection = require("./auth/Connect");
@@ -24,6 +24,8 @@ app.use('/metrics/', Metrics);
 app.use('/pcf/', PCFRoutes);
 app.use('/reserve/', Reserve);
 app.use('/stats/', Stats);
+
+var access = new appAcecess();
 
 server = require('http').createServer(app);
 
@@ -60,8 +62,8 @@ app.listen(app.get('port'), function () {
 //pretty much useless, used it to test db connection
 app.get('/', function (request, response) {
   response.json({ Welcome: 'Please use the SwaggerDocs to learn more about specific API calls' });
-  console.log(appAccess.check('r2OFejNfmGx7SfVw',2));
-  console.log(appAccess.check('eekgmcfROcx2qMXs',2));
+  console.log(access.check('r2OFejNfmGx7SfVw',2));
+  console.log((access.check('eekgmcfROcx2qMXs',2));
 });
 
 // Used to get All info from each table
