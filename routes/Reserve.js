@@ -235,7 +235,7 @@ router.get('/select/:day', function(request,response) {
   
   router.post('/insert', function(request,response) {
     //used in connection.query
-    console.log(request.body);
+    console.log(request);
     let test = String(request.body.test).toLowerCase() == "true";
     let tableName = (!test) ? "Reservations" : "Reservations_TEST";
     conflicts = 0;
