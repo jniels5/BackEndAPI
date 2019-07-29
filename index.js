@@ -39,8 +39,8 @@ var nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'CodeOrangeReservations@gmail.com',
-    pass: 'Scrumptious7!'
+    user: process.env.NODEMAILER_EMAIL,
+    pass: process.env.NODEMAILER_PASSWORD
   }
 });
 
