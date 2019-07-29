@@ -25,7 +25,7 @@ app.use('/pcf/', PCFRoutes);
 app.use('/reserve/', Reserve);
 app.use('/stats/', Stats);
 
-var access = new appAcecess();
+var access = new appAccess();
 
 server = require('http').createServer(app);
 
