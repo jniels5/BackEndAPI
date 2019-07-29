@@ -16,26 +16,7 @@ var transporter = nodemailer.createTransport({
     pass: process.env.NODEMAILER_PASSWORD
   }
 });
-
-/*
-var mailOptions = {
-  from: 'CodeOrangeReservations@gmail.com',
-  to: 'danielomalley@discover.com',
-  subject: 'Reservations Page Email',
-  text: 'api email start'
-};
-
-transporter.sendMail(mailOptions, function(error, info){
-  if(error){
-    res.json(null)
-  }
-  else{
-    res.json({email: 'sent'})
-  }
-})
-*/
-
-//-------------- Email End ---------------------
+//--------------------------------------------
 
 var whitelist = [
   'http://localhost:3000/',
@@ -71,16 +52,14 @@ router.get('/select/:day', function(request,response) {
   });
   router.get('/remove/:rID', function(request,response) {
     //used in connection.query
+    var res;
     let test = String(request.query.test).toLowerCase() == "true";
     let tableName = (!test) ? "Reservations" : "Reservations_TEST";
     
-      var emailQuery = "select WorkEmail, Description, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
+    var emailQuery = "select WorkEmail, Description, Reservations.Date, Start, End, Reservations.RoomID AS RoomID, Teams.TeamNumber AS TeamNumber from Members INNER JOIN TeamMembers ON TeamMembers.MemberID=Members.MemberID INNER JOIN Teams ON TeamMembers.TeamID=Teams.TeamID INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? AND Teams.TeamID=(SELECT MAX(Teams.TeamID)   FROM Teams INNER JOIN Reservations ON Teams.TeamNumber=Reservations.TeamID WHERE Reservations.ReserveID=? GROUP BY Teams.TeamID ORDER BY Teams.TeamID DESC LIMIT 1);"
     connection.query(emailQuery,[request.params.rID, request.params.rID], function(error, results, fields) {
         if(error){
-             response.json({
-                remove_status: "failed",
-                remove_error: error
-              });
+          res = "failed";
         }
         else{
           var teamEmails = [];
@@ -98,10 +77,10 @@ router.get('/select/:day', function(request,response) {
   
             transporter.sendMail(mailOptions, function(error, info){
               if(error){
-                response.json(null)
+                res = "failed: email";
               }
               else {
-                response.json({email: "sent"})
+                res = "sent: email";
               }
             });
             //END EMAIL TOKEN
@@ -110,13 +89,15 @@ router.get('/select/:day', function(request,response) {
     connection.query('DELETE FROM ' + tableName + ' WHERE ReserveID = ' + request.params.rID, function (error, results, fields) {
           if(error) {
               response.json({
-                remove_status: "failed",
+                res = "failed",
+                remove_status: res,
                 remove_error: error
               });
           }
           else {
               response.json({
-                remove_status: "success",
+                res = "success",
+                remove_status: res,
               });
           }
     });
