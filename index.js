@@ -64,7 +64,7 @@ app.get('/', function(request,response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function(request,response) {
-  if(response.params.table.toLowerCase() == "applications")
+  if(request.params.table.toLowerCase() == "applications")
   {
     response.sendStatus(403);
   }
