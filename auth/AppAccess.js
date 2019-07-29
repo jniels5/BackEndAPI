@@ -12,7 +12,7 @@ class AppAccess{
      * @param {number} access   The minimum access level the application must have to access the call
      * @return {boolean}        true if allowed to access call
      */
-    check(key, access)
+    async check(key, access)
     {
         var result;
         let query = "SELECT AccessLevel FROM Applications WHERE AppID='" + access + "';";
