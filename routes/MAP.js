@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var cors = require('cors');
+var bodyParser = require('body-parser')
 
 var connection = require("../auth/Connect");
 
@@ -19,6 +20,7 @@ var corsOptions = {
 }
 
 router.use(cors(corsOptions)); 
+router.use(bodyParser.json());
 
 //********************************************
 //  MAP API                                  *
