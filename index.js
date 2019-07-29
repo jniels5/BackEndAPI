@@ -88,12 +88,7 @@ app.listen(app.get('port'), function() {
 
 //pretty much useless, used it to test db connection
 app.get('/', function(request,response) {
-  if(!conn_succ) {
-    response.json({connect_status: 'Failed'});
-  }
-  else {
-    response.json({connect_status: 'Success'});
-  }
+    response.json({Welcome: 'Please use the SwaggerDocs to learn more about specific API calls'});
 });
 
 // Used to get All info from each table

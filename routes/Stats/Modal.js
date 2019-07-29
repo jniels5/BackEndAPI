@@ -33,6 +33,7 @@ router.post('/post', function(request,response) {
       GradYear: request.body.GradYear,
       Email: request.body.Email,
       WorkEmail: request.body.WorkEmail,
+      PhoneNum: request.body.PhoneNum,
       MemberID: request.body.MemberID
     };
   
