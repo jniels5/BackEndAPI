@@ -64,6 +64,10 @@ app.get('/', function(request,response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function(request,response) {
+  if(response.params.table.toLowerCase() == "applications")
+  {
+    response.sendStatus(403);
+  }
   let tag = (String(request.query.test).toLowerCase() == "true") ? "_TEST" : "";
   let query = 'SELECT * FROM '  +  mysql.escapeId(request.params.table + tag);
   connection.query(query, function (error, results, fields) {
