@@ -15,7 +15,7 @@ class AppAccess{
      */
     async check(key, access)
     {
-        var result;
+        let result;
         let query = "SELECT AccessLevel FROM Applications WHERE AppID=" + mysql.escape(key) + ";";
         console.log(query);
         await connection.query(query, function(err, results){
