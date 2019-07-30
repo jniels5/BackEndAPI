@@ -35,7 +35,7 @@ class AppAccess{
                 }
             });
         });
-        await p.then(function (result) {
+        return await p.then(function (result) {
             //console.log("p.then success");
             //return AccessLevel >= access;
             console.log(key + ": " + result.AccessLevel + " >= " + access);
