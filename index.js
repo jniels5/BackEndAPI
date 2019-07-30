@@ -62,8 +62,8 @@ app.listen(app.get('port'), function () {
 //pretty much useless, used it to test db connection
 app.get('/', function (request, response) {
   response.json({ Welcome: 'Please use the SwaggerDocs to learn more about specific API calls' });
-  await access.check('r2OFejNfmGx7SfVw',2);
-  await access.check('eekgmcfROcx2qMXs',2);
+  access.check('r2OFejNfmGx7SfVw',2);
+  access.check('eekgmcfROcx2qMXs',2);
 });
 
 // Used to get All info from each table
