@@ -8,7 +8,7 @@ class AppAccess{
 
     /**
      * @author Jacob Drzewiecki
-     * @param {string} key      The AppID of the application trying to access the call
+     * @param {string} key      The AppID of the application trying to access the call. Key will be mysql.escaped in function.
      * @param {number} access   The minimum access level the application must have to access the call
      * @return {boolean}        true if allowed to access call
      */
@@ -17,7 +17,7 @@ class AppAccess{
         var result;
         let query = "SELECT AccessLevel FROM Applications WHERE AppID='" + key + "';";
         await connection.query(query, function(err, results){
-            result = 5;
+            result = results;
         });
         console.log(result);
     }
