@@ -19,8 +19,9 @@ class AppAccess{
         console.log(query);
         await connection.query(query, function(err, results)
         {
-            console.log(results);
+            result = results;
         });
+        console.log(result);
     }
 }
 
