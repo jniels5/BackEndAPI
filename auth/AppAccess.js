@@ -3,7 +3,7 @@ var connection = require("../auth/Connect");
 class AppAccess{
     constructor()
     {
-
+        console.log("constructed");
     }
 
     /**
@@ -22,3 +22,5 @@ class AppAccess{
         });
     }
 }
+
+module.exports = {AppAccess};
