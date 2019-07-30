@@ -15,36 +15,36 @@ class AppAccess{
      * @return {boolean}        true if allowed to access call
      * 
      */
-    check(access, req, resp) {
+    async check(access, req, resp) {
         var key = req.query.AppID;
         var connection = require("../auth/Connect");
         var retVal;
-        //console.log("creating promise");
         var p = new Promise(function (resolve, reject) {
-            //console.log("starting promise");
             let query = "SELECT AccessLevel FROM Applications WHERE AppID=" + mysql.escape(key) + ";";
             connection.query(query, function (err, results) {
-                //console.log("executing query");
                 if (err) {
-                    //console.log("rejecting promise");
+                    //resp.sendStatus(500);
                     reject(err);
                 }
+                else if (results.length == 0)
+                {
+                    //resp.sendStatus(500);
+                    resolve(0);
+                }
                 else {
-                    //console.log("resolving promise");
-                    resolve(results[0]);
+                    resolve(results[0].AccessLevel);
                 }
             });
         });
-        return p.then(function (result) {
-            //console.log("p.then success");
-            //return AccessLevel >= access;
-            console.log(key + ": " + result.AccessLevel + " >= " + access);
-            retVal = result.AccessLevel >= access;
-            
+        await p.then(function (result) {
+            console.log(key + ": " + result + " >= " + access);
+            retVal = result >= access;
+            if(retVal == false)
+                resp.sendStatus(403);
         }, function (error) {
             retVal = false;
+            resp.sendStatus(500);
         });
-        console.log("retVal", retVal);
         return retVal;
     }
 }
