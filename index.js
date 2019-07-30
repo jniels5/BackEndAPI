@@ -66,21 +66,25 @@ app.get('/', function (request, response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function (request, response) {
-  if (request.params.table.toLowerCase() == "applications") {
-    response.sendStatus(403);
-  }
-  else {
-    let tag = (String(request.query.test).toLowerCase() == "true") ? "_TEST" : "";
-    let query = 'SELECT * FROM ' + mysql.escapeId(request.params.table + tag);
-    connection.query(query, function (error, results, fields) {
-      if (error) {
-        response.json({ select_status: "failed" });
+  access.check(1, request, response).then(result => {
+    if (result) {
+      if (request.params.table.toLowerCase() == "applications") {
+        response.sendStatus(403);
       }
       else {
-        response.json(results);
+        let tag = (String(request.query.test).toLowerCase() == "true") ? "_TEST" : "";
+        let query = 'SELECT * FROM ' + mysql.escapeId(request.params.table + tag);
+        connection.query(query, function (error, results, fields) {
+          if (error) {
+            response.json({ select_status: "failed" });
+          }
+          else {
+            response.json(results);
+          }
+        });
       }
-    });
-  }
+    }
+  });
 });
 
 //********************************************
@@ -208,16 +212,12 @@ app.get('/getmail', function (request, response) {
 });
 //END EMAIL TOKEN
 
-app.get('/testAccess', function(request, response) {
-  var a = access.check(3, request, response).then(result => {if(result)
-  {
-    response.json({access: "granted!"});
-  }
-  else
-  {
-    //response.json({access: "denied!"});
-  }});
-  //console.log(a);
+app.get('/testAccess', function (request, response) {
+  access.check(3, request, response).then(result => {
+    if (result) {
+      response.json({ access: "granted!" });
+    }
+  });
 });
 
 decodeSemester = function (val) {
