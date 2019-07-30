@@ -209,14 +209,15 @@ app.get('/getmail', function (request, response) {
 //END EMAIL TOKEN
 
 app.get('/testAccess', function(request, response) {
-  if(access.check(3, request, response).result)
+  console.log(access.check(3, request, response));
+  /*if(access.check(3, request, response).result)
   {
     response.json({access: "granted!"});
   }
   else
   {
     response.json({access: "denied!"});
-  }
+  }*/
 });
 
 decodeSemester = function (val) {
