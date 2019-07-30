@@ -15,7 +15,7 @@ class AppAccess{
      * @return {boolean}        true if allowed to access call
      * 
      */
-    async check(access, req, resp) {
+    check(access, req, resp) {
         var key = req.query.AppID;
         var connection = require("../auth/Connect");
         var retVal;
@@ -35,7 +35,7 @@ class AppAccess{
                 }
             });
         });
-        return await p.then(function (result) {
+        return p.then(function (result) {
             //console.log("p.then success");
             //return AccessLevel >= access;
             console.log(key + ": " + result.AccessLevel + " >= " + access);
