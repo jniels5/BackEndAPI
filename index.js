@@ -211,7 +211,7 @@ app.get('/getmail', function (request, response) {
 //END EMAIL TOKEN
 
 app.get('/testAccess', function(request, response) {
-  if(access.check(request.query.Access, request, response))
+  if(access.check(request.query.Access, request, response).result)
   {
     response.json({access: "granted!"});
   }
