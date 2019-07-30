@@ -19,9 +19,9 @@ class AppAccess{
         let query = "SELECT AccessLevel FROM Applications WHERE AppID=" + mysql.escape(key) + ";";
         console.log(query);
         await connection.query(query, function(err, results){
-            result = results;
+            console.log(results);
         });
-        console.log(result);
+        //console.log(result);
     }
 }
 
