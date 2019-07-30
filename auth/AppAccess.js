@@ -9,13 +9,14 @@ class AppAccess{
 
     /**
      * @author Jacob Drzewiecki
-     * @param {string} key      The AppID of the application trying to access the call. Key will be mysql.escaped in function.
      * @param {number} access   The minimum access level the application must have to access the call
+     * @param {request} req     TThe request to parse AppID
      * @param {response} resp   The response to allow immediate 403/500
      * @return {boolean}        true if allowed to access call
      * 
      */
-    async check(key, access, resp) {
+    async check(access, req, resp) {
+        var key = req.query.AppID;
         var connection = require("../auth/Connect");
         var retVal;
         //console.log("creating promise");
