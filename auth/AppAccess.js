@@ -44,7 +44,6 @@ class AppAccess{
             retVal = false;
         });
         console.log("retVal", retVal);
-        connection.end();
         return retVal;
     }
 }
