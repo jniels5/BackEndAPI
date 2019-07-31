@@ -232,12 +232,12 @@ app.get('/testAccess', function (request, response) {
   });
 });
 
-app.post('/sendContactUsEmail', function(request, response) {
+app.get('/sendContactUsEmail', function(request, response) {
   var mailOptions = {
     from: 'CodeOrangeReservations@gmail.com',
     to: 'andynguyen@discover.com',
     subject: 'code_orange website inquiry',
-    text: 'RESPOND TO: ' + request.body.from + '\nNAME: ' + request.body.name + '\n\n' + request.body.body, 
+    text: 'RESPOND TO: ' + request.query.from + '\nNAME: ' + request.query.name + '\n\n' + request.query.body, 
   };
   transporter.sendMail(mailOptions, function(error, info){
     if(error){

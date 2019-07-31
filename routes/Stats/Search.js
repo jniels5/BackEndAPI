@@ -72,20 +72,24 @@ router.get('/last', function (request, response) {
   });
 });
   
-  router.get('/grad', function(request,response) {
-    connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                     'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
-                     'tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail ' +
-                     'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                     'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
-          if(error) {
-              response.json({grad_select: "failed"});
+router.get('/grad', function (request, response) {
+  access.check(1, request, response).then(result => {
+    if (result) {
+      connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
+        'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
+        'tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail ' +
+        'FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+        'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' AND m.GradYear = ' + request.query.Search + ' ORDER BY m.MemberID', function (error, results, fields) {
+          if (error) {
+            response.json({ grad_select: "failed" });
           }
           else {
-              response.json(results);
+            response.json(results);
           }
-    });
+        });
+    }
   });
+});
   
   router.get('/graduatedIn/:sem', function(request,response)
   {
