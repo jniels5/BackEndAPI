@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var cors = require('cors');
+//const AppAccess = require('./auth/AppAccess');
 
 var connection = require("../../auth/Connect");
 
@@ -17,6 +18,8 @@ var corsOptions = {
   methods: 'GET,HEAD,POST,OPTIONS,DELETE',
   "preflightContinue": true
 }
+
+//var access = new AppAccess.AppAccess();
 
 router.use(cors(corsOptions)); 
 

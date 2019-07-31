@@ -59,6 +59,18 @@ app.listen(app.get('port'), function () {
   console.log("Node app is running at localhost:" + app.get('port'));
 });
 
+//--------------- Email Begin----------------
+var nodemailer = require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.NODEMAILER_EMAIL,
+    pass: process.env.NODEMAILER_PASSWORD
+  }
+});
+//--------------------------------------------
+
 //pretty much useless, used it to test db connection
 app.get('/', function (request, response) {
   response.json({ Welcome: 'Please use the SwaggerDocs to learn more about specific API calls' });
@@ -216,6 +228,24 @@ app.get('/testAccess', function (request, response) {
   access.check(3, request, response).then(result => {
     if (result) {
       response.json({ access: "granted!" });
+    }
+  });
+});
+
+app.get('/sendContactUsEmail', function(request, response) {
+  var mailOptions = {
+    from: 'CodeOrangeReservations@gmail.com',
+    to: 'andynguyen@discover.com',
+    subject: 'code_orange website inquiry',
+    text: 'RESPOND TO: ' + request.query.from + '\nNAME: ' + request.query.name + '\n\n MESSAGE:\n' + request.query.body, 
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      response.json(null)
+      console.log(error)
+    }
+    else {
+      response.json({email: "sent"})
     }
   });
 });
