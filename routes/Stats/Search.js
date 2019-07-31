@@ -91,33 +91,40 @@ router.get('/grad', function (request, response) {
   });
 });
   
-  router.get('/graduatedIn/:sem', function(request,response)
-  {
-    let semCode = decodeSemester(request.params.sem);
-    let semester = semCode.split(" ")[0];
-    let year = semCode.split(" ")[1];
-    let query = "SELECT * FROM Members WHERE GradSemester=" + mysql.escape(semester) + " AND GradYear=" + mysql.escape(year) + ";";
-    connection.query(query, function (error, results, fields) {
-          if(error) {
-              response.json({graduadtedIn: "failed"});
-          }
-          else {
-              response.json(results);
-          }
-    });
+router.get('/graduatedIn/:sem', function (request, response) {
+  access.check(1, request, response).then(result => {
+    if (result) {
+      let semCode = decodeSemester(request.params.sem);
+      let semester = semCode.split(" ")[0];
+      let year = semCode.split(" ")[1];
+      let query = "SELECT * FROM Members WHERE GradSemester=" + mysql.escape(semester) + " AND GradYear=" + mysql.escape(year) + ";";
+      connection.query(query, function (error, results, fields) {
+        if (error) {
+          response.json({ graduadtedIn: "failed" });
+        }
+        else {
+          response.json(results);
+        }
+      });
+    }
   });
+});
   
-  router.get('/all', function(request,response) {
-    connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-                     'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                     'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
-          if(error) {
-              response.json({all_select: "failed"});
+router.get('/all', function (request, response) {
+  access.check(1, request, response).then(result => {
+    if (result) {
+      connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
+        'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+        'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
+          if (error) {
+            response.json({ all_select: "failed" });
           }
           else {
-              response.json(results);
+            response.json(results);
           }
-    });
+        });
+    }
   });
+});
 
   module.exports = router
