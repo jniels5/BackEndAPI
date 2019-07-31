@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var cors = require('cors');
-//const AppAccess = require('./auth/AppAccess');
+const AppAccess = require('../../auth/AppAccess');
 
 var connection = require("../../auth/Connect");
 
@@ -19,52 +19,58 @@ var corsOptions = {
   "preflightContinue": true
 }
 
-//var access = new AppAccess.AppAccess();
+var access = new AppAccess.AppAccess();
 
 router.use(cors(corsOptions)); 
 
 // Stats Search Calls . . .
-router.get('/first', function(request,response) {
-    var sem = "";
-    if (request.query.Semester)
-    {
-      sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
+router.get('/first', function (request, response) {
+  access.check(1, request, response).then(result => {
+    if (result) {
+      var sem = "";
+      if (request.query.Semester) {
+        sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
+      }
+      var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
+        'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, m.WorkEmail, ' +
+        'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+        'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
+        sem + 'm.FirstName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
+      connection.query(query, function (error, results, fields) {
+        if (error) {
+          response.json({ first_select: "failed" });
+        }
+        else {
+          response.json(results);
+        }
+      });
     }
-    var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
-                     'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, m.WorkEmail, ' +
-                     'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                     'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
-                     sem + 'm.FirstName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
-    connection.query(query, function (error, results, fields) {
-          if(error) {
-              response.json({first_select: "failed"});
-          }
-          else {
-              response.json(results);
-          }
-    });
   });
+});
   
-  router.get('/last', function(request,response) {
-    var sem = "";
-    if (request.query.Semester)
-    {
-      sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
+router.get('/last', function (request, response) {
+  access.check(1, request, response).then(result => {
+    if (result) {
+      var sem = "";
+      if (request.query.Semester) {
+        sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
+      }
+      var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
+        'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, m.WorkEmail, ' +
+        'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
+        'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
+        sem + 'm.LastName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
+      connection.query(query, function (error, results, fields) {
+        if (error) {
+          response.json({ last_select: "failed" });
+        }
+        else {
+          response.json(results);
+        }
+      });
     }
-    var query = 'SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, m.GradYear, ' +
-                     'm.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, m.WorkEmail, ' +
-                     'Teams.Semester, m.Gender FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-                     'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND ' +
-                     sem + 'm.LastName = ' + mysql.escape(request.query.Search) + ' ORDER BY m.MemberID';
-    connection.query(query, function (error, results, fields) {
-          if(error) {
-              response.json({last_select: "failed"});
-          }
-          else {
-              response.json(results);
-          }
-    });
   });
+});
   
   router.get('/grad', function(request,response) {
     connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
