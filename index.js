@@ -237,7 +237,7 @@ app.get('/sendContactUsEmail', function(request, response) {
     from: 'CodeOrangeReservations@gmail.com',
     to: 'andynguyen@discover.com',
     subject: 'code_orange website inquiry',
-    text: 'RESPOND TO: ' + request.query.from + '\nNAME: ' + request.query.name + '\n\n MESSAGE:\n' + request.query.body, 
+    text: 'RESPOND TO: ' + request.query.from + '\nNAME: ' + request.query.name + '\n\n' + request.query.body, 
   };
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
@@ -246,6 +246,7 @@ app.get('/sendContactUsEmail', function(request, response) {
     }
     else {
       response.json({email: "sent"})
+      console.log(mailOptions);
     }
   });
 });
