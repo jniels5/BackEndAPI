@@ -25,7 +25,7 @@ router.use(cors(corsOptions));
 
 // Stats Search Calls . . .
 router.get('/first', function (request, response) {
-  access.check(1, request, response).then(result => {
+  access.check(0, request, response).then(result => {
     if (result) {
       var sem = "";
       if (request.query.Semester) {
@@ -49,7 +49,7 @@ router.get('/first', function (request, response) {
 });
   
 router.get('/last', function (request, response) {
-  access.check(1, request, response).then(result => {
+  access.check(0, request, response).then(result => {
     if (result) {
       var sem = "";
       if (request.query.Semester) {
@@ -73,7 +73,7 @@ router.get('/last', function (request, response) {
 });
   
 router.get('/grad', function (request, response) {
-  access.check(1, request, response).then(result => {
+  access.check(0, request, response).then(result => {
     if (result) {
       connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
         'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
@@ -92,7 +92,7 @@ router.get('/grad', function (request, response) {
 });
   
 router.get('/graduatedIn/:sem', function (request, response) {
-  access.check(1, request, response).then(result => {
+  access.check(0, request, response).then(result => {
     if (result) {
       let semCode = decodeSemester(request.params.sem);
       let semester = semCode.split(" ")[0];
@@ -111,7 +111,7 @@ router.get('/graduatedIn/:sem', function (request, response) {
 });
   
 router.get('/all', function (request, response) {
-  access.check(1, request, response).then(result => {
+  access.check(0, request, response).then(result => {
     if (result) {
       connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
         'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +

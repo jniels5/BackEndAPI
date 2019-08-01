@@ -78,7 +78,7 @@ app.get('/', function (request, response) {
 
 // Used to get All info from each table
 app.get('/select/table/:table', function (request, response) {
-  access.check(1, request, response).then(result => {
+  access.check(0, request, response).then(result => {
     if (result) {
       if (request.params.table.toLowerCase() == "applications") {
         response.sendStatus(403);
