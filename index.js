@@ -210,7 +210,7 @@ app.get('/runfile/:file', function (request, response) {
   response.json({ runfile_status: "Success" });
 });
 
-//funciton is used to send an email to the userpool
+//function is used to send an email to the userpool
 app.get('/getmail', function (request, response) {
   //EMAIL TOKEN
   transporter.sendMail(mailOptions, function (error, info) {
@@ -224,6 +224,10 @@ app.get('/getmail', function (request, response) {
 });
 //END EMAIL TOKEN
 
+/**
+ * @author Jacob Drzewiecki
+ * @description Temporary test function to test AppAccess object
+ */
 app.get('/testAccess', function (request, response) {
   access.check(3, request, response).then(result => {
     if (result) {
@@ -251,6 +255,12 @@ app.get('/sendContactUsEmail', function(request, response) {
   });
 });
 
+/**
+ * @author Jacob Drzewiecki
+ * @param {string} 4 character long semester code (ex, "SU19")
+ * @returns {string} "Full name" of semester (ex, "SUMMER 2019")
+ * @description Returns the "full name" of the provided 4 character long semester code
+ */
 decodeSemester = function (val) {
   let semester;
   if (val.length === 4) {
