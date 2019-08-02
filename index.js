@@ -239,7 +239,7 @@ app.get('/testAccess', function (request, response) {
 app.get('/sendContactUsEmail', function(request, response) {
   var mailOptions = {
     from: 'CodeOrangeReservations@gmail.com',
-    to: 'andynguyen@discover.com',
+    to: 'danielomalley@discover.com',
     subject: 'code_orange website inquiry',
     text: 'RESPOND TO: ' + request.query.from + '\nNAME: ' + request.query.name + '\n\n' + request.query.body, 
   };

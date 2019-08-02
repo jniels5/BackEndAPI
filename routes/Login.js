@@ -80,6 +80,8 @@ router.post('/attempts/post', function(request, response){
 })
 });
 
+
+
 router.post('/attempts/insert', function(request, response){
 
   let query = 'INSERT IGNORE INTO LoginAttempts VALUES((SELECT MemberID FROM Members WHERE WorkEmail= ' + mysql.escape(request.body.WorkEmail) + ' ) , 0);';
