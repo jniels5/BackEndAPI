@@ -35,8 +35,6 @@ io.on('connection', function (socket) {
   console.log("a user connected");
 });
 
-
-
 var whitelist = [
   'http://localhost:3000/',
   'http://team11-frontend.mjhmkfjvi5.us-east-2.elasticbeanstalk.com/'
@@ -73,7 +71,7 @@ var transporter = nodemailer.createTransport({
 
 //pretty much useless, used it to test db connection
 app.get('/', function (request, response) {
-  response.json({ Welcome: 'Please use the SwaggerDocs to learn more about specific API calls' });
+    response.json(vcap_services);
 });
 
 // Used to get All info from each table

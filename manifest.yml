@@ -1,0 +1,10 @@
+---
+applications:
+- name: campus-innovator-api
+  memory: 1gb
+  instances: 1
+  buildpacks:
+  - nodejs_buildpack
+  env:
+    OPTIMIZE_MEMORY: true
+  command: npm start

@@ -6,15 +6,17 @@ var app = express()
 var whitelist = [
     'http://localhost:3000/',
     'http://team11-frontend.mjhmkfjvi5.us-east-2.elasticbeanstalk.com/'
-  ]
+  ];
+
+var vcap_services = JSON.parse(process.env.VCAP_SERVICES)
 
 //creating connection object
 var connection = mysql.createConnection({
-  host     : process.env.RDS_HOSTNAME,
-  user     : process.env.RDS_USERNAME,
-  password : process.env.RDS_PASSWORD,
-  port     : process.env.RDS_PORT,
-  database : process.env.RDS_DB_NAME,
+  host     : vcap_services["p.mysql"][0].credentials.hostname,
+  user     : vcap_services["p.mysql"][0].credentials.username,
+  password : vcap_services["p.mysql"][0].credentials.password,
+  port     : vcap_services["p.mysql"][0].credentials.port,
+  database : vcap_services["p.mysql"][0].credentials.name,
   multipleStatements: true //used for running an sql file
 });
 var conn_succ = false; //checks connection status, will probably get rid of this soon
