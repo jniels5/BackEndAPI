@@ -71,7 +71,7 @@ var transporter = nodemailer.createTransport({
 
 //pretty much useless, used it to test db connection
 app.get('/', function (request, response) {
-    response.json(vcap_services);
+    response.json({Welcome: "Don't Mind the Mess"});
 });
 
 // Used to get All info from each table

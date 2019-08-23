@@ -53,7 +53,8 @@ router.get('/projects', function(request,response) {
 
   // Lists all teams, groups by semester
 router.get('/semesters', function(request,response) {
-  connection.query('SELECT Semester FROM Teams GROUP BY Semester ORDER BY TeamID DESC;', function (error, results, fields) {
+  connection.query('select * FROM ( Select Semester FROM Teams ORDER BY TeamID Desc ) ' +
+                   'AS tmp_table Group by Semester', function (error, results, fields) {
         if(error) {
             response.json({semester_select: "failed"});
         }

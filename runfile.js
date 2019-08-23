@@ -5,10 +5,12 @@
 var fs = require('fs');
 var _ = require('underscore');
 var	mysql = require('mysql');
+// Connection 
+var connection = require("./auth/Connect");
 
 //takes a sql connection and sql query as a string
 //runs a specific sql query
-function exec(connection, sql, response, callback) {
+function exec(sql, response, callback) {
 	connection.query(sql, function (error, results) {
     if(error) {
 			throw error;
@@ -21,7 +23,7 @@ function exec(connection, sql, response, callback) {
 	return this;
 }
 
-function execNodeMailer(connection, filename, response, callback) {
+function execNodeMailer(filename, response, callback) {
 	fs.readFile(filename, 'utf8', function(error, data) {
 		if (error) {
 			throw error;
@@ -32,13 +34,13 @@ function execNodeMailer(connection, filename, response, callback) {
 }
 
 //takes a mysql connection and sql file
-function execFile(connection, filename, response, callback) {
+function execFile( filename, response, callback) {
 	fs.readFile(filename, 'utf8', function (error, data) {
 		if (error) {
 			throw error;
   	};
 	//execute specific sql query
-  exec(connection, data, response, callback);
+  exec( data, response, callback);
 	});
 	return this;
 }

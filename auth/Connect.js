@@ -5,7 +5,6 @@ var app = express()
 
 var whitelist = [
     'http://localhost:3000/',
-    'http://team11-frontend.mjhmkfjvi5.us-east-2.elasticbeanstalk.com/'
   ];
 
 var vcap_services = JSON.parse(process.env.VCAP_SERVICES)
