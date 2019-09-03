@@ -85,14 +85,18 @@ router.use(cors(corsOptions));
     });
   });
 
-  // Male / Female Pie Chart
-  router.get('/pie/gender', function(request, response) {
-    connection.query('SELECT SUM(CASE WHEN m.Gender = "Male" THEN 1 ELSE 0 END) AS "Male", ' +
-                     'SUM(CASE WHEN m.Gender = "Female" THEN 1 ELSE 0 END) AS "Female" FROM Members m', function (error, results) {
+  // Interns + Hires By Gender
+  router.get('/total/gender/', function(request, response) {
+    connection.query('SELECT ' +
+    'SUM(CASE WHEN m.Gender = "Male" AND (r.Type = "Intern" OR r.Type = "Former Intern") THEN 1 ELSE 0 END) as "MaleInterns", ' +
+    'SUM(CASE WHEN m.Gender = "Male" AND (r.Status = "Full Time Hire" OR r.Status = "Accepted Offer, Delayed" OR r.Status = "Accepted Offer") THEN 1 ELSE 0 END) as "MaleHires", ' +
+    'SUM(CASE WHEN m.Gender = "Female" AND (r.Type = "Intern" OR r.Type = "Former Intern") THEN 1 ELSE 0 END) as "FemaleInterns", ' +
+    'SUM(CASE WHEN m.Gender = "Female" AND (r.Status = "Full Time Hire" OR r.Status = "Accepted Offer, Delayed" OR r.Status = "Accepted Offer") THEN 1 ELSE 0 END) as "FemaleHires" ' +
+    'FROM Members m, Role r WHERE r.MemberID = m.MemberID', function (error, results) {
       if (error) {
         response.json({pie_gender: "Failed"});
       }
-      else {
+     else {
         response.json(results)
       }
     });
