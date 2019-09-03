@@ -193,21 +193,6 @@ app.get('/select/table/Members/team/:team/:semester', function (request, respons
 //                                                //
 ////////////////////////////////////////////////////
 
-//runs a specified sql file (**Needs error handling**)
-app.get('/runfile/:file', function (request, response) {
-  try {
-    runfile.execFile(connection, './' + request.params.file, response);
-  }
-  catch (error) {
-    response.json({
-      runfile_status: "Failed",
-      runfile_error: error
-    });
-    return;
-  }
-  response.json({ runfile_status: "Success" });
-});
-
 //function is used to send an email to the userpool
 app.get('/getmail', function (request, response) {
   //EMAIL TOKEN
