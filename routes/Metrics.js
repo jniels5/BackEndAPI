@@ -85,4 +85,17 @@ router.use(cors(corsOptions));
     });
   });
 
+  // Male / Female Pie Chart
+  router.get('/pie/gender', function(request, response) {
+    connection.query('SELECT SUM(CASE WHEN m.Gender = "Male" THEN 1 ELSE 0 END) AS "Male", ' +
+                     'SUM(CASE WHEN m.Gender = "Female" THEN 1 ELSE 0 END) AS "Female" FROM Members m', function (error, results) {
+      if (error) {
+        response.json({pie_gender: "Failed"});
+      }
+      else {
+        response.json(results)
+      }
+    });
+  });
+
 module.exports = router
