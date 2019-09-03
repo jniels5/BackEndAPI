@@ -94,12 +94,30 @@ router.use(cors(corsOptions));
     'SUM(CASE WHEN m.Gender = "Female" AND (r.Status = "Full Time Hire" OR r.Status = "Accepted, Delay" OR r.Status = "Accepted Offer") THEN 1 ELSE 0 END) as "FemaleHires" ' +
     'FROM Members m, Role r WHERE r.MemberID = m.MemberID', function (error, results) {
       if (error) {
-        response.json({pie_gender: "Failed"});
+        response.json({gender_totals: "Failed"});
       }
      else {
         response.json(results)
       }
     });
   });
+
+    // Total Projects
+    router.get('/total/projects/', function(request, response) {
+      connection.query('SELECT ' + 
+      'SUM(CASE WHEN Type = "Web App" THEN 1 ELSE 0 END) AS "WebApp", ' +
+      'SUM(CASE WHEN Type = "Mobile App" THEN 1 ELSE 0 END) AS "MobileApp", ' +
+      'SUM(CASE WHEN Type = "AR App" THEN 1 ELSE 0 END) AS "ArApp", ' +
+      'SUM(CASE WHEN Type = "VR App" THEN 1 ELSE 0 END) AS "VrApp", ' +
+      'SUM(CASE WHEN Type = "Chat bot" THEN 1 ELSE 0 END) AS "ChatBot", ' +
+      'SUM(CASE WHEN Type = "Amazon Deep Lens" THEN 1 ELSE 0 END) AS "DeepLens" FROM Projects', function (error, results) {
+        if (error) {
+          response.json({project_totals: "Failed"});
+        }
+       else {
+          response.json(results)
+        }
+      });
+    });
 
 module.exports = router
