@@ -89,9 +89,9 @@ router.use(cors(corsOptions));
   router.get('/total/gender/', function(request, response) {
     connection.query('SELECT ' +
     'SUM(CASE WHEN m.Gender = "Male" AND (r.Type = "Intern" OR r.Type = "Former Intern") THEN 1 ELSE 0 END) as "MaleInterns", ' +
-    'SUM(CASE WHEN m.Gender = "Male" AND (r.Status = "Full Time Hire" OR r.Status = "Accepted Offer, Delayed" OR r.Status = "Accepted Offer") THEN 1 ELSE 0 END) as "MaleHires", ' +
+    'SUM(CASE WHEN m.Gender = "Male" AND (r.Status = "Full Time Hire" OR r.Status = "Accepted, Delay" OR r.Status = "Accepted Offer") THEN 1 ELSE 0 END) as "MaleHires", ' +
     'SUM(CASE WHEN m.Gender = "Female" AND (r.Type = "Intern" OR r.Type = "Former Intern") THEN 1 ELSE 0 END) as "FemaleInterns", ' +
-    'SUM(CASE WHEN m.Gender = "Female" AND (r.Status = "Full Time Hire" OR r.Status = "Accepted Offer, Delayed" OR r.Status = "Accepted Offer") THEN 1 ELSE 0 END) as "FemaleHires" ' +
+    'SUM(CASE WHEN m.Gender = "Female" AND (r.Status = "Full Time Hire" OR r.Status = "Accepted, Delay" OR r.Status = "Accepted Offer") THEN 1 ELSE 0 END) as "FemaleHires" ' +
     'FROM Members m, Role r WHERE r.MemberID = m.MemberID', function (error, results) {
       if (error) {
         response.json({pie_gender: "Failed"});
