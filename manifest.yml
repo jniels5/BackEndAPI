@@ -1,7 +1,7 @@
 ---
 applications:
 - name: campus-innovator-api
-  memory: 1gb
+  memory: 512mb
   instances: 1
   buildpacks:
   - nodejs_buildpack

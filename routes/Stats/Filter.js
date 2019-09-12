@@ -62,7 +62,7 @@ router.get('/status', function(request,response) {
                      'Teams.LabID, Teams.TeamID, Projects.ProjectID FROM Teams ' +
                      'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
                      'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
-                     'WHERE Teams.TeamNumber IN ' + mysql.escape(request.query.TeamNumber)  +
+                     'WHERE Teams.TeamNumber IN ' + request.query.TeamNumber  +
                      ' AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ';';
     connection.query(query, function (error, results, fields) {
           if(error) {
