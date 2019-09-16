@@ -125,8 +125,8 @@ router.use(cors(corsOptions));
       connection.query('SELECT SUM(CASE WHEN Status = "Accepted Offer" OR Status = "Accepted, Delay" OR Status = "Full Time Hire" THEN 1 ELSE 0 END) As "Fulltime", ' +
       'SUM(CASE WHEN Status = "Declined Offer" THEN 1 ELSE 0 END) AS "Declined", ' +
       'SUM(CASE WHEN Status = "Resigned, Performance" OR Status = "Resigned, Personal" OR Status = "Resigned, Schedule" THEN 1 ELSE 0 END) AS "Resigned", ' +
-      'SUM(CASE WHEN Status = "Planned Offer" OR Status = "Provided Offer" THEN 1 ELSE 0 END) AS "Planned/Provided", ' +
-      'SUM(CASE WHEN Status = "RW Full Time Hire" THEN 1 ELSE 0 END) AS "Riverwoods Hire" FROM Role', function (error, results) {
+      'SUM(CASE WHEN Status = "Planned Offer" OR Status = "Provided Offer" THEN 1 ELSE 0 END) AS "Offers", ' +
+      'SUM(CASE WHEN Status = "RW Full Time Hire" THEN 1 ELSE 0 END) AS "Riverwoods" FROM Role', function (error, results) {
         if (error) {
           response.json({project_totals: "Failed"});
         }
