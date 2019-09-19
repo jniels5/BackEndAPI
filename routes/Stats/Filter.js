@@ -56,11 +56,11 @@ router.get('/status', function(request,response) {
   
   router.get('/teams', function(request,response) {
   //get team details from semester and team number
-    let query = 'SELECT t.TeamName AS "Team Name", t.TeamNumber AS "Team Number, t.Semester' + 
+    let query = 'SELECT t.TeamName AS "Team Name", t.TeamNumber AS "Team Number", t.Semester, ' + 
                      'p.Name AS "Project Name", p.Type AS "Project Type", ' +
-                     'p.FrontEnd AS "Front End", p.Backend AS "Back End, ' + 
+                     'p.FrontEnd AS "Front End", p.Backend AS "Back End", ' + 
                      'p.RDS AS "Database" FROM Teams t ' +
-                     'JOIN TeamProjects tp ON Teams.TeamID = tp.TeamID ' +
+                     'JOIN TeamProjects tp ON t.TeamID = tp.TeamID ' +
                      'JOIN Projects p ON p.ProjectID = tp.ProjectID ' +
                      'WHERE t.TeamNumber IN ' + request.query.TeamNumber  +
                      ' AND t.Semester = ' + mysql.escape(request.query.Semester) + ';';
