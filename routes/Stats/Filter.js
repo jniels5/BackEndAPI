@@ -56,14 +56,14 @@ router.get('/status', function(request,response) {
   
   router.get('/teams', function(request,response) {
   //get team details from semester and team number
-    let query = 'SELECT Teams.TeamName, Teams.TeamNumber, Projects.Name, Projects.Type, ' +
-                     'Projects.Description, Projects.Paragraph, Projects.FrontEnd, ' +
-                     'Projects.Backend, Projects.RDS, Teams.Semester, Teams.PhotoPath, ' +
-                     'Teams.LabID, Teams.TeamID, Projects.ProjectID FROM Teams ' +
-                     'JOIN TeamProjects ON Teams.TeamID = TeamProjects.TeamID ' +
-                     'JOIN Projects ON Projects.ProjectID = TeamProjects.ProjectID ' +
-                     'WHERE Teams.TeamNumber IN ' + request.query.TeamNumber  +
-                     ' AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ';';
+    let query = 'SELECT t.TeamName AS "Team Name", t.TeamNumber AS "Team Number, t.Semester' + 
+                     'p.Name AS "Project Name", p.Type AS "Project Type", ' +
+                     'p.FrontEnd AS "Front End", p.Backend AS "Back End, ' + 
+                     'p.RDS AS "Database" FROM Teams t ' +
+                     'JOIN TeamProjects tp ON Teams.TeamID = tp.TeamID ' +
+                     'JOIN Projects p ON p.ProjectID = tp.ProjectID ' +
+                     'WHERE t.TeamNumber IN ' + request.query.TeamNumber  +
+                     ' AND t.Semester = ' + mysql.escape(request.query.Semester) + ';';
     connection.query(query, function (error, results, fields) {
           if(error) {
               response.json({Status_Select: "failed"});
