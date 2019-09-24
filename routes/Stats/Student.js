@@ -73,22 +73,22 @@ router.get('/portal/info', function(request,response) {
     connection.query('SET foreign_key_checks = 0; ' +
     'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";", membUpdate, function (error) {
       if(error) {
-        response.json({student_update: "failed: " + error});
+        response.json({student_update_member: "failed: " + error});
       }
     });
 
     connection.query('UPDATE Teams SET ? WHERE TeamID = ' + request.body.TeamID + "; ", teamUpdate, function (error) {
         if(error) {
-          response.json({student_update: "failed: " + error});
+          response.json({student_update_team: "failed: " + error});
         }
       });
 
       connection.query('UPDATE Projects SET ? WHERE ProjectID = ' + request.body.ProjectID + "; " +
         'SET foreign_key_checks = 1;', projUpdate, function (error) {
           if(error) {
-            response.json({student_update: "failed: " + error});
+            response.json({student_update_project: "failed: " + error});
           } else {
-            respose.json({student_update: "success"})
+            response.json({student_update: "success"})
           }
         });
   });
