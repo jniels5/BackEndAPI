@@ -49,9 +49,7 @@ router.get('/portal/info', function(request,response) {
   
   router.post('/portal/update', function(request,response) {
     // used in connection.query
-    var entry = {
-      FirstName: request.body.FirstName,
-      LastName: request.body.LastName,
+    var membUpdate = {
       Gender: request.body.Gender,
       GradSemester: request.body.GradSemester,
       GradYear: request.body.GradYear,
@@ -59,12 +57,27 @@ router.get('/portal/info', function(request,response) {
       PhoneNum: request.body.PhoneNum,
       MemberID: request.body.MemberID
     };
+
+    var projUpdate = {
+      Name: request.body.ProjectName,
+      Paragraph: request.body.Paragraph,
+      FrontEnd: request.body.FrontEnd,
+      BackEnd: request.body.BackEnd,
+      RDS: request.body.RDS
+    };
+
+    var teamUpdate = {
+      TeamName: request.body.TeamName,
+      PhotoPath: request.body.PhotoPath
+    };
   
     connection.query('SET foreign_key_checks = 0; ' +
     'UPDATE Members SET ? WHERE MemberID = ' + request.body.MemberID + ";" +
-    'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+    'UPDATE Teams SET ? WHERE TeamID = ' + request.body.TeamID + ";" +
+    'UPDATE Projects SET ? WHERE ProjectID = ' + request.body.ProjectID + ";" +
+    'SET foreign_key_checks = 1;', membUpdate, teamUpdate, projUpdate, function (error, results, fields) {
       if(error) {
-        response.json({student_update: "failed: " + error, entry: entry});
+        response.json({student_update: "failed: " + error});
       } else {
         respose.json({student_update: "success"})
       }
