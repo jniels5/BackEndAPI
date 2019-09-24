@@ -28,6 +28,21 @@ router.use(bodyParser.json());
 //                                                //
 ////////////////////////////////////////////////////
 
+router.get('/portal/check', function(request, response) {
+  var WorkEmail = decodeURIComponent(request.body.WorkEmail)
+
+  let query = "SELECT * FROM Members WHERE WorkEmail = '" + WorkEmail + "';";
+
+  connection.query(query, function(error) {
+    if(error) {
+      response.json({email_verify: "failed"});
+    }
+    else{
+      response.json({email_verify: "success"});
+    }
+  })
+})
+
 router.get('/portal/info', function(request,response) {
     let query = 'SELECT m.MemberID, m.FirstName, m.LastName, m.GradSemester, m.GradYear, m.Email, m.AssetID, m.Gender, m.Email, m.PhoneNum, m.WorkEmail, m.SuperUser, ' +
                      't.TeamNumber, t.TeamName, t.Semester, t.PhotoPath, t.LabID, ' +
