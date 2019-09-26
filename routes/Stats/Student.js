@@ -28,17 +28,36 @@ router.use(bodyParser.json());
 //                                                //
 ////////////////////////////////////////////////////
 
-router.get('/portal/check', function(request, response) {
-  var WorkEmail = decodeURIComponent(request.body.WorkEmail)
+router.post('/portal/check', function(request, response) {
+  var MemberID = 0;
 
-  let query = "SELECT * FROM Members WHERE WorkEmail = '" + WorkEmail + "';";
+  let query = "SELECT * FROM Members WHERE WorkEmail = '" + request.body.data.WorkEmail + "';";
 
-  connection.query(query, function(error) {
+  connection.query(query, function(error, results) {
     if(error) {
       response.json({email_verify: "failed"});
     }
     else{
-      response.json({email_verify: "success"});
+      MemberID = results[0].MemberID;
+
+      connection.query("SELECT * FROM Viewed WHERE MemberID = " + MemberID + ";", function(error, results) {
+        if(error) {
+          response.json({email_verify: "failed"});
+        }
+        else if(results.length == 1) {
+          response.json({ email_verify: "success"});
+        }
+        else {
+          connection.query("INSERT INTO Viewed (MemberID) VALUES (" + MemberID + ");", function(error) {
+            if(error) {
+              response.json({email_verify: "failed"});
+            }
+            else {
+              response.json({ email_verify: "success" });
+            }
+          })
+        }
+      })
     }
   })
 })

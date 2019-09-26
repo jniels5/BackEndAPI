@@ -22,9 +22,19 @@ var corsOptions = {
 router.use(cors(corsOptions)); 
 router.use(bodyParser.json());
 
-// Stats Update Record Calls . . .
+router.put('/delete', function(request,response) {
+  connection.query('SET foreign_key_checks = 0; ' +
+    'DELETE FROM Role WHERE RoleID = ' + request.body.RoleID + ";" +
+    'DELETE FROM Members WHERE MemberID = ' + request.body.MemberID + ";" +
+    'SET foreign_key_checks = 1;', entry, function (error, results, fields) {
+      if(error) {
+        response.json({modal_delete: "failed: " + error});
+      }
+    })
+})
+
 router.post('/post', function(request,response) {
-    // used in connection.query
+    
     var entry = {
       FirstName: request.body.FirstName,
       LastName: request.body.LastName,
@@ -65,7 +75,7 @@ router.post('/post', function(request,response) {
   });
   
   router.post('/post/teams', function(request,response) {
-    // used in connection.query
+    
     var entry = {
       TeamName: request.body.TeamName,
       TeamNumber: request.body.TeamNumber,
