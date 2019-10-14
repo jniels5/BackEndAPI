@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var cors = require('cors');
-const AppAccess = require('../../auth/AppAccess');
+//const AppAccess = require('../../auth/AppAccess');
 
 var connection = require("../../auth/Connect");
 
@@ -19,14 +19,19 @@ var corsOptions = {
   "preflightContinue": true
 }
 
-var access = new AppAccess.AppAccess();
+//var access = new AppAccess.AppAccess();
 
 router.use(cors(corsOptions)); 
 
+/*
+access.check(0, request, response).then(result => {
+  if (result) {
+  }
+});
+*/
+
 // Stats Search Calls . . .
 router.get('/first', function (request, response) {
-  access.check(0, request, response).then(result => {
-    if (result) {
       var sem = "";
       if (request.query.Semester) {
         sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
@@ -44,13 +49,9 @@ router.get('/first', function (request, response) {
           response.json(results);
         }
       });
-    }
-  });
 });
   
 router.get('/last', function (request, response) {
-  access.check(0, request, response).then(result => {
-    if (result) {
       var sem = "";
       if (request.query.Semester) {
         sem = "Teams.Semester = " + mysql.escape(request.query.Semester) + " AND ";
@@ -68,13 +69,9 @@ router.get('/last', function (request, response) {
           response.json(results);
         }
       });
-    }
-  });
 });
   
 router.get('/grad', function (request, response) {
-  access.check(0, request, response).then(result => {
-    if (result) {
       connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
         'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, ' +
         'tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail ' +
@@ -87,13 +84,9 @@ router.get('/grad', function (request, response) {
             response.json(results);
           }
         });
-    }
-  });
 });
   
 router.get('/graduatedIn/:sem', function (request, response) {
-  access.check(0, request, response).then(result => {
-    if (result) {
       let semCode = decodeSemester(request.params.sem);
       let semester = semCode.split(" ")[0];
       let year = semCode.split(" ")[1];
@@ -106,16 +99,13 @@ router.get('/graduatedIn/:sem', function (request, response) {
           response.json(results);
         }
       });
-    }
-  });
 });
   
 router.get('/all', function (request, response) {
-  access.check(0, request, response).then(result => {
-    if (result) {
-      connection.query('SELECT m.MemberID, m.FirstName, m.LastName, Teams.TeamNumber, r.Type, ' +
-        'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, Teams.TeamName, Teams.Semester, m.Gender, m.WorkEmail FROM Members AS m, Role AS r, TeamMembers AS tm, Teams ' +
-        'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = Teams.TeamID AND Teams.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
+      connection.query('SELECT m.MemberID, m.FirstName, m.LastName, t.TeamNumber, r.Type, ' +
+        'm.GradYear, m.Email, m.AssetID, m.GradSemester, r.Status, r.Description, r.Date, tm.TeamID, ' + 
+        't.TeamName, t.Semester, m.Gender, m.WorkEmail FROM Members AS m, Role AS r, TeamMembers AS tm, Teams AS t ' +
+        'WHERE r.MemberID = m.MemberID AND m.MemberID = tm.MemberID AND tm.TeamID = t.TeamID AND t.Semester = ' + mysql.escape(request.query.Semester) + ' ORDER BY m.MemberID', function (error, results, fields) {
           if (error) {
             response.json({ all_select: "failed" });
           }
@@ -123,8 +113,6 @@ router.get('/all', function (request, response) {
             response.json(results);
           }
         });
-    }
-  });
 });
 
   module.exports = router

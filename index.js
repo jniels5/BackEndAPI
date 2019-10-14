@@ -107,7 +107,7 @@ app.post('/checkin', function (request, response) {
     FirstName: request.body.firstName,
     LastName: request.body.lastName,
     Gender: '',
-    GradSemester: '',
+    GradSemester: request.body.gradSemester,
     GradYear: request.body.gradYear,
     Email: request.body.email,
     WorkEmail: '',
@@ -133,7 +133,7 @@ app.post('/checkin', function (request, response) {
         }
         else {
           var holding = results[0].MemberID;
-          connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'Spring code_orange open house', '2019-3-28', '" + holding + "')", function (error, results, fields) {
+          connection.query("INSERT INTO Role(Type, Status, Description, Date, MemberID) VALUES ('Open House', 'Attendee', 'Fall 2019 code_orange open house', '2019-10-1', '" + holding + "')", function (error, results, fields) {
             if (error) {
               response.json({
                 role_status: "FAILED"
