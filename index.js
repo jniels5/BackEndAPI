@@ -26,5 +26,6 @@ app.listen(app.get('port'), function () {
 
 //pretty much useless, used it to test db connection
 app.get('/', function (request, response) {
+  console.log("connections");
     response.json({Welcome: "Don't Mind the Mess"});
 });
