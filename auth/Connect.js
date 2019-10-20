@@ -7,15 +7,16 @@ var whitelist = [
     'http://localhost:3000/',
   ];
 
-var vcap_services = JSON.parse(process.env.VCAP_SERVICES)
+//var vcap_services = JSON.parse(process.env.VCAP_SERVICES)
 
 //creating connection object
 var connection = mysql.createConnection({
-  host     : vcap_services["p.mysql"][0].credentials.hostname,
-  user     : vcap_services["p.mysql"][0].credentials.username,
-  password : vcap_services["p.mysql"][0].credentials.password,
-  port     : vcap_services["p.mysql"][0].credentials.port,
-  database : vcap_services["p.mysql"][0].credentials.name,
+  
+  host     : 'firstdatabasepractice.clmedzuqz8zr.us-east-2.rds.amazonaws.com',
+  user     :'admin',
+  password : 'feirick1996',
+  port     : '3306',
+  database : 'firstdatabasepractice',
   multipleStatements: true //used for running an sql file
 });
 var conn_succ = false; //checks connection status, will probably get rid of this soon

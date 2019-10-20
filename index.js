@@ -5,7 +5,7 @@ var cors = require('cors')
 var app = express()
 
 // Connection 
-// var connection = require("./auth/Connect");
+ var connection = require("./auth/Connect");
 
 //keep out the baddies
 var corsOptions = {
