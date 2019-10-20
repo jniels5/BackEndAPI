@@ -12,11 +12,11 @@ var whitelist = [
 //creating connection object
 var connection = mysql.createConnection({
   
-  host     : 'firstdatabasepractice.clmedzuqz8zr.us-east-2.rds.amazonaws.com',
+  host     : 'database-1.clmedzuqz8zr.us-east-2.rds.amazonaws.com',
   user     :'admin',
-  password : 'feirick1996',
+  password : '123456789',
   port     : '3306',
-  database : 'firstdatabasepractice',
+  database : 'dbname',
   multipleStatements: true //used for running an sql file
 });
 var conn_succ = false; //checks connection status, will probably get rid of this soon
